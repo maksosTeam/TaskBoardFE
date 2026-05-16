@@ -20,8 +20,8 @@ jobs:
 
     - name: Build and push frontend
       run: |
-        docker build -t ghcr.io/swagateam/frontend:1.0.4 -f Dockerfile .
-        docker push ghcr.io/swagateam/frontend:1.0.4
+        docker build -t ghcr.io/maksosteam/frontend:1.0.4 -f Dockerfile .
+        docker push ghcr.io/maksosteam/frontend:1.0.4
       
   deploy:
         needs: publish
