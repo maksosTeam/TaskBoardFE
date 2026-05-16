@@ -1,0 +1,18 @@
+.project-navigation-component {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 10px;
+    margin-right: 50px;
+    float: right;
+}
+
+.project-navigation-component button{
+    background: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.project-navigation-component button:hover{
+    color: #bfbff3;
+}

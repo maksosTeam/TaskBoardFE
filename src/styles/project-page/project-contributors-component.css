@@ -1,0 +1,223 @@
+.project-users-container {
+    background-color: #121f2b;
+    border-radius: 8px;
+    color: white;
+    max-width: 880px;
+    margin-top: -10px;
+    font-family: Inter, sans-serif;
+    max-height: 400px;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 165px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+
+    /* Стилизация скроллбара для WebKit */
+    scrollbar-width: thin;              /* Firefox */
+    scrollbar-color: #9bacbe #141f29;   /* Firefox */
+
+    /* Webkit (Chrome, Edge, Safari) */
+}
+
+.user-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.user-list::-webkit-scrollbar-track {
+    background: #141f29;
+    border-radius: 4px;
+}
+
+.user-list::-webkit-scrollbar-thumb {
+    background-color: #9bacbe;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 840px;
+}
+
+.user-avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #9CADBF;
+}
+
+.add-user-button {
+    padding: 6px 12px;
+    background-color: #3a3f47;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 6px;
+}
+
+.add-user-button:hover {
+    background-color: #4b525c;
+}
+
+.invite-form {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.invite-form-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #606060;
+    border-radius: 8px;
+    padding: 12px 6px 2px 6px;
+    width: 100%;
+}
+
+.invite-form-input input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 6px;
+    background: transparent;
+    color: white;
+}
+
+.invite-form-sent-btn {
+    margin-top: -6px;
+    margin-right: 5px;
+    padding: 0;
+}
+
+.invite-form button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #bababa;
+}
+
+.invite-form button:hover {
+    color: #628dc3;
+}
+
+.invite-message {
+    width: 900px;
+    margin-top: 0;
+    padding-bottom: 4px;
+    position: relative;
+    font-size: 14px;
+    color: #afafaf;
+}
+
+.invite-message a {
+    color: #496f98;
+    text-decoration: underline;
+}
+
+.close-invite-message {
+    background: none;
+    border: none;
+    color: #bababa;
+    position: absolute;
+    top: 2px;
+    right: 0;
+    cursor: pointer;
+}
+
+.close-invite-message:hover {
+    color: #628dc3;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+
+
+.project-user-actions {
+    margin-left: auto;
+    position: relative;
+}
+
+.project-user-actions button{
+    background: none;
+    color: #cacaca;
+}
+.project-user-actions button:hover {
+    color: #628dc3;
+}
+
+.project-user-edit-role-popup {
+    position: absolute;
+    width: 300px;
+    right: -8px;
+    top: -5px;
+    background: #141f29;
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    z-index: 10;
+}
+
+.project-user-edit-role-popup input {
+    background: #282c34;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+    padding: 0 5px;
+    height: 20px;
+    margin-top: 0;
+}
+
+.project-user-edit-role-popup button {
+    background: none;
+    color: #cccccc;
+    border: none;
+    cursor: pointer;
+}

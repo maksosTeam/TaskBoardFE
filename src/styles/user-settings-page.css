@@ -1,0 +1,193 @@
+.user-settings {
+    width: 700px;
+    font-family: Inter, sans-serif;
+}
+
+.user-settings-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-settings-pic-sect {
+    display: flex;
+    margin-bottom: 14px;
+}
+.user-settings-pic-sect span {
+    font-size: 20px;
+    color: #cccccc;
+    margin: 3px 0 4px 20px;
+    padding: 6px 20px 0px 20px;
+    background-color: #273748;
+    border-radius: 8px;
+}
+
+.settings-sect {
+    background-color: #273749;
+    padding: 3px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+.settings-sect-2{
+    margin-top: 30px;
+    background-color: #273749;
+    padding: 5px 5px 5px 5px;
+    border-radius: 15px;
+    color: #cdcdcd;
+}
+
+.settings-sub-tab-container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 14px;
+    justify-content: space-between;
+}
+
+.settings-sub-tab-container button{
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    margin: 5px 15px 5px 5px;
+    width: 180px;
+    padding: 5px 15px;
+    color: #cdcdcd;
+}
+
+.settings-sub-tab-container button:hover {
+    background-color: #374e67;
+    cursor: pointer;
+}
+
+.settings-sub-tab {
+    font-family: Inter, sans-serif;
+    width: 680px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    margin: 7px 0px 5px 5px;
+    padding: 5px 0px 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    color: #cdcdcd;
+    margin-bottom: 10px;
+}
+
+.settings-sub-tab:hover {
+    background-color: #374e67;
+    cursor: pointer;
+}
+
+.settings-sub-tab-password p{
+    height: 25px;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-sub-tab span {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.settings-sub-tab p {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.settings-go {
+    margin-right: 20px;
+    font-size: 25px;
+    color: #b1b1b1;
+}
+
+.user-settings-logout {
+    width: 100%;
+    background: #d35050;
+    color: #c3c3c3;
+    padding: 8px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+.user-settings-logout:hover {
+    background: #c34242;
+}
+
+input:focus {
+    outline: none;
+    border: none;
+}
+.password-edit-container {
+    display: flex;
+}
+
+
+.email-confirmation-container {
+    display: flex;
+}
+
+.email-confirmation-container div {
+    padding-bottom: 10px;
+    margin-right: 15px;
+}
+
+.email-confirmation-container p {
+    margin: 0 auto;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.email-confirmation-input {
+    margin-top: 5px;
+    margin-left: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #39526c;
+    padding: 4px 7px;
+}
+
+.email-confirmation-input:focus {
+    outline: none;
+    border: none;
+}
+
+.email-edit-container {
+    display: flex;
+
+}
+
+.email-edit-container p{
+    font-size: 17px;
+    margin: 20px 0 15px 20px;
+
+}
+
+.email-edit-actions {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.email-edit-actions button{
+    background-color: #39516b;
+    color: #dcdcdc;
+    font-size: 14px;
+    padding: 4px 18px;
+    border: none;
+    border-radius: 8px;
+    margin-left:15px;
+    margin-top: 18px;
+}
+
+.email-edit-actions button:hover{
+    background-color: rgb(45, 63, 81);
+    cursor: pointer;
+}

@@ -1,0 +1,50 @@
+.sort-button-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: auto;
+}
+
+.sort-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.sort-icon {
+    color: white;
+    transition: color 0.2s;
+    margin-top: -6px;
+    margin-right: -3px;
+}
+
+.sort-toggle:hover .sort-icon {
+    color: #8ab4f8;
+}
+
+.sort-dropdown {
+    position: absolute;
+
+    right: 0px;
+    background: #101C28;
+    border-radius: 10px;
+    width: 110px;
+    z-index: 20;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 4px;
+}
+
+.sort-dropdown div {
+    border: solid 1px #1E2F3F;
+    padding: 0px 4px;
+    cursor: pointer;
+    margin: 4px 0;
+    border-radius: 10px;
+}
+
+.sort-dropdown div:hover {
+    background-color: #1E2F3F;
+}

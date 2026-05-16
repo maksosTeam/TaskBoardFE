@@ -1,0 +1,170 @@
+/* Inter Regular */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Italic.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Bold */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Bold Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-BoldItalic.otf') format('opentype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter ExtraBold */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter ExtraBold Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-ExtraBoldItalic.otf') format('opentype');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Black */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Black Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-BlackItalic.otf') format('opentype');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Light */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Light Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-LightItalic.otf') format('opentype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter ExtraLight */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter ExtraLight Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-ExtraLightItalic.otf') format('opentype');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Medium */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Medium Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-MediumItalic.otf') format('opentype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter SemiBold */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter SemiBold Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-SemiBoldItalic.otf') format('opentype');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Thin */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Thin.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Thin Italic */
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-ThinItalic.otf') format('opentype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Inter Variable (если нужно) */
+@font-face {
+    font-family: 'Inter Variable';
+    src: url('../assets/fonts/Inter-V.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: oblique 0deg 10deg;
+    font-display: swap;
+}

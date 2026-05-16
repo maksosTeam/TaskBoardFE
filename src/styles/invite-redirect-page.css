@@ -1,0 +1,51 @@
+.invite-loading-container,
+.invite-error-container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    background: #141f29;
+    color: #ffffff;
+}
+
+.invite-card {
+    padding: 200px 40px;
+    border-radius: 16px;
+    max-width: 400px;
+}
+
+.invite-card {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.invite-button {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #5d6e80;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: -10px;
+    transition: background-color 0.3s ease;
+}
+
+.invite-button:hover {
+    background-color: #30547a;
+}
+
+.invite-loader {
+    display: flex;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    background: #141f29;
+    color: #ffffff;
+    margin-left: 20px;
+}

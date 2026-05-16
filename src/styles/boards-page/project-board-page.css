@@ -1,0 +1,67 @@
+.board-page-wrapper {
+    color: white;
+    background-color: #141F29;
+    min-height: 100vh;
+}
+
+.board-page-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.project-title {
+    color: #9CADBF;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.board-page-list {
+    display: flex;
+    flex-direction: column;
+    width: 1100px;
+    gap: 12px;
+}
+
+.board-page-item {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    background-color: #171F26;
+    padding: 13px 18px;
+    border-radius: 8px;
+    border: solid 1px #2E3B47;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.board-page-item:hover {
+    background-color: #1b2c3a;
+}
+
+.board-page-item span {
+    color: #fff;
+    align-self: center;
+    margin-left: 5px;
+}
+
+.board-icon-wrapper {
+    background-color: #2E3B47;
+    padding: 8px;
+    padding-bottom: 0px;
+    border-radius: 8px;
+}
+
+.add-board-btn {
+    background-color: #122B45;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+.add-board-btn:hover {
+    background-color: #072640;
+}

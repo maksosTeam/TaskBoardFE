@@ -1,0 +1,175 @@
+.welcome-container {
+    --primary: #d1d1d1;
+    --primary-dark: #2b4539;
+    --primary-light: #61b3dc;
+    --dark: #0a0a0a;
+    --darker: #000000;
+    --light: #ffffff;
+    --gray: #2a2a2a;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-color: var(--darker);
+    color: var(--light);
+    font-family: 'Inter', sans-serif;
+
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Анимированный фон справа */
+.background-glow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.background-glow::before {
+    content: '';
+    position: absolute;
+    left: -100px;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(90deg,
+    rgba(11, 11, 11, 0) 0%,
+    rgb(0, 0, 0) 90%,
+    rgb(0, 0, 0) 100%);
+    z-index: 2;
+    filter: blur(10px);
+}
+
+/* Контент слева */
+.welcome-content {
+    position: relative;
+    z-index: 1;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10%;
+    background: linear-gradient(
+            90deg,
+            var(--darker) 0%,
+            rgba(10, 10, 0, 1) 80%,
+            rgba(10, 10, 10, 0) 100%
+    );
+    padding-left: 10%;
+}
+
+
+
+.welcome-title {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--light);
+    animation: fadeIn 1s ease-out;
+}
+
+.welcome-subtitle {
+    font-size: 1.25rem;
+    color: rgba(245, 245, 245, 0.8);
+    max-width: 80%;
+    animation: fadeIn 1s ease-out 0.2s both;
+    margin-top: -40px;
+}
+
+/* Кнопки */
+.welcome-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.welcome-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-btn {
+    background: var(--primary);
+    color: var(--darker);
+}
+
+.welcome-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(100, 172, 206, 0.61);
+}
+
+.welcome-btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.welcome-btn-outline:hover {
+    background: rgba(97, 220, 163, 0.1);
+    box-shadow: 0 10px 40px rgba(100, 172, 206, 0.61);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes underline {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.welcome-container {
+    /* ... существующие стили ... */
+    transition: background-color 1s ease;
+}
+
+.welcome-container.exiting {
+    background-color: #141F29FF;
+}
+
+/* Для анимированного фона справа */
+.background-glow {
+    /* ... существующие стили ... */
+    transition: opacity 0.2s ease;
+}
+
+.welcome-container.exiting .background-glow {
+    opacity: 0;
+}
+
+/* Для контента слева */
+.welcome-content {
+    /* ... существующие стили ... */
+    transition: opacity 1s ease;
+}
+
+.welcome-container.exiting .welcome-content {
+    opacity: 0;
+}

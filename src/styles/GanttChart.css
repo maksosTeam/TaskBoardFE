@@ -1,0 +1,39 @@
+/* GanttChart.css */
+.gantt-chart-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.loading {
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+}
+
+.error {
+    color: #ff5555;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Кастомизация стилей для react-google-charts */
+.gantt-chart-container svg {
+    background-color: #1e1e1e !important;
+}
+
+.gantt-chart-container svg text {
+    fill: #ffffff !important;
+}
+
+.gantt-chart-container svg rect {
+    fill: #333333 !important;
+    stroke: #555555 !important;
+}
+
+.gantt-chart-container svg path {
+    stroke: #ffffff !important;
+}

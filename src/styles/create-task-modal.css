@@ -1,0 +1,116 @@
+.task-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.task-modal-container {
+    background-color: #122b44;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgb(225, 225, 225);
+    margin-bottom: 16px;
+}
+
+.task-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.task-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-form-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(255, 255, 255);
+    margin-bottom: 8px;
+    margin-top: -8px;
+}
+
+.task-form-input,
+.task-form-textarea,
+.task-form-select {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #FFFFFF80;
+    background-color: #141f29;
+    transition: border-color 0.2s ease;
+    border: none;
+}
+
+.task-form-input:focus,
+.task-form-textarea:focus,
+.task-form-select:focus {
+    outline: none;
+}
+
+.task-form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.task-form-error {
+    color: #dc2626;
+    font-size: 0.75rem;
+    margin-top: 8px;
+}
+
+.task-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.task-form-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.task-btn-cancel {
+    background-color: #2e3b46;
+    color: #b6b6b6;
+    border: none;
+}
+
+.task-btn-cancel:hover {
+    background-color: #466177;
+}
+
+.task-btn-submit {
+    background-color: #133554;
+    color: #b6b6b6;
+    border: none;
+}
+
+.task-btn-submit:hover {
+    background-color: #205483;
+}
+
+.task-btn-submit:disabled {
+    background-color: #69859e;
+    cursor: not-allowed;
+}

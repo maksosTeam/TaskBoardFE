@@ -1,0 +1,146 @@
+.table-container {
+    width: 1144px;
+    overflow-x: auto;
+}
+
+.task-table {
+    border-radius: 12px;
+    border: 1px solid #214F7D;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.task-table th {
+    background-color: #f8f9fa;
+    padding: 16px 15px 35px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+}
+
+.task-table td {
+    padding: 6px 15px;
+    border-top: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.task-table tbody tr{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.task-table tr:hover {
+    background-color: #133453;
+}
+
+.task-table thead tr th {
+    background-color: #122B45;
+    color: white;
+    text-align: center;
+}
+
+.task-id {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #6c757d;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+.tracker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.tracker-bar {
+    flex-grow: 1;
+    height: 6px;
+    background-color: #214F7D;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.tracker-fill {
+    height: 100%;
+    background-color: #3899FA;
+    transition: width 0.3s ease;
+}
+
+.tracker-bar-value {
+    font-size: 14px;
+    font-weight: 500;
+
+    text-align: right;
+    color: #fff;
+}
+
+.timeleft-info span {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.tasks-table-go-board {
+    font-family: Inter, sans-serif;
+    background-color: #1b3349;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.tasks-table-go-board {
+    font-family: Inter, sans-serif;
+    background-color: #1b3349;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.tasks-table-go-board:hover {
+    background-color: #2a4e70;
+}
+
+.tasks-status-badge {
+    padding: 2px 0 3px 16px;
+    border-radius: 12px;
+}
+
+.sprint-info-component h2 {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+.sprint-info-component p {
+    margin-top: -24px;
+    font-size: 16px;
+    color: #80ADDB;
+}
+.tabs   {
+    display: flex;
+    flex-direction: row;
+    margin-top: -15px;
+    margin-left: 670px;
+    padding: 0;
+}
+.tabs button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.tabs button.active-tab {
+    color: #91ADC9;
+}

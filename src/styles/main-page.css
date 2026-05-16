@@ -1,0 +1,17 @@
+.main-page-root {
+    min-width: 1500px;
+    background-color: #141F29;
+    padding-top: 20px;
+}
+
+.main-page {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.content-wrapper {
+    width: 1150px;
+}
+

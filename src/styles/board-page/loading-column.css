@@ -1,0 +1,49 @@
+.board-columns {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.loading-columns-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    padding: 0;
+}
+
+.loading-column {
+    background: #0F151B; /* Базовый фон темной темы */
+    border-radius: 20px;
+    margin: 10px;
+    min-width: 220px;
+    min-height: 94vh;
+    position: relative; /* Для корректной работы анимации */
+    overflow: hidden; /* Обрезает градиент по скругленным углам */
+}
+
+.loading-column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            0deg,
+            transparent 40%,
+            rgba(58, 58, 58, 0.3) 50%, /* Полупрозрачная полоса */
+            transparent 60%
+    ); /* Узкая полоса с плавными переходами */
+    background-size: 100% 200%;
+    animation: shimmer 1.5s linear infinite; /* Медленнее */
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% -200%; /* Полоса начинается сверху (вне блока) */
+    }
+    100% {
+        background-position: 0% 200%; /* Полоса уходит вниз */
+    }
+}
+}

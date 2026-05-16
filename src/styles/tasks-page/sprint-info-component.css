@@ -1,0 +1,9 @@
+.sprint-info-component h2 {
+    font-size: 32px;
+    margin: 0;
+}
+
+.sprint-info-component p {
+    margin-top: 5px;
+    color: #80ADDB;
+}

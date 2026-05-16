@@ -1,0 +1,171 @@
+.project-settings-form-container h3 {
+    margin-top: 36px;
+    font-size: 20px;
+    color: #dadada;
+}
+
+.project-settings-form {
+    width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    margin-top: -10px;
+    background: #1a2633;
+    border-radius: 8px;
+    color: #d1d9e6;
+}
+
+.project-settings-form input{
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    background: #27374a;
+    color: #fff;
+}
+
+.project-settings-form textarea {
+    margin-top: 0;
+    margin-bottom: -20px;
+    padding: 6px;
+    background: #27374a;
+}
+
+
+.project-settings-data-sect label{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.project-settings-switch-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.project-settings-switch-container .switch {
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.project-settings-datepicker-input {
+
+}
+
+.project-settings-form .success {
+    color: #3bcf88;
+    margin-bottom: 0;
+
+}
+
+.project-settings-form .error {
+    color: #e06c75;
+    margin-bottom: 0;
+}
+
+
+.project-settings-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.project-settings-modal {
+    background-color: #1d2737;
+    padding: 24px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.project-settings-modal p {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 0;
+}
+
+.project-settings-modal-buttons {
+    margin-top: 16px;
+    font-size: 19px;
+    font-weight: 400;
+    display: flex;
+}
+
+.project-settings-modal-buttons button{
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 16px;
+    color: #cacaca;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.project-settings-confirm-delete-btn {
+    background-color: #c54f4b;
+}
+
+.project-settings-cancel-delete-btn {
+    background-color: #6c757d;
+}
+
+.project-settings-delete-btn {
+    margin-top: 12px;
+    background-color: #c54f4b;
+    color: #e1e1e1;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 96%;
+}
+
+.project-settings-submit-btn {
+    margin-top: 8px;
+    background-color: #152f47;
+    color: #e1e1e1;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 96%;
+}
+
+.project-settings-select-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.project-settings-select {
+    background: #27374a;
+    color: #f0f0f0;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    cursor: pointer;
+    width: 96%;
+}
+
+.project-settings-select:focus {
+    outline: none;
+    border-color: #888;
+}
+
+.project-settings-select option {
+    background-color: #273749;
+    color: #f0f0f0;
+}

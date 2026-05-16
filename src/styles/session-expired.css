@@ -1,0 +1,34 @@
+.session-expired-container {
+    font-family: Inter, sans-serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+.session-expired-card {
+    padding: 200px 50px;
+    border-radius: 12px;
+    text-align: center;
+}
+.session-expired-card h2 {
+    font-size: 42px;
+    margin-bottom: 0;
+}
+.session-expired-card p {
+    color: #91a2b4;
+    margin-top: 10px;
+    margin-bottom: 24px;
+}
+.session-expired-button {
+    font-family: Inter, sans-serif;
+    background-color: #92a3b5;
+    color: #000000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color .3s;
+}
+.session-expired-button:hover {
+    background-color: #7895b5;
+}

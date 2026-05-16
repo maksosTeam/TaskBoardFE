@@ -1,0 +1,106 @@
+.burndown-container {
+    color: white;
+    border-radius: 8px;
+    width: 850px;
+}
+
+.burndown-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.burndown-toggle-button {
+    background: none;
+    color: #dfdfdf;
+}
+.burndown-toggle-button:hover {
+    color: #84acc7;
+}
+
+.burndown-title {
+    font-size: 24px;
+}
+
+.burndown-filter-block label{
+    font-size: 20px;
+}
+
+.burndown-filters {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    background-color: rgba(16, 28, 40, 0.61);
+    border-radius: 10px;
+    border: 1px solid #4b5a6a;
+    padding: 20px;
+}
+
+.burndown-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.burndown-button {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 4px 14px;
+    border: 1px solid #1E2F3F;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #e3e3e3;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.burndown-button:hover {
+    background-color: #2a415b;
+}
+
+.burndown-button.active {
+    background-color: #1E2F3F;
+    font-weight: 600;
+}
+
+.burndown-filter-block-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+}
+
+.burndown-filter-block-container label {
+    margin-right: 10px;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.burndown-datepicker {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 4px 14px;
+    border: 1px solid #1E2F3F;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #e3e3e3;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    width: 90px;
+    margin-bottom: 10px;
+}
+
+.burndown-label-user-date{
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 2px 14px;
+    border: 1px solid #1E2F3F;
+    border-radius: 10px;
+    height: 23px;
+    margin-right: 50px;
+}
