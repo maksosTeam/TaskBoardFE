@@ -7,9 +7,6 @@ networks:
 services:
   client:
     container_name: client
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     command: ["sh", "-c", "npm run dev"]
     image: ghcr.io/maksosteam/frontend:1.0.4
     ports:
@@ -18,3 +15,4 @@ services:
       - taskboard-network
     env_file:
       - .env
+    restart: always
