@@ -1,8 +1,8 @@
 networks:
-  swaga-network:
+  taskboard-network:
     driver: bridge
     external: true
-    name: swaga-network
+    name: taskboard-network
 
 services:
   client:
@@ -11,27 +11,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     command: ["sh", "-c", "npm run dev"]
-    image: ghcr.io/swagateam/frontend:1.0.4
+    image: ghcr.io/maksosteam/frontend:1.0.4
     ports:
       - 5173:5173
     networks:
-      - swaga-network
+      - taskboard-network
     env_file:
       - .env
-
-  nginx:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: ./Dockerfile.nginx
-    image: ghcr.io/swagateam/nginx:1.0.3  
-    ports:
-      - "443:443" 
-    command: ["sh", "-c", "nginx -g 'daemon off;'"]
-    volumes:
-      - /nginx/ssl:/etc/nginx/ssl 
-      - /etc/letsencrypt:/etc/letsencrypt 
-    depends_on:
-      - client
-    networks:
-      - swaga-network
