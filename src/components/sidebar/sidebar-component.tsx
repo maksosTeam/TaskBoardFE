@@ -1,19 +1,10 @@
 import '../../styles/sidebar-component.css'
 import defaultAvatar from "../../assets/user-avatar.webp";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {rebuildFilePath} from "../../utils.ts";
-
-type NavigationItem = {
-    [key: string]: string;
-};
-
-const navigation_List: NavigationItem = {
-    "Проекты": "projects",
-    "Доски": "boards",
-    "Задачи": "tasks",
-    "Настройки": "settings",
-} as const
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { rebuildFilePath } from "../../utils.ts";
+// Импортируем нужные иконки
+import { FolderKanban, Kanban, ListTodo, Settings } from 'lucide-react';
 
 interface SidebarComponentProps {
     user?: {
@@ -21,6 +12,14 @@ interface SidebarComponentProps {
         username?: string;
     };
 }
+
+// Переводим список навигации в массив объектов с компонентами иконок
+const navigation_List = [
+    { title: "Проекты", path: "projects", icon: FolderKanban },
+    { title: "Доски", path: "boards", icon: Kanban },
+    { title: "Задачи", path: "tasks", icon: ListTodo },
+    { title: "Настройки", path: "settings", icon: Settings },
+] as const;
 
 export const SidebarComponent = ({ user }: SidebarComponentProps) => {
     const navigate = useNavigate();
@@ -30,21 +29,23 @@ export const SidebarComponent = ({ user }: SidebarComponentProps) => {
         <div className='sidebar'>
             <div className="profile-info">
                 <img className="profile-image" src={rebuildFilePath(user?.imagePath, 0) || defaultAvatar} alt="Ваш профиль" />
-                <button onClick={() => {navigate('/home/settings')}}>
+                <button type="button" className="profile-username" onClick={() => { navigate('/home/settings') }}>
                     {user?.username || ''}
                 </button>
             </div>
             <div className="navigation">
-                {Object.entries(navigation_List).map(([title, path]) => (
+                {navigation_List.map(({ title, path, icon: Icon }) => (
                     <button
                         key={path}
+                        type="button"
                         onClick={() => {
                             navigate(`/home/${path}`);
                             setActivePath(path);
                         }}
                         className={`nav-link ${activePath === path ? 'active' : ''}`}
                     >
-                        {title}
+                        <Icon className="nav-icon" size={20} />
+                        <span className="nav-text">{title}</span>
                     </button>
                 ))}
             </div>

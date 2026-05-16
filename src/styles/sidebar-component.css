@@ -1,54 +1,150 @@
 .sidebar {
-}
-
-.navigation {
+    width: 260px;
+    height: 94vh;
+    background-color: #0f172a; /* Глубокий slate оттенок */
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
-    width: 250px;
-    margin-right: 15px;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navigation button {
-    color: white;
-    font-family: Inter, sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    background: none;
-    border-radius: 18px;
-    padding: 10px 12px;
-    gap: 12px;
-    text-align: left;
-}
-.navigation button:hover {
-    background-color: #122B45;
-    border: none;
-}
-
-.navigation button.active {
-    background-color: #122B45;
-}
-
+/* Блок профиля */
 .profile-info {
     display: flex;
     flex-direction: row;
-    margin-bottom: 5px;
+    align-items: center;
+    gap: 12px;
+    padding: 6px;
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: background 0.2s ease, border-color 0.2s ease, padding 0.3s ease;
+    overflow: hidden;
+}
+
+.profile-info:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .profile-image {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
 }
 
-.profile-info button {
+.profile-username {
     background: none;
-    margin: 5px 10px 0 15px;
-    font-size: 16px;
-    height: 20px;
-    color: white;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #f8fafc;
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    transition: color 0.2s ease;
 }
 
-.profile-info button:hover {
-    color: #9cc4ed;
+.profile-username:hover {
+    color: #3b82f6; /* Акцентный синий */
+}
+
+/* Навигация */
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.navigation button {
+    width: 100%;
+    color: #94a3b8;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease, padding 0.3s ease;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Расстояние между иконкой и текстом */
+}
+
+.nav-icon {
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.nav-text {
+    white-space: nowrap;
+}
+
+/* Состояние при наведении */
+.navigation button:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #f8fafc;
+}
+
+/* Активное состояние */
+.navigation button.active {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+@media (max-width: 1400px) {
+    .sidebar {
+        width: 72px; /* Сайдбар сжимается в узкую полосу */
+        padding: 24px 8px;
+        align-items: center;
+    }
+
+    /* Блок профиля превращается в аккуратный круг вокруг аватарки */
+    .profile-info {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 24px;
+    }
+
+    .profile-username {
+        display: none; /* Скрываем никнейм */
+    }
+
+    /* Кнопки навигации центрируют иконки */
+    .navigation button {
+        padding: 12px 0;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .nav-text {
+        display: none; /* Скрываем названия пунктов меню */
+    }
+
+    /* В сжатом состоянии боковая линия сместит иконку,
+       поэтому убираем инсет и делаем акцент на фоне */
+    .navigation button.active {
+        box-shadow: none;
+        background-color: rgba(59, 130, 246, 0.15);
+    }
 }

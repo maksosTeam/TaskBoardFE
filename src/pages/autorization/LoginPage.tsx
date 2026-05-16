@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/autorization/login-page.css';
+import axios, {AxiosResponse} from "axios";
 
 export const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -17,10 +18,8 @@ export const LoginPage: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-
         try {
             const url = '/api/auth/login';
-
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -29,7 +28,6 @@ export const LoginPage: React.FC = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
-
             if (!response.ok) {
                 const errorData = await response.json();
                 console.log(errorData);
@@ -39,7 +37,6 @@ export const LoginPage: React.FC = () => {
                     'Ошибка входа. Проверьте email или пароль.'
                 );
             }
-
             const data = await response.json();
             localStorage.setItem('token', data.token);
             console.log(data);
@@ -54,17 +51,19 @@ export const LoginPage: React.FC = () => {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1>Войти в свою учетную запись</h1>
+                <h1>С возвращением</h1>
 
                 {error && <div className="auth-error-message">{error}</div>}
+
                 <form onSubmit={handleLogin}>
                     <div className="auth-form-group">
-                        <label htmlFor="email">Адрес электронной почты</label>
+                        <label htmlFor="email">Электронная почта</label>
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder="name@example.com"
                             required
                         />
                     </div>
@@ -76,6 +75,7 @@ export const LoginPage: React.FC = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
                             required
                         />
                         <button type="button" className="forgot-password">
@@ -84,12 +84,13 @@ export const LoginPage: React.FC = () => {
                     </div>
 
                     <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Загрузка...' : 'Вход'}
+                        {loading ? 'Загрузка...' : 'Войти'}
                     </button>
 
                     <div className="signup-link">
                         <p>У вас еще нет учетной записи?</p>
                         <button
+                            type="button"
                             className="auth-navigate-btn"
                             onClick={() => navigate('/register')}
                         >

@@ -1,0 +1,30 @@
+.main-header {
+    width: 100%;
+    height: 64px;
+    background-color: rgba(15, 23, 42, 0.75); /* Полупрозрачный slate-фон */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #f8fafc; /* Чистый белый с небольшим уклоном в синеву */
+    letter-spacing: -0.03em; /* Легкое сужение букв для премиального вида */
+    user-select: none;
+    cursor: default;
+}
+
+.brand-dot {
+    color: #a6c2f1; /* Акцентный неоново-синий */
+    font-weight: 800;
+}

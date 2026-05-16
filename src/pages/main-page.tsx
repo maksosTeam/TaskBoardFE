@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchCurrentUser } from "../store/userSlice";
 import { fetchProjects } from "../store/projectSlice";
 import "../styles/main-page.css";
+import {HeaderComponent} from "../components/Header.tsx";
 
 export const MainPage = () => {
     const dispatch = useAppDispatch();
@@ -25,11 +26,10 @@ export const MainPage = () => {
 
     return (
         <div className="main-page-root">
+            <HeaderComponent />
             <div className="main-page">
                 <SidebarComponent user={user} />
-                <div className="content-wrapper">
-                    <Outlet />
-                </div>
+                <Outlet />
             </div>
         </div>
     );
