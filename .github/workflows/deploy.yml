@@ -22,13 +22,7 @@ jobs:
       run: |
         docker build -t ghcr.io/swagateam/frontend:1.0.4 -f Dockerfile .
         docker push ghcr.io/swagateam/frontend:1.0.4
-    
-    - name: Build and push nginx
-      run: |
-        docker build -t ghcr.io/swagateam/nginx:1.0.3 -f Dockerfile.nginx .
-        docker push ghcr.io/swagateam/nginx:1.0.3
-    
-
+      
   deploy:
         needs: publish
         name: deploy app
