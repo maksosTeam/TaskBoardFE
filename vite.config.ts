@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(() => {
 
 
-  const API = "gateway-service:5000";
+  const API = "https://project-domain.ru";
 
   return {
     plugins: [react()],
