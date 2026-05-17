@@ -26,7 +26,6 @@ export const MainPage = () => {
 
     return (
         <div className="main-page-root">
-            <HeaderComponent />
             <div className="main-page">
                 <SidebarComponent user={user} />
                 <Outlet />

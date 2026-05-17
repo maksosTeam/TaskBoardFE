@@ -1,149 +1,229 @@
+/* Базовые стили контейнера */
 .sidebar {
-    width: 260px;
-    height: 94vh;
-    background-color: #0f172a; /* Глубокий slate оттенок */
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    height: 100vh; /* Или 94vh как было в твоем коде */
+    background-color: #000000;
+    border-right: 1px solid #2C333A;
     display: flex;
     flex-direction: column;
-    padding: 24px 16px;
+    transition: width 0.3s ease;
     box-sizing: border-box;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Блок профиля */
-.profile-info {
+.sidebar-open {
+    width: 256px; /* w-64 */
+}
+
+.sidebar-closed {
+    width: 64px; /* w-16 */
+}
+
+/* === Шапка и Логотип === */
+.sidebar-header {
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 12px;
-    padding: 6px;
-    margin-bottom: 24px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    transition: background 0.2s ease, border-color 0.2s ease, padding 0.3s ease;
-    overflow: hidden;
+    padding: 20px 16px;
+    border-bottom: 1px solid #2C333A;
 }
 
-.profile-info:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.profile-image {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    object-fit: cover;
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: linear-gradient(to bottom right, #4BCE97, #2BA06B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+    transition: box-shadow 0.3s ease;
 }
 
-.profile-username {
-    background: none;
-    border: none;
-    outline: none;
-    padding: 0;
+.logo-icon:hover {
+    box-shadow: 0 0 12px rgba(75, 206, 151, 0.6); /* glow-hover-green */
+}
+
+.logo-icon span {
+    font-weight: 700;
+    color: #000000;
+}
+
+.header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-title {
     margin: 0;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: #f8fafc;
-    cursor: pointer;
-    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-grow: 1;
-    transition: color 0.2s ease;
 }
 
-.profile-username:hover {
-    color: #3b82f6; /* Акцентный синий */
+.app-subtitle {
+    margin: 0;
+    font-size: 12px;
+    color: #9FADBC;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Навигация */
+.toggle-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: #9FADBC;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.toggle-btn:hover {
+    background-color: #161A1D;
+    color: #ffffff;
+}
+
+/* === Навигация === */
 .navigation {
+    flex: 1;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 100%;
+    overflow-y: auto;
 }
 
-.navigation button {
-    width: 100%;
-    color: #94a3b8;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    background: none;
-    border: none;
-    outline: none;
-    border-radius: 12px;
-    padding: 12px 16px;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s ease, padding 0.3s ease;
-    box-sizing: border-box;
+.nav-link {
     display: flex;
     align-items: center;
-    gap: 12px; /* Расстояние между иконкой и текстом */
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid transparent; /* Чтобы не прыгала ширина при active */
+    color: #9FADBC;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
 }
 
 .nav-icon {
     flex-shrink: 0;
-    transition: color 0.2s ease;
+    color: inherit;
 }
 
 .nav-text {
     white-space: nowrap;
 }
 
-/* Состояние при наведении */
-.navigation button:hover {
-    background-color: rgba(255, 255, 255, 0.04);
-    color: #f8fafc;
+.nav-link:hover:not(.active) {
+    background-color: #161A1D;
+    color: #ffffff;
 }
 
-/* Активное состояние */
-.navigation button.active {
-    background-color: rgba(59, 130, 246, 0.1);
+/* Активное состояние (Зеленый стиль) */
+.nav-link.active {
+    background-color: rgba(75, 206, 151, 0.1);
+    color: #4BCE97;
+    border: 1px solid #4BCE97;
 }
-@media (max-width: 1400px) {
-    .sidebar {
-        width: 72px; /* Сайдбар сжимается в узкую полосу */
-        padding: 24px 8px;
-        align-items: center;
-    }
 
-    /* Блок профиля превращается в аккуратный круг вокруг аватарки */
-    .profile-info {
-        width: 44px;
-        height: 44px;
-        padding: 0;
-        justify-content: center;
-        border-radius: 50%;
-        margin-bottom: 24px;
-    }
+.nav-link.active:hover {
+    box-shadow: 0 0 10px rgba(75, 206, 151, 0.3); /* glow-hover-green */
+}
 
-    .profile-username {
-        display: none; /* Скрываем никнейм */
-    }
+/* При закрытом сайдбаре центрируем иконки */
+.sidebar-closed .nav-link {
+    justify-content: center;
+    padding: 10px 0;
+}
 
-    /* Кнопки навигации центрируют иконки */
-    .navigation button {
-        padding: 12px 0;
-        justify-content: center;
-        border-radius: 12px;
-    }
+/* === Подвал (Профиль пользователя) === */
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid #2C333A;
+}
 
-    .nav-text {
-        display: none; /* Скрываем названия пунктов меню */
-    }
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 4px;
+    transition: background-color 0.2s;
+}
 
-    /* В сжатом состоянии боковая линия сместит иконку,
-       поэтому убираем инсет и делаем акцент на фоне */
-    .navigation button.active {
-        box-shadow: none;
-        background-color: rgba(59, 130, 246, 0.15);
-    }
+.user-profile:hover {
+    background-color: #161A1D;
+}
+
+/* Аватарка картинкой */
+.profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Заглушка аватарки (синий градиент из дизайна) */
+.profile-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom right, #579DFF, #388BFF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: box-shadow 0.3s ease;
+}
+
+.user-profile:hover .profile-avatar-placeholder {
+    box-shadow: 0 0 12px rgba(87, 157, 255, 0.6); /* glow-hover-cyan */
+}
+
+.profile-avatar-placeholder span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-username {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role {
+    margin: 0;
+    font-size: 12px;
+    color: #9FADBC;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
