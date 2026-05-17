@@ -1,11 +1,11 @@
 .project-page-main-container {
-    margin-left: 60px;
+    width: 900px;
 }
 
 .project-page-header {
-    width: 900px;
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .project-page-header div{
@@ -38,8 +38,7 @@
     margin-top: -10px;
     padding: 16px 20px;
     border-radius: 10px;
-    background-color: #171F26;
-    margin-right: 250px;
+    border: #334e6a 1px solid;
 }
 
 .project-specificity-sect {
@@ -77,7 +76,7 @@
 
 
 .project-description-container {
-    width: 890px;
+    width: 100%;
     word-break: break-all;
     hyphens: auto;
 }

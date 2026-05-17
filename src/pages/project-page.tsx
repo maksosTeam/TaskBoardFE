@@ -9,10 +9,7 @@ import { formatDateToDayMonth } from '../utils.ts'
 import '../styles/project-page.css'
 import { useAppDispatch, useAppSelector } from "../store/hooks.ts";
 import { fetchBoardsByProject } from "../store/boardSlice.ts";
-
 import {Analitycs} from "../components/project-page/analitycs.tsx";
-
-
 
 type Board = {
     id: number;
@@ -22,7 +19,7 @@ type Board = {
 export const ProjectPage = () => {
     const { projectId } = useParams<{ projectId: string }>();
     const projectIdNumber = projectId ? Number(projectId) : 0;
-    const [project, setProject] = useState<ProjectData | null>(null);
+    const [project, setProject] = useState(null);
     const [activeTab, setActiveTab] = useState<"overview" | "docs">("overview");
     const [error, setError] = useState(false);
     const [userId, setUserId] = useState<number | null>(null);
@@ -40,7 +37,7 @@ export const ProjectPage = () => {
         setError(false);
 
         try {
-            const response = await axios.get<ProjectData>(`/api/project/get/${projectId}`, {
+            const response = await axios.get(`/api/project/get/${projectId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

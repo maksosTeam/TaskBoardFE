@@ -46,11 +46,12 @@
 }
 
 .project-table-status {
-    background-color: #122B45;
-    padding: 6px 0 5px 15px;
+    display: flex;
+    justify-content:center;
+    background-color: #12394f;
     margin-left: -15px;
     margin-right: 15px;
-    border-radius: 10px;
+    border-radius: 6px;
 }
 
 

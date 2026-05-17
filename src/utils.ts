@@ -38,7 +38,7 @@ export const rebuildFilePath = (filePath: string, fileTypeId: number): string =>
     if (!filePath?.trim()) return '';
 
     const fileTypes = {
-        0: 'avatars',
+        0: '',
         1: 'documents',
         2: 'attachments',
         3: '',

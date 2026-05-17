@@ -123,6 +123,7 @@ export const UserSettings = () => {
     useEffect(() => {
         document.title = 'Настройки';
         dispatch(fetchCurrentUser());
+        console.log(rebuildFilePath(user?.imagePath, 0));
     }, [dispatch]);
 
     return (
