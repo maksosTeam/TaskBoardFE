@@ -1,7 +1,9 @@
+.projects-page {
+    width: 900px;
+}
+
 .project-table-wrapper {
     margin-top: 20px;
-    width: 1144px;
-    overflow-x: auto;
 }
 
 .project-table {
@@ -10,6 +12,7 @@
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
+    width: 100%;
 }
 
 .project-table th {
@@ -123,3 +126,5 @@
 .add-button:hover {
     background-color: #052445;
 }
+
+

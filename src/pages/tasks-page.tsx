@@ -116,35 +116,37 @@ export const TasksPage = () => {
 
 
     return (
-        <div style={{  backgroundColor: "#141F29"}}>
+        <div className={"tasks-page"}>
             <h2>Мои задачи</h2>
-            <div className="tabs">
-                <button
-                    className={`tab-button ${activeTab === 'all' ? 'active-tab' : ''}`}
-                    onClick={() => setActiveTab('all')}
-                >
-                    Все задачи
-                </button>
-                <button
-                    className={`tab-button ${activeTab === 'archived' ? 'active-tab' : ''}`}
-                    onClick={() => setActiveTab('archived')}
-                >
-                    Архивные
-                </button>
-            </div>
-            <div className="sprint-info-component">
-                <p>{getTasksCountText(filteredTasks)}</p>
+            <div className="sprint-info-component-container">
+                <div className="sprint-info-component">
+                    <p>{getTasksCountText(filteredTasks)}</p>
+                </div>
+                <div className="tabs">
+                    <button
+                        className={`tab-button ${activeTab === 'all' ? 'active-tab' : ''}`}
+                        onClick={() => setActiveTab('all')}
+                    >
+                        Все задачи
+                    </button>
+                    <button
+                        className={`tab-button ${activeTab === 'archived' ? 'active-tab' : ''}`}
+                        onClick={() => setActiveTab('archived')}
+                    >
+                        Архивные
+                    </button>
+                </div>
             </div>
             <div className="table-container">
                 <table className="task-table">
                     <thead>
                     <tr>
-                        <th style={{textAlign: 'left'}}>Задача</th>
-                        <th style={{width: "120px"}}>Статус</th>
-                        <th style={{width: "100px"}}>Приоритет</th>
-                        <th style={{width: "100px"}}>Дедлайн</th>
-                        <th style={{width: "150px"}}>Осталось</th>
-                        <th style={{width: "150px"}}></th>
+                        <th style={{ }}>Задача</th>
+                        <th style={{ }}>Статус</th>
+                        <th style={{ }}>Приоритет</th>
+                        <th style={{ }}>Дедлайн</th>
+                        <th style={{ }}>Осталось</th>
+                        <th style={{ }}></th>
                     </tr>
                     </thead>
                     <tbody>

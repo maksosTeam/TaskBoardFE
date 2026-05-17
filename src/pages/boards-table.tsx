@@ -55,11 +55,11 @@ export const BoardsTable = () => {
             <table className="board-table">
                 <thead>
                 <tr>
-                    <th style={{ width: "252px" }}>Наименование</th>
-                    <th style={{ width: "300px" }}>Описание</th>
-                    <th style={{ width: "214px" }}>Проект</th>
-                    <th style={{ width: "214px" }}>Количество задач</th>
-                    <th style={{ width: "214px" }}>Дата создания</th>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Проект</th>
+                    <th>Количество задач</th>
+                    <th>Дата создания</th>
                     <th></th>
                 </tr>
                 </thead>

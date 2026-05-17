@@ -1,6 +1,6 @@
 .board-table-wrapper {
     margin-top: 20px;
-    width: 1144px;
+    width: 900px;
     overflow-x: auto;
 }
 
@@ -10,6 +10,7 @@
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
+    width: 100%;
 }
 
 .board-table th {

@@ -68,10 +68,10 @@ export const ProjectTableComponent: React.FC<ProjectTableProps> = ({ search }) =
             <table className="project-table">
                 <thead>
                 <tr>
-                    <th style={{ width: "252px" }}>Наименование</th>
-                    <th style={{ width: "180px" }}>Статус</th>
-                    <th style={{ width: "214px" }}>Дата</th>
-                    <th style={{ width: "232px" }}>Руководитель</th>
+                    <th>Наименование</th>
+                    <th>Статус</th>
+                    <th>Дата</th>
+                    <th>Руководитель</th>
                     <th></th>
                 </tr>
                 </thead>

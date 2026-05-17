@@ -10,7 +10,7 @@ export const ProjectsPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className="projects-page">
             <div className="search-container" >
                 <input
                     type="text"
