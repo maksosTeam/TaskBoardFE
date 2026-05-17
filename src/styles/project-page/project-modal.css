@@ -1,3 +1,4 @@
+/* Задний фон с размытием */
 .project-modal-backdrop {
     position: fixed;
     top: 0;
@@ -8,174 +9,186 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
-
+    background-color: rgba(15, 23, 42, 0.6);
 }
 
+/* Карточка модального окна */
 .project-modal {
-    background-color: #111829;
-    color: #e2e8f0;
-    padding: 25px 30px;
-    border-radius: 20px;
-    border: 1px solid #1a1f3a;
-    width: 400px;
+    background-color: #111726; /* Глубокий slate-dark */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+    padding: 32px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
     font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
 }
 
 .project-modal h2 {
-    margin-bottom: 15px;
+    margin-bottom: 24px;
     margin-top: 0;
-    font-size: 30px;
+    font-size: 24px;
+    font-weight: 700;
     color: #ffffff;
+    letter-spacing: -0.02em;
 }
 
+.project-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Равномерные отступы между всеми группами элементов */
+}
+
+/* Контейнеры для группировки лейбла и инпута */
+.form-element-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-element-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+/* Базовые стили текстовых полей */
 .project-modal form input,
-.project-modal form textarea,
-.project-modal form select {
-    margin-bottom: 1rem;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    background-color: #1e293b;
-    color: #f1f5f9;
+.project-modal form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background-color: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
     font-size: 14px;
     outline: none;
-    transition: border 0.3s ease;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-.project-modal form input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+.project-modal form input::placeholder,
+.project-modal form textarea::placeholder {
+    color: #475569;
 }
 
+/* Эффект фокуса */
 .project-modal form input:focus,
 .project-modal form textarea:focus {
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    background-color: rgba(15, 23, 42, 0.9);
 }
 
 .project-modal textarea {
-    min-height: 80px;
+    min-height: 90px;
     resize: vertical;
 }
 
-.project-modal label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.modal-buttons button {
-    flex: 1;
-    padding: 0.6rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modal-buttons button[type="submit"] {
-    background-color: #133555;
-    color: white;
-}
-
-.modal-buttons button[type="submit"]:hover {
-    background-color: #072a4a;
-}
-
-.modal-buttons button[type="button"] {
-    background-color: #2E3B47;
-    color: #f1f5f9;
-}
-
-.modal-buttons button[type="button"]:hover {
-    background-color: #475569;
-}
-
-
-
-
-
-
-
-
-
+/* Секция выбора дат */
 .project-modal-data-sect {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
 }
 
-.project-modal-data-sect p {
-    margin-left: 18px;
-    margin-right: 10px;
-    margin-top: 0px;
-}
-    /* Стили для react-datepicker */
-
-.datepicker-input{
-    width: 88%;
+.datepicker-wrapper {
+    flex: 1;
 }
 
-.react-datepicker__portal,
+/* Исправление ширины инпута самого DatePicker'а */
+.react-datepicker-wrapper {
+    width: 100% !important;
+}
+
+/* Элегантный минималистичный разделитель вместо дефиса */
+.date-separator {
+    width: 8px;
+    height: 1px;
+    background-color: #475569;
+    flex-shrink: 0;
+}
+
+/* Кастомизация выпадающего календаря react-datepicker */
 .react-datepicker {
-    background-color: #0f172a;
-    border: 1px solid #334155;
-
-}
-
-.react-datepicker__current-month {
-    color: #c6c6c6;
+    background-color: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
 .react-datepicker__header {
-    background-color: #1e293b;
-    border-bottom: 1px solid #334155;
+    background-color: #1e293b !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-top-left-radius: 11px !important;
+    border-top-right-radius: 11px !important;
 }
 
-.react-datepicker__day,
-.react-datepicker__day-name {
-    color: #e2e8f0;
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker__day {
+    color: #e2e8f0 !important;
 }
 
-.react-datepicker__day--selected,
-.react-datepicker__day--keyboard-selected {
-    background-color: #1542a5;
-    color: white;
+.react-datepicker__day--today {
+    background-color: #0f172a !important;
+    color: white !important;
+    border-radius: 6px !important;
 }
 
+.react-datepicker__day:hover {
+    background-color: rgb(24 43 89) !important;
+    border-radius: 6px !important;
+}
 
+.react-datepicker__day--selected {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-radius: 6px !important;
+}
 
-
-
-
-
-
-
-
-
-
-
+/* Свитч/Тоггл приватности */
 .switch-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: #e2e8f0;
-    margin-top: -18px;
+    justify-content: space-between; /* Расталкиваем текст и тумблер */
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 12px 16px;
+    border-radius: 14px;
+    margin-top: 4px;
+}
+
+.switch-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.switch-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #f8fafc;
+}
+
+.switch-subtitle {
+    font-size: 12px;
+    color: #64748b;
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 36px;
-    height: 18px;
-    margin-top: 18px;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .switch input {
@@ -192,26 +205,94 @@
     right: 0;
     bottom: 0;
     background-color: #334155;
-    transition: 0.4s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 24px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     left: 3px;
     bottom: 3px;
     background-color: white;
-    transition: 0.4s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .switch input:checked + .slider {
-    background-color: #2563eb;
+    background-color: #3b82f6;
 }
 
 .switch input:checked + .slider:before {
     transform: translateX(18px);
+}
+
+/* Кнопки управления */
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.modal-buttons button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-cancel {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+}
+
+.btn-cancel:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
+}
+
+.btn-submit {
+    background-color: #2a6ad3;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #1c49a8;
+}
+
+/* Стили для валидации */
+.required-star {
+    color: #e74c3c;
+    margin-left: 4px;
+}
+
+.error-input {
+    border-color: #e74c3c !important;
+    background-color: #fff5f5 !important;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #95a5a6 !important;
+}
+
+.btn-disabled:hover {
+    background-color: #95a5a6 !important;
+    transform: none !important;
 }
