@@ -5,6 +5,7 @@ import { GripVertical, MoreVertical, Archive, Trash2, Bug, UserPlus, X } from "l
 import { TaskComponent } from "./task-component";
 import { Task } from "../../pages/board-page";
 import '../../styles/board-page/sortable-task.css';
+import {rebuildFilePath} from "../../utils.ts";
 
 interface SortableTaskProps {
     task: Task;
@@ -284,7 +285,7 @@ export const SortableTask = ({ task, activeId, onClick, onTasksChange }: Sortabl
                                     <li key={user.userId}>
                                         <button onClick={() => handleAssignUser(user.userId)}>
                                             <img
-                                                src={user.imagePath ? rebuildFilePath(user.imagePath, 0) : defaultAvatar}
+                                                src={user.imagePath ? rebuildFilePath(user.imagePath, 0) : "./assets/images/user.png"}
                                                 alt={user.userName}
                                             />
                                             <span>{user.userName}</span>

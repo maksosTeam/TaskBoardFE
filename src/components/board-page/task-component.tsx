@@ -1,4 +1,4 @@
-import { Calendar, AlertCircle, Tag, Paperclip } from 'lucide-react';
+import { Calendar, Tag, Paperclip } from 'lucide-react';
 import '../../styles/board-page/task-component.css';
 import { formatDateToDayMonth, getTaskPriorityColor, rebuildFilePath } from '../../utils.ts';
 import { Task } from '../../pages/board-page';
@@ -18,9 +18,10 @@ const priorityConfig: Record<string, { label: string }> = {
 
 export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
     const isBug = task.itemTypeId === 3;
-    const priorityColor = getTaskPriorityColor(task.priority);
 
-    // Определяем конфиг приоритета на основе текста
+    // Если это баг — принудительно ставим красный цвет, иначе берем системный цвет приоритета
+    const priorityColor = isBug ? '#F87168' : getTaskPriorityColor(task.priority);
+
     const priorityKey = task.priority || 'medium';
     const priority = priorityConfig[priorityKey] || priorityConfig.medium;
 
@@ -30,42 +31,32 @@ export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
         const diffTime = due.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        if (diffDays < 0) return { color: 'overdue', label: 'Просрочена' };
+        if (diffDays < 0) return { color: 'overdue', label: 'Просрочено' };
         if (diffDays === 0) return { color: 'today', label: 'Сегодня' };
         if (diffDays <= 3) return { color: 'soon', label: `${diffDays} дн.` };
         return { color: 'normal', label: formatDateToDayMonth(dueDate) };
     };
 
     const dueDateStatus = task.expectedEndDate ? getDueDateStatus(task.expectedEndDate) : null;
-
-    // Подсчёт сабтасков (если есть в задаче)
     const subtasks = (task as any).subtasks || { completed: 0, total: 0 };
 
     return (
-        <div
-            onClick={() => onCardClick?.(task)}
-            className="task-card"
-        >
-            {/* Цветная полоска приоритета/бага сверху */}
+        <div onClick={() => onCardClick?.(task)} className="task-card">
+            {/* Боковой брутальный маркер */}
             <div
                 className="task-priority-bar"
-                style={{ backgroundColor: isBug ? '#F87168' : priorityColor }}
+                style={{ backgroundColor: priorityColor }}
             />
 
             <div className="task-header">
                 <h3 className="task-title" title={task.title}>
                     {task.title}
                 </h3>
-
-                {/* Бейдж приоритета */}
-                <span
-                    className={`task-priority-badge task-priority-${priorityKey}`}
-                >
-                    {priority.label}
+                <span className={`task-priority-badge task-priority-${priorityKey}`}>
+                    {isBug ? 'Bug' : priority.label}
                 </span>
             </div>
 
-            {/* Описание (если есть) */}
             {task.description && (
                 <p className="task-description">
                     {task.description.length > 100
@@ -74,19 +65,17 @@ export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
                 </p>
             )}
 
-            {/* Теги (если есть) */}
             {(task as any).tags && (task as any).tags.length > 0 && (
                 <div className="task-tags">
                     {(task as any).tags.map((tag: string, idx: number) => (
                         <div key={idx} className="task-tag">
-                            <Tag className="size-3" />
+                            <Tag />
                             {tag}
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Прогресс сабтасков (если есть) */}
             {subtasks.total > 0 && (
                 <div className="task-subtasks">
                     <div className="task-subtasks-header">
@@ -106,24 +95,21 @@ export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
 
             <div className="task-footer">
                 <div className="task-footer-left">
-                    {/* Дата с визуальным статусом */}
                     {dueDateStatus && (
                         <div className={`task-date-info task-date-${dueDateStatus.color}`}>
-                            <Calendar className="size-3" />
+                            <Calendar />
                             <span>{dueDateStatus.label}</span>
                         </div>
                     )}
 
-                    {/* Вложения (если есть) */}
                     {(task as any).attachments && (task as any).attachments > 0 && (
                         <div className="task-attachments">
-                            <Paperclip className="size-3" />
+                            <Paperclip />
                             <span>{(task as any).attachments}</span>
                         </div>
                     )}
                 </div>
 
-                {/* Аватарки исполнителей */}
                 <div className="task-avatars">
                     {task?.contributors?.length > 0 ? (
                         task.contributors.slice(0, 3).map((user, idx) => (
@@ -135,7 +121,7 @@ export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
                             </div>
                         ))
                     ) : (
-                        <div className="task-avatar-fallback" title="Нет исполнителя">
+                        <div className="task-avatar-fallback" title="Исполнитель не назначен">
                             ?
                         </div>
                     )}

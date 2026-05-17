@@ -1,0 +1,420 @@
+/* === Sprint Management Styles === */
+
+.sm-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* === Board Selector === */
+.sm-board-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 12px;
+}
+
+.sm-selector-label {
+    color: #9FADBC;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+}
+
+.sm-selector {
+    flex: 1;
+    background-color: #0a0e11;
+    border: 1px solid #4BCE97;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sm-selector:hover,
+.sm-selector:focus {
+    border-color: #4BCE97;
+    box-shadow: 0 0 8px rgba(75, 206, 151, 0.3);
+    outline: none;
+}
+
+/* === Sprints List === */
+.sm-sprints-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sm-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sm-list-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* === Loading State === */
+.sm-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    gap: 16px;
+}
+
+.sm-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #2C333A;
+    border-top-color: #4BCE97;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.sm-loading p {
+    color: #9FADBC;
+    font-size: 14px;
+    margin: 0;
+}
+
+.sm-create-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #4BCE97;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sm-create-btn:hover:not(:disabled) {
+    background-color: #36b679;
+    box-shadow: 0 0 12px rgba(75, 206, 151, 0.4);
+    transform: translateY(-2px);
+}
+
+.sm-create-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* === Form === */
+.sm-form {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.sm-form:hover {
+    border-color: #4BCE97;
+    box-shadow: 0 0 15px rgba(75, 206, 151, 0.1);
+}
+
+.sm-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.sm-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.sm-form-label {
+    color: #9FADBC;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin-bottom: 8px;
+}
+
+.sm-form-input {
+    background-color: #0a0e11;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.sm-form-input:hover,
+.sm-form-input:focus {
+    border-color: #4BCE97;
+    box-shadow: 0 0 8px rgba(75, 206, 151, 0.2);
+    outline: none;
+}
+
+.sm-form-input::placeholder {
+    color: #5a6b77;
+}
+
+.sm-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.sm-btn-primary,
+.sm-btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sm-btn-primary {
+    background-color: #4BCE97;
+    color: #000000;
+    flex: 1;
+}
+
+.sm-btn-primary:hover {
+    background-color: #36b679;
+    box-shadow: 0 0 12px rgba(75, 206, 151, 0.4);
+}
+
+.sm-btn-secondary {
+    background-color: #2C333A;
+    color: #9FADBC;
+    min-width: 120px;
+}
+
+.sm-btn-secondary:hover {
+    background-color: #3a4249;
+    color: #ffffff;
+}
+
+/* === Empty State === */
+.sm-empty {
+    background-color: #000000;
+    border: 2px dashed #2C333A;
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sm-empty:hover {
+    border-color: #4BCE97;
+}
+
+.sm-empty p {
+    color: #9FADBC;
+    font-size: 16px;
+    margin: 0;
+}
+
+.sm-empty-hint {
+    color: #5a6b77;
+    font-size: 14px;
+    margin-top: 8px !important;
+}
+
+/* === Cards Grid === */
+.sm-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    .sm-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .sm-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* === Sprint Card === */
+.sm-card {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sm-card:hover {
+    border-color: #4BCE97;
+    box-shadow: 0 0 20px rgba(75, 206, 151, 0.15);
+    transform: translateY(-4px);
+}
+
+.sm-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.sm-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    flex: 1;
+    word-break: break-word;
+}
+
+.sm-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.sm-card-btn {
+    background-color: transparent;
+    border: 1px solid #2C333A;
+    border-radius: 6px;
+    color: #9FADBC;
+    padding: 6px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sm-card-btn:hover {
+    background-color: #0a0e11;
+}
+
+.sm-card-btn-edit:hover {
+    border-color: #4BCE97;
+    color: #4BCE97;
+}
+
+.sm-card-btn-delete:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+/* === Card Dates === */
+.sm-card-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    background-color: #0a0e11;
+    border-radius: 8px;
+    border: 1px solid #2C333A;
+}
+
+.sm-date-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.sm-date-icon {
+    color: #4BCE97;
+    flex-shrink: 0;
+}
+
+.sm-date-label {
+    color: #9FADBC;
+    min-width: 65px;
+}
+
+.sm-date-value {
+    color: #ffffff;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+/* === Card Items === */
+.sm-card-items {
+    padding: 10px 12px;
+    background-color: rgba(75, 206, 151, 0.05);
+    border: 1px solid rgba(75, 206, 151, 0.2);
+    border-radius: 6px;
+}
+
+.sm-items-label {
+    color: #4BCE97;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .sm-container {
+        gap: 16px;
+    }
+
+    .sm-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .sm-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .sm-card {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .sm-form-actions {
+        flex-direction: column;
+    }
+
+    .sm-btn-primary,
+    .sm-btn-secondary {
+        width: 100%;
+    }
+}

@@ -2,6 +2,7 @@ import { ProjectTasksState } from "../components/project-page/project-tasks-stat
 import { ProjectContributorsComponent } from "../components/project-page/project-contributors-component.tsx";
 import { ProjectDocumentsComponent } from "../components/project-page/project-documents-component.tsx";
 import { ProjectSettingsForm } from "../components/project-page/project-settings-form";
+import { SprintManagement } from "../components/project-page/sprint-management.tsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,7 +17,7 @@ type Board = {
     id: number;
     name: string;
 };
-type TabType = "overview" | "docs" | "settings" | "analytics";
+type TabType = "overview" | "docs" | "sprints" | "settings" | "analytics";
 
 export const ProjectPage = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -113,10 +114,11 @@ export const ProjectPage = () => {
 
             {/* Navigation Tabs */}
             <nav className="pp-tabs" aria-label="Навигация по проекту">
-                {(["overview", "docs", "settings", "analytics"] as const).map((tab) => {
+                {(["overview", "docs", "sprints", "settings", "analytics"] as const).map((tab) => {
                     const labels: Record<TabType, string> = {
                         overview: "Обзор",
                         docs: "Документация",
+                        sprints: "Спринты",
                         settings: "Настройки",
                         analytics: "Аналитика"
                     };
@@ -201,6 +203,8 @@ export const ProjectPage = () => {
                 </div>
             ) : activeTab === "docs" ? (
                 <ProjectDocumentsComponent projectId={projectIdNumber} />
+            ) : activeTab === "sprints" ? (
+                <SprintManagement projectId={projectIdNumber} boards={boards} />
             ) : activeTab === "settings" && project ? (
                 <ProjectSettingsForm project={project} onUpdate={fetchProject} />
             ) : activeTab === "analytics" && project ? (

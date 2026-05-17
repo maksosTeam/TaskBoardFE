@@ -17,6 +17,27 @@ export const formatDateToDayMonth = (dateString: string): string => {
     return `${day} ${month}`;
 };
 
+/**
+ * Безопасно форматирует дату в формат 'D MMM', не выбрасывая ошибку
+ * @param dateString - Дата в любом формате
+ * @returns Отформатированная дата или 'Неизв.' если дата невалидна
+ */
+export const formatDateToDayMonthSafe = (dateString?: string | null): string => {
+    if (!dateString) return 'Неизв.';
+    
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return 'Неизв.';
+        }
+        const day = date.getDate();
+        const month = date.toLocaleString('ru-RU', { month: 'short' }).replace('.', '');
+        return `${day} ${month}`;
+    } catch {
+        return 'Неизв.';
+    }
+};
+
 export const getTaskPriorityColor = (priority: number): string => {
     switch (priority) {
         case 0:

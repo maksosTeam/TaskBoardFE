@@ -3,25 +3,34 @@
     display: flex;
     height: 100vh;
     background-color: #0A0A0A;
-    overflow: hidden;
     margin-left: -40px;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .board-columns {
     display: flex;
     gap: 1rem;
     padding: 1.5rem;
-    overflow-x: auto;
+    overflow-x: auto; /* Меняем scroll на auto для аккуратности */
     overflow-y: hidden;
     height: 100%;
     align-items: flex-start;
     flex: 1;
+
+    /* ДОБАВИТЬ ЭТИ СТРОКИ: */
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* Колонка */
 .board-column {
     min-width: 320px;
     max-width: 320px;
+
+    /* ДОБАВИТЬ ЭТУ СТРОКУ: */
+    flex-shrink: 0;
+
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid #2C333A;
     border-radius: 0.5rem;
@@ -114,6 +123,7 @@
     align-items: center;
     gap: 6px;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .column-add-task-btn {
@@ -128,9 +138,8 @@
 }
 
 .add-column-button {
-    min-width: 320px;
-    max-width: 320px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border: 2px dashed #2C333A;
     justify-content: center;
 }
@@ -255,4 +264,240 @@
 .btn-ghost:hover {
     background-color: #161A1D;
     color: #FFFFFF;
+}
+
+/* Контейнер для колонок скелетона */
+.loading-columns-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    padding: 1.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
+    align-items: flex-start;
+    flex: 1;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Колонка скелетона */
+.loading-column {
+    min-width: 320px;
+    max-width: 320px;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #2C333A;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+/* Шапка колонки скелетона */
+.loading-column-header {
+    padding: 1rem;
+    border-bottom: 1px solid #2C333A;
+    background-color: #000000;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.loading-column-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loading-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2C333A;
+}
+
+.loading-status-title {
+    width: 80px;
+    height: 14px;
+    background-color: #2C333A;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.loading-status-count {
+    width: 30px;
+    height: 20px;
+    background-color: #161A1D;
+    border: 1px solid #2C333A;
+    border-radius: 999px;
+}
+
+.loading-sort-button {
+    width: 24px;
+    height: 24px;
+    background-color: #2C333A;
+    border-radius: 4px;
+}
+
+/* Контент колонки скелетона */
+.loading-column-content {
+    flex: 1;
+    padding: 0.75rem;
+    overflow-y: auto;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Карточка задачи-скелетона */
+.loading-task-card {
+    background: #0F151B;
+    border: 1px solid #2C333A;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-task-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            0deg,
+            transparent 40%,
+            rgb(103 103 103 / 0.1) 50%,
+            transparent 60%
+    );
+    background-size: 100% 200%;
+    animation: shimmer 1.5s linear infinite;
+    pointer-events: none;
+}
+
+/* Внутренние элементы карточки */
+.loading-task-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.loading-task-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2C333A;
+}
+
+.loading-task-user {
+    flex: 1;
+    height: 14px;
+    background-color: #2C333A;
+    border-radius: 4px;
+}
+
+.loading-task-priority {
+    width: 60px;
+    height: 20px;
+    background-color: #2C333A;
+    border-radius: 4px;
+}
+
+.loading-task-title {
+    height: 16px;
+    background-color: #2C333A;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.loading-task-title.short {
+    width: 70%;
+}
+
+.loading-task-description {
+    height: 12px;
+    background-color: #2C333A;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
+.loading-task-description:last-child {
+    width: 50%;
+    margin-bottom: 0;
+}
+
+.loading-task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #2C333A;
+}
+
+.loading-task-date {
+    width: 80px;
+    height: 12px;
+    background-color: #2C333A;
+    border-radius: 4px;
+}
+
+.loading-task-contributors {
+    display: flex;
+    gap: 4px;
+}
+
+.loading-contributor {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #2C333A;
+}
+
+/* Кнопка добавления задачи-скелетон */
+.loading-add-button {
+    width: 100%;
+    height: 32px;
+    background-color: #161A1D;
+    border: 1px solid #2C333A;
+    border-radius: 0.25rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-add-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            0deg,
+            transparent 40%,
+            rgb(80 80 80 / 0.1) 50%,
+            transparent 60%
+    );
+    background-size: 100% 200%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+/* Анимация */
+@keyframes shimmer {
+    0% {
+        background-position: 0% -200%;
+    }
+    100% {
+        background-position: 0% 200%;
+    }
 }

@@ -12,7 +12,6 @@ import { SortButton } from "../components/board-page/sort-button";
 import "../styles/board-page/board-page.css";
 import { CreateTaskModal } from "../components/create-task-modal.tsx";
 import { useParams } from "react-router-dom";
-import { LoadingColumn } from "../components/board-page/loading-column.tsx";
 import { Plus, ListPlus } from 'lucide-react';
 
 export interface Task {
@@ -41,6 +40,45 @@ interface BoardPageProps {
     tasks?: Task[];
     boardId: number;
 }
+
+export const LoadingColumn: React.FC = () => {
+    return (
+        <div className="loading-column">
+            <div className="loading-column-header">
+                <div className="loading-column-header-left">
+                    <div className="loading-status-dot" />
+                    <div className="loading-status-title" />
+                    <div className="loading-status-count" />
+                </div>
+                <div className="loading-sort-button" />
+            </div>
+
+            <div className="loading-column-content">
+                <div className="loading-add-button" />
+
+                {[1, 2, 3].map((index) => (
+                    <div key={index} className="loading-task-card">
+                        <div className="loading-task-header">
+                            <div className="loading-task-avatar" />
+                            <div className="loading-task-user" />
+                            <div className="loading-task-priority" />
+                        </div>
+                        <div className="loading-task-title short" />
+                        <div className="loading-task-description" />
+                        <div className="loading-task-description" />
+                        <div className="loading-task-footer">
+                            <div className="loading-task-date" />
+                            <div className="loading-task-contributors">
+                                <div className="loading-contributor" />
+                                <div className="loading-contributor" />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
     const dispatch = useDispatch();
@@ -219,7 +257,11 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
             >
                 <div className="board-columns">
                     {statusesStatus === 'loading' ? (
-                        Array.from({ length: 4 }).map((_, index) => <LoadingColumn key={index} />)
+                        <div className="loading-columns-container">
+                            {Array.from({ length: 4 }).map((_, index) => (
+                                <LoadingColumn key={index} />
+                            ))}
+                        </div>
                     ) : (
                         <>
                             {[...statuses]
@@ -295,10 +337,10 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                             {isCreatingStatus ? (
                                 <div className="add-status-overlay">
                                     <div className="create-status-form">
-                                        <h4>Add New Column</h4>
+                                        <h4>Добавить колонку</h4>
                                         <input
                                             type="text"
-                                            placeholder="Column Name"
+                                            placeholder="Название"
                                             value={newStatus.name}
                                             onChange={(e) => setNewStatus({ ...newStatus, name: e.target.value })}
                                         />
@@ -314,7 +356,7 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                                                     })}
                                                     disabled={newStatus.isRejected}
                                                 />
-                                                Contains completed tasks
+                                                Для завершенных задач
                                             </label>
                                             <label className="status-checkbox-label">
                                                 <input
@@ -327,20 +369,19 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                                                     })}
                                                     disabled={newStatus.isDone}
                                                 />
-                                                Contains rejected tasks
+                                                Для отклоненных задач
                                             </label>
                                         </div>
 
                                         <div className="create-status-actions">
-                                            <button className="btn-primary" onClick={handleCreateStatus}>Create</button>
-                                            <button className="btn-ghost" onClick={() => setIsCreatingStatus(false)}>Cancel</button>
+                                            <button className="btn-primary" onClick={handleCreateStatus}>Создать</button>
+                                            <button className="btn-ghost" onClick={() => setIsCreatingStatus(false)}>Отменить</button>
                                         </div>
                                     </div>
                                 </div>
                             ) : (
                                 <button onClick={() => setIsCreatingStatus(true)} className="add-column-button">
-                                    <ListPlus size={20} />
-                                    Add Column
+                                    <ListPlus size={28} />
                                 </button>
                             )}
 

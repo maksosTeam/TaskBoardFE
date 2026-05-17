@@ -1,45 +1,68 @@
-/* task-component.css - обновленный стиль без Tailwind */
-
 /* Карточка задачи */
 .task-card {
     background-color: #000000;
-    border: 1px solid #2C333A;
-    border-radius: 12px;
-    padding: 16px;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 16px 16px 16px 22px; /* Отступ слева увеличен под линию приоритета */
     cursor: pointer;
-    transition: all 0.2s ease;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Эффект полутонового растра (Halftone) при ховере */
+.task-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(#22C55E 1px, transparent 1px);
+    background-size: 10px 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 0;
 }
 
 .task-card:hover {
-    border-color: #4BCE97;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(75, 206, 151, 0.15);
+    border-color: #22C55E;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.15); /* glow-hover-green */
 }
 
-/* Верхняя полоса приоритета */
+.task-card:hover::before {
+    opacity: 0.03; /* Легкое проявление растра */
+}
+
+/* Поднимаем контент выше подложки растра */
+.task-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Левая брутальная полоса приоритета */
 .task-priority-bar {
-    height: 4px;
-    border-radius: 9999px;
-    margin: -16px -16px 12px -16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 6px;
+    height: 100%;
 }
 
-/* Заголовок и бейджи */
+/* Шапка карточки */
 .task-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 
 .task-title {
     font-weight: 700;
     font-size: 14px;
-    line-height: 1.25rem;
+    line-height: 1.4;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.05em;
     color: #FFFFFF;
     margin: 0;
     display: -webkit-box;
@@ -54,125 +77,121 @@
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    padding: 2px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
     flex-shrink: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    background-color: #1A1A1A;
 }
 
 .task-priority-low {
-    background-color: rgba(87, 157, 255, 0.15);
     color: #579DFF;
-    border: 1px solid #579DFF;
+    border: 1px solid rgba(87, 157, 255, 0.4);
 }
 
 .task-priority-medium {
-    background-color: rgba(245, 205, 71, 0.15);
-    color: #F5CD47;
-    border: 1px solid #F5CD47;
+    color: #FBBF24;
+    border: 1px solid rgba(251, 191, 36, 0.4);
 }
 
 .task-priority-high {
-    background-color: rgba(226, 178, 3, 0.15);
-    color: #E2B203;
-    border: 1px solid #E2B203;
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.4);
 }
 
 .task-priority-urgent {
-    background-color: rgba(248, 113, 104, 0.15);
     color: #F87168;
-    border: 1px solid #F87168;
+    border: 1px solid rgba(248, 113, 104, 0.4);
 }
 
-/* Описание */
+/* Описание задачи */
 .task-description {
     font-size: 12px;
-    color: #9FADBC;
-    margin-bottom: 12px;
-    line-height: 1.4;
+    color: #AAAAAA;
+    margin: 0 0 14px 0;
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Теги */
+/* Блок тегов */
 .task-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 14px;
 }
 
 .task-tag {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 8px;
-    background: rgba(155, 143, 239, 0.15);
-    border: 1px solid #9F8FEF;
+    padding: 2px 6px;
+    background-color: #1A1A1A;
+    border: 1px solid #333333;
     border-radius: 4px;
-    color: #B8ACF6;
+    color: #CCCCCC;
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
 }
 
-.task-tag svg {
-    width: 12px;
-    height: 12px;
-}
-
-/* Сабтаски */
+/* Прогресс подзадач */
 .task-subtasks {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    background-color: #1A1A1A;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #333333;
 }
 
 .task-subtasks-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .task-subtasks-label {
     font-size: 10px;
-    font-weight: 600;
-    color: #9FADBC;
+    font-weight: 700;
+    color: #AAAAAA;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
 }
 
 .task-subtasks-count {
-    font-size: 10px;
+    font-family: monospace;
+    font-size: 11px;
     font-weight: 700;
-    color: #4BCE97;
+    color: #22C55E;
 }
 
 .task-progress-bar {
     width: 100%;
-    background: #161A1D;
-    border-radius: 9999px;
+    background: #000000;
+    border-radius: 2px;
     height: 4px;
     overflow: hidden;
-    border: 1px solid #2C333A;
+    border: 1px solid #333333;
 }
 
 .task-progress-fill {
-    background: linear-gradient(90deg, #4BCE97, #2BA06B);
+    background: #22C55E;
     height: 100%;
-    border-radius: 9999px;
     transition: width 0.3s ease;
 }
 
-/* Подвал карточки */
+/* Нижняя часть (Подвал) */
 .task-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 12px;
-    border-top: 1px solid #2C333A;
+    border-top: 1px solid #333333;
     gap: 8px;
 }
 
@@ -182,37 +201,22 @@
     gap: 12px;
 }
 
-/* Блок с датой */
+/* Дедлайны */
 .task-date-info {
     display: flex;
     align-items: center;
     gap: 4px;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    font-family: monospace;
 }
 
-.task-date-info svg {
-    width: 12px;
-    height: 12px;
-}
-
-.task-date-overdue {
-    color: #F87168;
-}
-
-.task-date-today {
-    color: #E2B203;
-}
-
-.task-date-soon {
-    color: #F5CD47;
-}
-
-.task-date-normal {
-    color: #9FADBC;
-}
+.task-date-overdue { color: #F87168; }
+.task-date-today { color: #F59E0B; }
+.task-date-soon { color: #FBBF24; }
+.task-date-normal { color: #AAAAAA; }
 
 /* Вложения */
 .task-attachments {
@@ -220,20 +224,15 @@
     align-items: center;
     gap: 4px;
     font-size: 10px;
-    font-weight: 600;
-    color: #9FADBC;
+    font-weight: 700;
+    color: #AAAAAA;
+    font-family: monospace;
 }
 
-.task-attachments svg {
-    width: 12px;
-    height: 12px;
-}
-
-/* Аватарки */
+/* Контейнер аватаров */
 .task-avatars {
     display: flex;
     align-items: center;
-    flex-shrink: 0;
 }
 
 .task-avatar {
@@ -241,9 +240,10 @@
     height: 24px;
     border-radius: 50%;
     border: 2px solid #000000;
-    margin-left: -8px;
-    transition: all 0.2s ease;
+    margin-left: -6px;
+    transition: transform 0.2s ease, z-index 0s;
     overflow: hidden;
+    background-color: #1A1A1A;
 }
 
 .task-avatar:first-child {
@@ -251,9 +251,9 @@
 }
 
 .task-avatar:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
     z-index: 10;
-    box-shadow: 0 0 8px #4BCE97;
+    border-color: #22C55E;
 }
 
 .task-avatar img {
@@ -262,62 +262,41 @@
     object-fit: cover;
 }
 
+/* Заглушка, если нет исполнителя */
 .task-avatar-fallback {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 2px solid #000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #579DFF, #388BFF);
-    color: #000000;
-    margin-left: -8px;
-}
-
-.task-avatar-fallback:first-child {
-    margin-left: 0;
-}
-
-.task-avatar-more {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #161A1D;
-    border: 2px solid #000000;
-    margin-left: -8px;
+    border: 2px solid #333333;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 10px;
     font-weight: 700;
-    color: #9FADBC;
+    background-color: #1A1A1A;
+    color: #AAAAAA;
 }
 
-/* Иконки */
-.size-3 {
+/* Счетчик "+X исполнителей" */
+.task-avatar-more {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #1A1A1A;
+    border: 2px solid #333333;
+    margin-left: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: monospace;
+    color: #22C55E;
+}
+
+/* Системный хелпер для иконок Lucide внутри элементов */
+.task-card svg {
     width: 12px;
     height: 12px;
-}
-
-/* Адаптивность */
-@media (max-width: 640px) {
-    .task-card {
-        padding: 12px;
-    }
-
-    .task-title {
-        font-size: 12px;
-    }
-
-    .task-footer {
-        flex-wrap: wrap;
-    }
-
-    .task-footer-left {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
+    flex-shrink: 0;
 }
