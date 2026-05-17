@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchCurrentUser } from "../store/userSlice";
 import '../styles/user-settings-page.css';
 import defaultAvatar from '../assets/user-avatar.webp';
-import {rebuildFilePath} from "../utils.ts";
+import { rebuildFilePath } from "../utils.ts";
 
 export const UserSettings = () => {
     const token = localStorage.getItem("token");
@@ -20,7 +20,7 @@ export const UserSettings = () => {
 
     const changePasswordRequest = async () => {
         try {
-            const response = await axios.post(
+            await axios.post(
                 `/api/auth/change-password`,
                 {
                     lastPassword: oldPassword,
@@ -39,24 +39,16 @@ export const UserSettings = () => {
             setIsPasswordEditing(false);
             setOldPassword("");
             setNewPassword("");
-        } catch (error) {
+        } catch (error: any) {
             console.log("Ошибка при отправке запроса: " + error.message);
         }
     };
 
     const handleLogout = async () => {
         try {
-            await axios.post(
-                '/api/auth/logout',
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            // Очищаем токен и перенаправляем на главную
+            await axios.post('/api/auth/logout', {}, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
             localStorage.removeItem("token");
             navigate("/");
         } catch (error) {
@@ -71,22 +63,19 @@ export const UserSettings = () => {
         setNewPassword("");
     };
 
-
-    const onFileChange = (e) => {
+    const onFileChange = (e: any) => {
         const file = e.target.files[0];
         if (!file) return;
 
         setSelectedFile(file);
 
-        // Создание превью для отображения
         const reader = new FileReader();
         reader.onloadend = () => {
-            setPreview(reader.result);
+            setPreview(reader.result as string);
         };
         reader.readAsDataURL(file);
     };
 
-    // Загрузка аватара на сервер
     const uploadAvatar = async () => {
         if (!selectedFile) return;
 
@@ -101,10 +90,9 @@ export const UserSettings = () => {
                 },
             });
 
-            // Обновляем данные пользователя после успешной загрузки
             dispatch(fetchCurrentUser());
             alert("Аватар успешно обновлен!");
-            setPreview(""); // Сбрасываем превью
+            setPreview("");
         } catch (error) {
             console.error("Ошибка при загрузке аватара:", error);
             alert("Ошибка при загрузке аватара");
@@ -123,23 +111,27 @@ export const UserSettings = () => {
     useEffect(() => {
         document.title = 'Настройки';
         dispatch(fetchCurrentUser());
-        console.log(rebuildFilePath(user?.imagePath, 0));
     }, [dispatch]);
 
     return (
-        <div className="user-settings">
-            <h2>Аккаунт</h2>
-            <div className="user-settings-pic-sect">
+        <div className="user-settings-container">
+            <h2 className="settings-main-title">Аккаунт</h2>
+
+            {/* Карточка профиля */}
+            <div className="settings-profile-card">
+                <div className="profile-card-left">
                     <img
                         className='user-settings-avatar'
                         src={preview || rebuildFilePath(user?.imagePath, 0) || defaultAvatar}
                         alt="Аватар пользователя"
                     />
-                    <span>{user?.username || ''}</span>
-                    <span>{user?.email || ''}</span>
-            </div>
-            <div className="settings-sect-2">
-                <div className="avatar-upload-controls" >
+                    <div className="profile-meta-info">
+                        <h3>{user?.username || 'Пользователь'}</h3>
+                        <p>{user?.email || 'email@example.com'}</p>
+                    </div>
+                </div>
+
+                <div className="avatar-upload-controls">
                     <input
                         type="file"
                         id="avatar-upload"
@@ -147,82 +139,89 @@ export const UserSettings = () => {
                         onChange={onFileChange}
                         style={{ display: 'none' }}
                     />
-                    {!preview && (<label htmlFor="avatar-upload" className="settings-sub-tab" style={{width:'660px'}}>
-                        Выбрать фото профиля
-                    </label>)}
-                    {preview && (
-                        <div className="settings-sub-tab-container">
-                            <button onClick={uploadAvatar} >
-                                Сохранить
-                            </button>
-                            <button onClick={resetAvatarSelection}>
-                                Отмена
-                            </button>
+                    {!preview ? (
+                        <label htmlFor="avatar-upload" className="btn-secondary-sm">
+                            Изменить фото
+                        </label>
+                    ) : (
+                        <div className="avatar-action-buttons">
+                            <button className="btn-primary-sm" onClick={uploadAvatar}>Сохранить</button>
+                            <button className="btn-ghost-sm" onClick={resetAvatarSelection}>Отмена</button>
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className="settings-sect">
+            {/* Секция безопасности */}
+            <div className="settings-group-box">
                 {isPasswordEditing ? (
-                    <div className="email-confirmation-container">
-                        <div>
-                            <p>Старый пароль:</p>
-                            <input className="email-confirmation-input"
-                                   type="password"
-                                   autoComplete="off"
-                                   value={oldPassword}
-                                   onChange={(e) => setOldPassword(e.target.value)}
+                    <div className="password-edit-form">
+                        <div className="settings-input-group">
+                            <label>Старый пароль</label>
+                            <input
+                                type="password"
+                                autoComplete="off"
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                placeholder="••••••••"
                             />
                         </div>
-                        <div>
-                            <p>Новый пароль:</p>
-                            <input className="email-confirmation-input"
-                                   type="password"
-                                   autoComplete="off"
-                                   value={newPassword}
-                                   onChange={(e) => setNewPassword(e.target.value)}
+                        <div className="settings-input-group">
+                            <label>Новый пароль</label>
+                            <input
+                                type="password"
+                                autoComplete="off"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                placeholder="Минимум 6 символов"
                             />
                         </div>
-                        <div className="email-edit-actions">
-                            <button onClick={changePasswordRequest}>Подтвердить</button>
-                            <button onClick={handlePasswordCancel}>Отмена</button>
+                        <div className="form-action-row">
+                            <button className="btn-ghost" onClick={handlePasswordCancel}>Отмена</button>
+                            <button className="btn-primary" onClick={changePasswordRequest}>Обновить пароль</button>
                         </div>
                     </div>
                 ) : (
-                    <button
-                        className="settings-sub-tab settings-sub-tab-password"
-                        onClick={() => setIsPasswordEditing(true)}
-                    >
-                        <p>Пароль</p>
-                        <div className="settings-go">&#8250;</div>
+                    <button type="button" className="settings-row-item" onClick={() => setIsPasswordEditing(true)}>
+                        <div className="row-item-text">
+                            <span>Безопасность</span>
+                            <p>Изменить текущий пароль учетной записи</p>
+                        </div>
+                        <div className="settings-go-arrow">&#8250;</div>
                     </button>
                 )}
             </div>
-            <div className="settings-sect-2">
-                <button className="settings-sub-tab">
-                    <div>
-                        <span>Язык</span>
+
+            {/* Секция системных настроек */}
+            <div className="settings-group-box">
+                <button type="button" className="settings-row-item">
+                    <div className="row-item-text">
+                        <span>Язык интерфейса</span>
                         <p>Русский</p>
                     </div>
-                    <div className="settings-go">&#8250;</div>
+                    <div className="settings-go-arrow">&#8250;</div>
                 </button>
-                <button className="settings-sub-tab">
-                    <div>
-                        <span>Изменить тему оформления</span>
-                        <p>Скоро</p>
+
+                <button type="button" className="settings-row-item">
+                    <div className="row-item-text">
+                        <span>Тема оформления</span>
+                        <p>Темная (по умолчанию)</p>
                     </div>
-                    <div className="settings-go">&#8250;</div>
+                    <span className="badge-coming-soon">Скоро</span>
                 </button>
-                <button className="settings-sub-tab">
-                    <div>
-                        <span>Частые вопросы</span>
-                        <p>О взаимодейсвтии с сервисом</p>
+
+                <button type="button" className="settings-row-item">
+                    <div className="row-item-text">
+                        <span>Частые вопросы (FAQ)</span>
+                        <p>Помощь и руководство по взаимодействию с сервисом</p>
                     </div>
-                    <div className="settings-go">&#8250;</div>
+                    <div className="settings-go-arrow">&#8250;</div>
                 </button>
             </div>
-            <button className="user-settings-logout" onClick={handleLogout}>Выйти</button>
+
+            <button type="button" className="user-settings-logout-btn" onClick={handleLogout}>
+                Выйти из аккаунта
+            </button>
         </div>
     );
 };
