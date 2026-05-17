@@ -105,13 +105,15 @@ export const SortableTask = ({ task, activeId, onClick, onTasksChange }: Sortabl
                 onTasksChange();
             } else {
                 alert("Не удалось назначить исполнителя");
+
             }
+            setIsUserListOpen(false);
+            setIsMenuOpen(false);
         } catch (error) {
             console.error(error);
             alert('Ошибка запроса');
         }
-        setIsUserListOpen(false);
-        setIsMenuOpen(false);
+
     };
 
     const markAsBug = async () => {
@@ -211,9 +213,9 @@ export const SortableTask = ({ task, activeId, onClick, onTasksChange }: Sortabl
                     <h4>Выберите исполнителя</h4>
                     <ul>
                         {projectUsers.map(user => (
-                            <li key={user.id}>
-                                <button onClick={() => handleAssignUser(user.id)}>
-                                    <span>{user.username}</span>
+                            <li key={user.userId}>
+                                <button onClick={() => handleAssignUser(user.userId)}>
+                                    <span>{user.userName}</span>
                                     <img src={rebuildFilePath(user?.imagePath, 0) || defaultAvatar} />
                                 </button>
                             </li>
