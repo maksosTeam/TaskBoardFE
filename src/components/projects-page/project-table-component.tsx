@@ -13,7 +13,7 @@ const formatDateRangeWithoutYear = (start: string, end: string): string => {
         const month = String(date.getMonth() + 1).padStart(2, "0");
         return `${day}.${month}`;
     };
-    return `${toDayMonth(start)} - ${toDayMonth(end)}`;
+    return `${toDayMonth(start)} — ${toDayMonth(end)}`; // Используем длинное тире для стиля
 };
 
 type Project = {
@@ -80,10 +80,9 @@ export const ProjectTableComponent: React.FC<ProjectTableProps> = ({ search }) =
                     <tr
                         key={proj.id}
                         onClick={() => handleRowClick(proj.id)}
-                        style={{ cursor: "pointer" }}
                     >
                         <td>{proj.name}</td>
-                        <td><p className='project-table-status'>{proj.status}</p></td>
+                        <td><span className='project-table-status'>{proj.status}</span></td>
                         <td>
                             {formatDateRangeWithoutYear(
                                 proj.startDate,
@@ -96,7 +95,7 @@ export const ProjectTableComponent: React.FC<ProjectTableProps> = ({ search }) =
                                 className="project-item-menu-btn"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <MoreVertical />
+                                <MoreVertical size={18} />
                             </button>
                         </td>
                     </tr>
@@ -105,7 +104,7 @@ export const ProjectTableComponent: React.FC<ProjectTableProps> = ({ search }) =
             </table>
 
             <button className="add-button" onClick={() => setShowModal(true)}>
-                Создать новый проект
+                + Создать новый проект
             </button>
 
             {showModal && (

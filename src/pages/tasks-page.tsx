@@ -6,6 +6,8 @@ import { getTaskPriorityColor, calculateTimeLeft } from '../utils.ts';
 import {useNavigate} from "react-router-dom";
 import {TaskSidebar} from "../components/board-page/task-sidebar.tsx";
 import {declinateTaskWord} from '../utils.ts'
+import { Calendar, AlertCircle, Clock, ArrowRight, Layers, Archive, Inbox } from 'lucide-react';
+
 export interface Contributor {
     userName: string;
     imagePath: string;
@@ -75,7 +77,9 @@ export const TasksPage = () => {
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString();
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        return `${day}.${month}`;
     };
 
     const handleRowClick = (projectId: number, boardId: number) => {
@@ -99,7 +103,7 @@ export const TasksPage = () => {
         const counts = countTasksByStatus(tasks);
         const taskWord = declinateTaskWord(counts.total);
 
-        return `${counts.total} ${taskWord}: ${counts.inProgress} в работе, ${counts.inQueue} в очереди, ${counts.done} выполнено`;
+        return `${counts.total} ${taskWord}`;
     };
 
     const filteredTasks = tasks.filter(task =>
@@ -107,111 +111,187 @@ export const TasksPage = () => {
     );
 
     if (loading) {
-        return <div className="loading-message">Загрузка задач...</div>;
+        return (
+            <div className="tasks-page">
+                <div className="loading-skeleton-tasks">
+                    <div className="skeleton-header"></div>
+                    <div className="skeleton-table"></div>
+                </div>
+            </div>
+        );
     }
 
     if (error) {
-        return <div className="error-message">{error}</div>;
+        return (
+            <div className="tasks-page">
+                <div className="error-message-tasks">
+                    <AlertCircle size={24} />
+                    <p>{error}</p>
+                    <button onClick={fetchTasks} className="retry-button">Повторить</button>
+                </div>
+            </div>
+        );
     }
 
-
     return (
-        <div className={"tasks-page"}>
-            <h2>Мои задачи</h2>
-            <div className="sprint-info-component-container">
-                <div className="sprint-info-component">
-                    <p>{getTasksCountText(filteredTasks)}</p>
+        <div className="tasks-page">
+            <div className="tasks-header">
+                <h1 className="tasks-title">Мои задачи</h1>
+                <div className="tasks-stats-cards">
+                    <div className="stat-card">
+                        <div className="stat-value">{countTasksByStatus(filteredTasks).total}</div>
+                        <div className="stat-label">Всего задач</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value">{countTasksByStatus(filteredTasks).inProgress}</div>
+                        <div className="stat-label">В работе</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value">{countTasksByStatus(filteredTasks).inQueue}</div>
+                        <div className="stat-label">В очереди</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="stat-value">{countTasksByStatus(filteredTasks).done}</div>
+                        <div className="stat-label">Выполнено</div>
+                    </div>
                 </div>
+            </div>
+
+            <div className="tasks-controls">
                 <div className="tabs">
                     <button
                         className={`tab-button ${activeTab === 'all' ? 'active-tab' : ''}`}
                         onClick={() => setActiveTab('all')}
                     >
-                        Все задачи
+                        <Inbox size={16} />
+                        Активные
                     </button>
                     <button
                         className={`tab-button ${activeTab === 'archived' ? 'active-tab' : ''}`}
                         onClick={() => setActiveTab('archived')}
                     >
-                        Архивные
+                        <Archive size={16} />
+                        Архив
                     </button>
                 </div>
+                <div className="tasks-count-badge">
+                    {getTasksCountText(filteredTasks)}
+                </div>
             </div>
+
             <div className="table-container">
-                <table className="task-table">
-                    <thead>
-                    <tr>
-                        <th style={{ }}>Задача</th>
-                        <th style={{ }}>Статус</th>
-                        <th style={{ }}>Приоритет</th>
-                        <th style={{ }}>Дедлайн</th>
-                        <th style={{ }}>Осталось</th>
-                        <th style={{ }}></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {filteredTasks.map((task) => {
-                        const timeLeft = calculateTimeLeft(task.startDate, task.expectedEndDate);
+                {filteredTasks.length === 0 ? (
+                    <div className="empty-tasks-state">
+                        <Layers size={48} strokeWidth={1.5} />
+                        <p>Нет задач в этом разделе</p>
+                    </div>
+                ) : (
+                    <table className="task-table">
+                        <thead>
+                        <tr>
+                            <th>Задача</th>
+                            <th>Статус</th>
+                            <th>Приоритет</th>
+                            <th>Дедлайн</th>
+                            <th>Прогресс</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredTasks.map((task) => {
+                            const timeLeft = calculateTimeLeft(task.startDate, task.expectedEndDate);
 
-                        return (
-                            <tr key={task.id}
-                                onClick={() => setSelectedTask(task)}
-                                style={{ cursor: "pointer" }}
-                                className="task-row">
-                                <td>
-                                    <div className="task-title">{task.title}</div>
-                                </td>
-                                <td>
-                                    <div className="tasks-status-badge" style={{backgroundColor: '#122B45'}}>
-                                        {task.status.name}
-                                    </div>
-                                </td>
-                                <td>
-                                <span style={{color: getTaskPriorityColor(task.priorityText)}}>
-                                    {task.priorityText}
-                                </span>
-                                </td>
-                                <td style={{color: timeLeft.isOverdue ? '#c15050' : '#80ADDB'}}>
-                                    {formatDate(task.expectedEndDate)}
-                                </td>
-                                <td>
-                                    <div className="timeleft-tracker-wrapper">
-                                        {/* Прогресс-бар с процентом выполнения */}
-                                        <div className="tracker-bar">
-                                            <div
-                                                className="tracker-fill"
+                            return (
+                                <tr
+                                    key={task.id}
+                                    onClick={() => setSelectedTask(task)}
+                                    className="task-row"
+                                >
+                                    <td>
+                                        <div className="task-title-wrapper">
+                                            <div className="task-title">{task.title}</div>
+                                            {task.description && (
+                                                <div className="task-description-preview">
+                                                    {task.description.substring(0, 60)}...
+                                                </div>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td>
+                                            <span
+                                                className="task-status-badge"
                                                 style={{
-                                                    width: `${timeLeft.percentage}%`,
+                                                    background: task.status.isDone
+                                                        ? 'rgba(75, 206, 151, 0.2)'
+                                                        : 'rgba(87, 157, 255, 0.2)',
+                                                    color: task.status.isDone ? '#4BCE97' : '#579DFF'
                                                 }}
-                                            ></div>
+                                            >
+                                                {task.status.name}
+                                            </span>
+                                    </td>
+                                    <td>
+                                            <span
+                                                className="task-priority-badge"
+                                                style={{ color: getTaskPriorityColor(task.priorityText) }}
+                                            >
+                                                {task.priorityText}
+                                            </span>
+                                    </td>
+                                    <td>
+                                        <div className="task-deadline">
+                                            <Calendar size={12} />
+                                            {formatDate(task.expectedEndDate)}
                                         </div>
-
-                                        {/* Блок с текстовой информацией */}
-                                        <div className="timeleft-info">
-                                        <span
-                                            className="timeleft-text"
-                                            style={{color: timeLeft.isOverdue ? '#c15050' : '#80ADDB'}}
+                                    </td>
+                                    <td>
+                                        <div className="timeleft-tracker-wrapper">
+                                            <div className="tracker-bar">
+                                                <div
+                                                    className="tracker-fill"
+                                                    style={{
+                                                        width: `${timeLeft.percentage}%`,
+                                                        background: timeLeft.isOverdue
+                                                            ? '#FF4757'
+                                                            : timeLeft.percentage > 80
+                                                                ? '#F5CD47'
+                                                                : '#4BCE97'
+                                                    }}
+                                                ></div>
+                                            </div>
+                                            <div className="timeleft-info">
+                                                <Clock size={10} />
+                                                <span
+                                                    className="timeleft-text"
+                                                    style={{ color: timeLeft.isOverdue ? '#FF4757' : '#9FADBC' }}
+                                                >
+                                                        {timeLeft.text}
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button
+                                            className="tasks-table-go-board"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleRowClick(task.projectId, task.boardId);
+                                            }}
                                         >
-        {timeLeft.text}
-      </span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button
-                                        className='tasks-table-go-board'
-                                        onClick={() => handleRowClick(task.projectId, task.boardId)}
-                                    >Перейти на доску</button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
+                                            Доска
+                                            <ArrowRight size={14} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                )}
+
                 {selectedTask && (
                     <TaskSidebar task={selectedTask} onClose={() => setSelectedTask(null)} onTasksChange={fetchTasks}/>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};

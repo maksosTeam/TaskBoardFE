@@ -1,9 +1,8 @@
 /* projects-page.css - обновленный стиль */
 
 .projects-page {
-    width: 900px;
     padding: 8px;
-    max-width: 1200px;
+    width: 1200px;
     margin: 0 auto;
 }
 

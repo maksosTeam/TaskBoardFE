@@ -1,103 +1,165 @@
+/* board-table.css - обновленный стиль */
+
 .board-table-wrapper {
-    margin-top: 20px;
-    width: 900px;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 1200px;
     overflow-x: auto;
+    padding: 8px;
 }
 
 .board-table {
     border-radius: 12px;
-    border: 1px solid #214F7D;
+    border: 1px solid #2C333A;
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
     width: 100%;
+    background: black;
 }
 
 .board-table th {
-    background-color:#122B45;
-    padding: 16px 15px 16px 15px;
+    background-color: black;
+    padding: 16px 20px;
     text-align: left;
-    font-weight: 400;
-    font-size: 15px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #9FADBC;
+    border-bottom: 1px solid #2C333A;
 }
 
 .board-table td {
-    padding: 18px 15px;
-    border-top: 1px solid #dee2e6;
+    padding: 18px 20px;
+    border-top: 1px solid #2C333A;
     vertical-align: middle;
-    font-weight: 300;
-    font-size: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    color: white;
+}
+
+.board-row {
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .board-row:hover {
-    background-color: #223547;
+    background-color: #161A1D;
+    transform: scale(1.01);
+}
+
+/* Стиль для названия доски */
+.board-table td:first-child {
+    font-weight: 600;
+    color: #579DFF;
+}
+
+/* Стиль для количества задач */
+.board-table td:nth-child(4) {
+    font-weight: bold;
+    color: #4BCE97;
+    font-size: 16px;
+}
+
+/* Стиль для описания */
+.board-table td:nth-child(2) {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #9FADBC;
 }
 
 .board-item-menu-btn {
     background: none;
     border: none;
-    color: white;
+    color: #9FADBC;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .board-item-menu-btn:hover {
-    color: #95b4ec;
+    color: #4BCE97;
+    background: rgba(75, 206, 151, 0.1);
+    transform: scale(1.1);
 }
 
-.board-table-status {
-    background-color: #122B45;
-    padding: 6px 0 5px 15px;
-    border-radius: 10px;
-    margin-right: 10px;
+/* Стиль для даты */
+.board-table td:nth-child(5) {
+    color: #9FADBC;
+    font-family: monospace;
+    font-size: 13px;
 }
 
-.board-search-input {
-    border: 1px solid #D9D9D980;
-    background: none;
-    padding: 8px 15px;
-    width: 200px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    color: white;
-}
-
-.status-badge {
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: bold;
-    display: inline-block;
-}
-
-.status-active {
-    background-color: #2563eb;
-    color: white;
-}
-
-.status-inactive {
-    background-color: #6b7280;
-    color: white;
-}
-
-.menu-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.add-button {
-    margin-top: 20px;
-    padding: 12px 18px;
-    border: none;
+/* Стили для модалки создания доски (если есть) */
+.create-board-button {
+    margin-top: 24px;
+    padding: 12px 24px;
+    border: 2px solid transparent;
     border-radius: 12px;
-    background-color: #122B45;
-    color: white;
+    background: #F1F2F4;
+    color: black;
     font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.add-button:hover {
-    background-color: #052445;
+.create-board-button:hover {
+    background: #4BCE97;
+    border-color: #4BCE97;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(75, 206, 151, 0.3);
+}
+
+/* Анимация загрузки */
+.loading-skeleton {
+    background: linear-gradient(90deg, #161A1D 25%, #2C333A 50%, #161A1D 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Стиль для ошибки */
+.error-message {
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+    color: #FF4757;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Пустое состояние */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #9FADBC;
+    font-size: 16px;
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
 }
