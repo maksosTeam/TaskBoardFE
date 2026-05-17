@@ -3,7 +3,7 @@ import defaultAvatar from "../../assets/user-avatar.webp";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { rebuildFilePath } from "../../utils.ts";
-import { FolderKanban, Kanban, ListTodo, User, Menu } from 'lucide-react';
+import { FolderKanban, Kanban, ListTodo, User, Menu, AlignHorizontalDistributeCenterIcon } from 'lucide-react';
 
 interface SidebarComponentProps {
     user?: {
@@ -14,7 +14,8 @@ interface SidebarComponentProps {
 
 const navigation_List = [
     { title: "Проекты", path: "projects", icon: FolderKanban },
-    { title: "Доски", path: "boards", icon: Kanban },
+    { title: "Kanban доски", path: "boards", icon: Kanban },
+    { title: "Спринты", path: "sprints", icon: AlignHorizontalDistributeCenterIcon },
     { title: "Задачи", path: "tasks", icon: ListTodo },
     { title: "Настройки", path: "settings", icon: User },
 ] as const;

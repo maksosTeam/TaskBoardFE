@@ -173,11 +173,11 @@ export const TaskSidebar = ({ task, onClose }: TaskSidebarProps) => {
                     <div className="sidebar-props">
                         <div className="prop-row">
                             <span className="prop-label">Автор</span>
-                            <span className="prop-value">{task.author}</span>
+                            <span className="prop-value">{task.author.split("@~")[0]}</span>
                         </div>
                         <div className="prop-row">
-                            <span className="prop-label">ИСполнитель</span>
-                            <span className="prop-value">{task?.contributors?.[0]?.userName || 'Отсутствует'}</span>
+                            <span className="prop-label">Иcполнитель</span>
+                            <span className="prop-value">{task?.contributors.map(x => x.split("@~")[0]).join(", ") || 'Отсутствует'}</span>
                         </div>
                         <div className="prop-row">
                             <span className="prop-label">Создано</span>

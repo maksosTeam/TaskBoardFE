@@ -23,10 +23,6 @@
     z-index: 0;
 }
 
-.task-card:hover {
-    border-color: #22C55E;
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.15); /* glow-hover-green */
-}
 
 .task-card:hover::before {
     opacity: 0.03; /* Легкое проявление растра */
@@ -82,6 +78,7 @@
     flex-shrink: 0;
     letter-spacing: 0.05em;
     background-color: #1A1A1A;
+    margin-right: 30px;
 }
 
 .task-priority-low {
@@ -233,6 +230,7 @@
 .task-avatars {
     display: flex;
     align-items: center;
+    margin-left: 0;
 }
 
 .task-avatar {

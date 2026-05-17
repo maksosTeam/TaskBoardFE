@@ -1,295 +1,305 @@
-/* Основной блок */
-.project-docs {
-    font-family: 'Inter', sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 700px;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+/* Основной контейнер */
+.doc-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: transparent; /* Или #000, если фон страницы должен быть черным */
 }
 
-/* Шапка блока */
-.project-docs__header {
+/* Шапка */
+.doc-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
 }
 
-.project-docs__meta {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+.doc-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    letter-spacing: 0.025em;
 }
 
-.project-docs__title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #f8fafc;
+.doc-subtitle {
+    font-size: 20px;
+    color: #ffffff;
     margin: 0;
 }
 
-.project-docs__counter {
-    font-size: 13px;
-    color: #64748b;
-}
-
-/* Кнопка добавления документа в шапке */
-.project-docs__upload-trigger {
+/* Кнопка загрузки */
+.doc-btn-upload {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #94a3b8;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
+    background-color: #F1F2F4;
+    color: #000000;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.project-docs__upload-trigger:hover {
-    background-color: #3b82f6;
-    color: #ffffff;
-    border-color: #3b82f6;
+.doc-btn-upload:hover {
+    border-color: #0a0a0a;
 }
 
-/* Сетка документов */
-.project-docs__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 16px;
+.doc-hidden-input {
+    display: none;
 }
 
-.project-docs__empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px 0;
-    color: #64748b;
-    font-size: 14px;
-    border: 1px dashed rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-}
-
-/* Плитка документа */
-.project-docs__tile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    color: #cbd5e1;
-    text-decoration: none;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    min-height: 110px;
-    box-sizing: border-box;
-}
-
-.project-docs__tile:hover {
-    background-color: rgba(59, 130, 246, 0.08);
-    border-color: rgba(59, 130, 246, 0.3);
-    color: #f8fafc;
-    transform: translateY(-2px);
-}
-
-.project-docs__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    height: 40px;
-}
-
-.project-docs__tile-title {
-    font-size: 12px;
-    line-height: 1.4;
-    font-weight: 400;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    width: 100%;
-}
-
-/* Цвета иконок по типам */
-.project-docs__icon--pdf { color: #ef4444; }
-.project-docs__icon--image { color: #10b981; }
-.project-docs__icon--archive { color: #f59e0b; }
-.project-docs__icon--text { color: #3b82f6; }
-.project-docs__icon--default { color: #94a3b8; }
-
-/* Кастомный скелетон */
-.project-docs__tile--skeleton {
-    background-color: #0f172a;
-    border: none;
+/* Поиск */
+.doc-search-wrapper {
     position: relative;
-    overflow: hidden;
+    width: 448px;
 }
 
-.project-docs__tile--skeleton::before {
-    content: '';
+.doc-search-icon {
     position: absolute;
-    top: 0;
-    left: 0;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9FADBC;
+}
+
+.doc-search-input {
     width: 100%;
-    height: 100%;
-    background: linear-gradient(
-            90deg,
-            rgba(15, 23, 42, 0) 0%,
-            rgba(255, 255, 255, 0.03) 50%,
-            rgba(15, 23, 42, 0) 100__
-    );
-    animation: pulse-sweep 1.5s infinite linear;
+    box-sizing: border-box;
+    background-color: #161A1D;
+    border: 1px solid #2C333A;
+    color: #ffffff;
+    padding: 14px 10px 14px 36px;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-@keyframes pulse-sweep {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+.doc-search-input::placeholder {
+    color: #9FADBC;
 }
 
-/* Модальное окно и бэкдроп */
-.project-docs__backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+.doc-search-input:focus {
+    border-color: #4BCE97;
+    box-shadow: 0 0 0 1px #4BCE97;
+}
+
+/* Состояние пустой папки / Drag & Drop */
+.doc-empty-state {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.doc-empty-state--active {
+    border-color: #4BCE97;
+    background-color: rgba(75, 206, 151, 0.05);
+    box-shadow: 0 0 20px rgba(75, 206, 151, 0.2);
+}
+
+.doc-empty-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #161A1D;
+    border: 1px solid #2C333A;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    color: #9FADBC;
+    margin-bottom: 16px;
 }
 
-.project-docs__modal {
-    background-color: #1e293b;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 24px;
-    border-radius: 16px;
-    color: #f8fafc;
-    width: 380px;
-    max-width: 90%;
+.doc-empty-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin: 0 0 8px 0;
+}
+
+.doc-empty-subtitle {
+    color: #9FADBC;
+    max-width: 384px;
+    margin: 0 0 24px 0;
+    font-size: 14px;
+}
+
+/* Карточка загрузки прогресса */
+.doc-uploading-card {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.doc-uploading-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.doc-uploading-icon {
+    color: #4BCE97;
+    animation: doc-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes doc-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
+
+.doc-uploading-text {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.doc-progress-bar {
+    height: 8px;
+    background-color: #161A1D;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.doc-progress-fill {
+    height: 100%;
+    background-color: #4BCE97;
+    width: 100%;
+    animation: doc-progress-anim 1s infinite linear;
+    transform-origin: left;
+}
+
+@keyframes doc-progress-anim {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+/* Список документов */
+.doc-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    gap: 8px;
 }
 
-.project-docs__modal-header {
+.doc-loading {
+    color: #9FADBC;
+    font-size: 14px;
+    padding: 24px 0;
+}
+
+/* Карточка документа */
+.doc-card {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: all 0.2s ease;
 }
 
-.project-docs__modal-title {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
+.doc-card:hover {
+    border-color: #4BCE97;
+    background-image: radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 4px 4px;
 }
 
-.project-docs__modal-close {
+.doc-card-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.doc-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: rgba(87, 157, 255, 0.2);
+    border: 1px solid #579DFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #579DFF;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s ease;
+}
+
+.doc-card:hover .doc-icon-box {
+    box-shadow: 0 0 12px rgba(87, 157, 255, 0.4);
+}
+
+.doc-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.doc-info-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doc-info-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: #9FADBC;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Кнопки действий в карточке */
+.doc-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+.doc-action-btn {
     background: transparent;
     border: none;
-    color: #64748b;
+    color: #9FADBC;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.15s;
-}
-
-.project-docs__modal-close:hover {
-    color: #f8fafc;
-}
-
-.project-docs__form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Кастомная зона дропа файлов */
-.project-docs__dropzone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 2px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 30px 20px;
-    cursor: pointer;
-    background-color: #0f172a;
     transition: all 0.2s ease;
-    text-align: center;
 }
 
-.project-docs__dropzone:hover {
-    border-color: #3b82f6;
-    background-color: rgba(59, 130, 246, 0.02);
+.doc-action-btn:hover {
+    color: #4BCE97;
+    background-color: #161A1D;
 }
 
-.project-docs__dropzone--has-file {
-    border-color: #10b981;
-    background-color: rgba(16, 185, 129, 0.02);
-}
-
-.project-docs__dropzone--has-file .project-docs__dropzone-icon {
-    color: #10b981;
-}
-
-.project-docs__dropzone-icon {
-    color: #64748b;
-    transition: color 0.2s;
-}
-
-.project-docs__dropzone:hover .project-docs__dropzone-icon {
-    color: #3b82f6;
-}
-
-.project-docs__dropzone-text {
-    font-size: 13px;
-    color: #94a3b8;
-    word-break: break-all;
-    font-weight: 400;
-}
-
-.project-docs__file-input {
-    display: none; /* Прячем дефолтную плашку */
-}
-
-/* Кнопка отправки */
-.project-docs__submit-btn {
-    background-color: #3b82f6;
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-    width: 100%;
-}
-
-.project-docs__submit-btn:hover:not(:disabled) {
-    background-color: #2563eb;
-}
-
-.project-docs__submit-btn:disabled {
-    background-color: #334155;
-    color: #64748b;
-    cursor: not-allowed;
+.doc-action-btn--delete:hover {
+    color: #F5CD47; /* Желтый/предупреждающий, как в вашем дизайне */
 }

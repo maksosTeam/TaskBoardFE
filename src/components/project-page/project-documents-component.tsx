@@ -1,6 +1,9 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent, DragEvent } from 'react';
 import '../../styles/project-page/project-documents.css';
-import { FileText, Image, FileArchive, File, FolderPlus, Upload, X } from 'lucide-react';
+import {
+    FileText, Image as ImageIcon, FileArchive, File, Upload,
+    Search, FolderOpen, Download, Share2, Trash2
+} from 'lucide-react';
 import { rebuildFilePath } from "../../utils.ts";
 
 interface ProjectDocumentsComponentProps {
@@ -19,10 +22,10 @@ interface ProjectDocument {
 
 export const ProjectDocumentsComponent = ({ projectId }: ProjectDocumentsComponentProps) => {
     const [documents, setDocuments] = useState<ProjectDocument[]>([]);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [modalOpen, setModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loadingDocs, setLoadingDocs] = useState(true);
     const [uploading, setUploading] = useState(false);
+    const [dragActive, setDragActive] = useState(false);
     const token = localStorage.getItem('token');
 
     const fetchDocuments = () => {
@@ -44,17 +47,9 @@ export const ProjectDocumentsComponent = ({ projectId }: ProjectDocumentsCompone
         fetchDocuments();
     }, [projectId]);
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedFile(e.target.files[0]);
-        }
-    };
-
-    const handleUpload = () => {
-        if (!selectedFile) return;
-
+    const uploadFile = (file: File) => {
         const formData = new FormData();
-        formData.append('document', selectedFile);
+        formData.append('document', file);
         setUploading(true);
 
         fetch(`/api/project/attach-document/${projectId}`, {
@@ -66,114 +61,198 @@ export const ProjectDocumentsComponent = ({ projectId }: ProjectDocumentsCompone
         })
             .then(res => res.ok ? res.text() : Promise.reject('Ошибка загрузки'))
             .then(() => {
-                setSelectedFile(null);
-                setModalOpen(false);
                 fetchDocuments();
             })
             .catch(err => console.error(err))
             .finally(() => setUploading(false));
     };
 
-    const handleModalClose = () => {
-        setModalOpen(false);
-        setSelectedFile(null);
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            uploadFile(e.target.files[0]);
+            e.target.value = ''; // Сбрасываем input
+        }
+    };
+
+    const handleDrag = (e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.type === 'dragenter' || e.type === 'dragover') {
+            setDragActive(true);
+        } else if (e.type === 'dragleave') {
+            setDragActive(false);
+        }
+    };
+
+    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragActive(false);
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            uploadFile(e.dataTransfer.files[0]);
+        }
+    };
+
+    const handleDelete = (id: number) => {
+        // Здесь должен быть вызов API для удаления, пока удаляем локально для вида
+        setDocuments(documents.filter(doc => doc.id !== id));
+        console.log(`Удаление документа ${id}`);
+    };
+
+    const handleCopyLink = (path: string) => {
+        const fullUrl = window.location.origin + rebuildFilePath(path, 1);
+        navigator.clipboard.writeText(fullUrl)
+            .then(() => alert('Ссылка скопирована!'))
+            .catch(err => console.error('Ошибка копирования:', err));
     };
 
     const getIconByExtension = (filename: string) => {
         const ext = filename.split('.').pop()?.toLowerCase();
         switch (ext) {
-            case 'pdf': return <File size={32} className="project-docs__icon project-docs__icon--pdf" />;
+            case 'pdf': return FileText;
             case 'png':
             case 'jpg':
             case 'jpeg':
             case 'webp':
-            case 'gif': return <Image size={32} className="project-docs__icon project-docs__icon--image" />;
+            case 'gif': return ImageIcon;
             case 'zip':
             case 'rar':
-            case '7z': return <FileArchive size={32} className="project-docs__icon project-docs__icon--archive" />;
+            case '7z': return FileArchive;
             case 'txt':
             case 'doc':
-            case 'docx': return <FileText size={32} className="project-docs__icon project-docs__icon--text" />;
-            default: return <File size={32} className="project-docs__icon project-docs__icon--default" />;
+            case 'docx': return FileText;
+            default: return File;
         }
     };
 
+    const getDocumentType = (filename: string) => {
+        return filename.split('.').pop()?.toUpperCase() || 'FILE';
+    };
+
+    const formatDate = (dateString: string) => {
+        if (!dateString) return 'Неизвестно';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
+    const filteredDocuments = documents.filter(doc =>
+        doc.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
-        <div className="project-docs">
-            <div className="project-docs__header">
-                <div className="project-docs__meta">
-                    <h3 className="project-docs__title">Документы проекта</h3>
-                    <span className="project-docs__counter">Всего: {documents.length}</span>
+        <div className="doc-page">
+            <div className="doc-header">
+                <div className="doc-search-wrapper">
+                    <Search size={16} className="doc-search-icon" />
+                    <input
+                        type="text"
+                        placeholder="Поиск документов..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="doc-search-input"
+                    />
                 </div>
-                <button
-                    className="project-docs__upload-trigger"
-                    onClick={() => setModalOpen(true)}
-                    title="Загрузить документ"
-                    type="button"
-                >
-                    <FolderPlus size={18} />
-                    <span>Добавить</span>
-                </button>
+                <label className="doc-btn-upload">
+                    <Upload size={16} />
+                    Загрузить файл
+                    <input
+                        type="file"
+                        className="doc-hidden-input"
+                        onChange={handleFileChange}
+                    />
+                </label>
             </div>
 
-            <div className="project-docs__grid">
-                {loadingDocs ? (
-                    [...Array(6)].map((_, i) => <div key={i} className="project-docs__tile project-docs__tile--skeleton" />)
-                ) : documents.length === 0 ? (
-                    <div className="project-docs__empty">Документы в проекте пока отсутствуют</div>
-                ) : (
-                    documents.map(doc => (
-                        <a
-                            key={doc.id}
-                            href={rebuildFilePath(doc.filePath, 1)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="project-docs__tile"
-                        >
-                            <div className="project-docs__icon-wrapper">
-                                {getIconByExtension(doc.title)}
-                            </div>
-                            <div className="project-docs__tile-title" title={doc.description || doc.title}>
-                                {doc.description || doc.title}
-                            </div>
-                        </a>
-                    ))
-                )}
-            </div>
 
-            {modalOpen && (
-                <div className="project-docs__backdrop" onClick={handleModalClose}>
-                    <div className="project-docs__modal" onClick={(e) => e.stopPropagation()}>
-                        <div className="project-docs__modal-header">
-                            <h4 className="project-docs__modal-title">Загрузка документа</h4>
-                            <button className="project-docs__modal-close" onClick={handleModalClose} type="button">
-                                <X size={18} />
-                            </button>
-                        </div>
 
-                        <div className="project-docs__form-group">
-                            <label className={`project-docs__dropzone ${selectedFile ? 'project-docs__dropzone--has-file' : ''}`}>
-                                <input
-                                    type="file"
-                                    onChange={handleFileChange}
-                                    className="project-docs__file-input"
-                                />
-                                <Upload size={24} className="project-docs__dropzone-icon" />
-                                <span className="project-docs__dropzone-text">
-                                    {selectedFile ? selectedFile.name : "Выберите файл для загрузки"}
-                                </span>
-                            </label>
-                        </div>
-
-                        <button
-                            className="project-docs__submit-btn"
-                            onClick={handleUpload}
-                            disabled={!selectedFile || uploading}
-                            type="button"
-                        >
-                            {uploading ? 'Загрузка...' : 'Загрузить файл'}
-                        </button>
+            {uploading && (
+                <div className="doc-uploading-card">
+                    <div className="doc-uploading-header">
+                        <Upload size={16} className="doc-uploading-icon" />
+                        <span className="doc-uploading-text">Загрузка файла...</span>
                     </div>
+                    <div className="doc-progress-bar">
+                        <div className="doc-progress-fill"></div>
+                    </div>
+                </div>
+            )}
+
+            {!loadingDocs && filteredDocuments.length === 0 && !uploading ? (
+                <div
+                    className={`doc-empty-state ${dragActive ? 'doc-empty-state--active' : ''}`}
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                >
+                    <div className="doc-empty-icon-wrapper">
+                        <FolderOpen size={32} />
+                    </div>
+                    <h3 className="doc-empty-title">Нет документов</h3>
+                    <p className="doc-empty-subtitle">Перетащите файлы сюда или нажмите кнопку "Загрузить файл"</p>
+                    <label className="doc-btn-upload">
+                        <Upload size={16} />
+                        Загрузить первый файл
+                        <input
+                            type="file"
+                            className="doc-hidden-input"
+                            onChange={handleFileChange}
+                        />
+                    </label>
+                </div>
+            ) : (
+                <div className="doc-list">
+                    {loadingDocs ? (
+                        <div className="doc-loading">Загрузка документов...</div>
+                    ) : (
+                        filteredDocuments.map((doc) => {
+                            const IconComponent = getIconByExtension(doc.title);
+                            return (
+                                <div key={doc.id} className="doc-card">
+                                    <div className="doc-card-main">
+                                        <div className="doc-icon-box">
+                                            <IconComponent size={20} />
+                                        </div>
+                                        <div className="doc-info">
+                                            <h3 className="doc-info-title">{doc.title}</h3>
+                                            <div className="doc-info-meta">
+                                                <span>{getDocumentType(doc.title)}</span>
+                                                <span>•</span>
+                                                <span>{formatDate(doc.uploadedAt)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="doc-actions">
+                                        <a
+                                            href={rebuildFilePath(doc.filePath, 1)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="doc-action-btn"
+                                            title="Скачать"
+                                        >
+                                            <Download size={16} />
+                                        </a>
+                                        <button
+                                            className="doc-action-btn"
+                                            onClick={() => handleCopyLink(doc.filePath)}
+                                            title="Поделиться ссылкой"
+                                            type="button"
+                                        >
+                                            <Share2 size={16} />
+                                        </button>
+                                        <button
+                                            className="doc-action-btn doc-action-btn--delete"
+                                            onClick={() => handleDelete(doc.id)}
+                                            title="Удалить"
+                                            type="button"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             )}
         </div>

@@ -47,7 +47,7 @@ export const BoardSelectPanel = () => {
                 >
                     <ChevronLeft size={24} />
                 </button>
-                <h2 className="panel-title">Доски проекта</h2>
+                <h2 className="panel-title">KANBAN</h2>
                 <div style={{ width: 24 }} /> {/* Балансировка для центрирования заголовка */}
             </div>
 

@@ -48,8 +48,7 @@
 }
 
 .task-menu-button {
-    background: #161A1D;
-    border: 1px solid #2C333A;
+    background: none;
     padding: 6px;
     border-radius: 6px;
     cursor: pointer;
@@ -58,7 +57,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    opacity: 1;
 }
 
 .sortable-task-wrapper:hover .task-menu-button {
@@ -66,8 +65,6 @@
 }
 
 .task-menu-button:hover {
-    background: #2C333A;
-    color: #4BCE97;
     border-color: #4BCE97;
 }
 

@@ -133,6 +133,12 @@ export const ProjectPage = () => {
                         </button>
                     );
                 })}
+                <div className="pp-action-container">
+                    <button onClick={handleBoardsNavigation} className="pp-action-lg-btn">
+                        Перейти к доскам
+                        <ArrowRight size={20} />
+                    </button>
+                </div>
             </nav>
 
             {/* Tab Content */}
@@ -171,6 +177,11 @@ export const ProjectPage = () => {
                             <p className="pp-info-value">{project.head || 'Не назначен'}</p>
                         </div>
                     </div>
+                    <div className="pp-tasks-section">
+                        <h2 className="pp-section-title-standalone">Обзор состояния задач</h2>
+                        {/* Компонент с состояниями. Стили для него заданы ниже в CSS */}
+                        <ProjectTasksState projectId={projectIdNumber} />
+                    </div>
 
                     {/* Contributors Section */}
                     <div className="pp-card pp-contributors-section">
@@ -187,19 +198,10 @@ export const ProjectPage = () => {
                     </div>
 
                     {/* Task Status Overview */}
-                    <div className="pp-tasks-section">
-                        <h2 className="pp-section-title-standalone">Обзор состояния задач</h2>
-                        {/* Компонент с состояниями. Стили для него заданы ниже в CSS */}
-                        <ProjectTasksState projectId={projectIdNumber} />
-                    </div>
+
 
                     {/* Big Navigation Button */}
-                    <div className="pp-action-container">
-                        <button onClick={handleBoardsNavigation} className="pp-action-lg-btn">
-                            Перейти к доскам проекта
-                            <ArrowRight size={20} />
-                        </button>
-                    </div>
+
                 </div>
             ) : activeTab === "docs" ? (
                 <ProjectDocumentsComponent projectId={projectIdNumber} />

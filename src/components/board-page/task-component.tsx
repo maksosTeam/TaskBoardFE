@@ -108,29 +108,30 @@ export const TaskComponent = ({ task, onCardClick }: TaskComponentProps) => {
                             <span>{(task as any).attachments}</span>
                         </div>
                     )}
+
+                    <div className="task-avatars">
+                        {task?.contributors?.length > 0 ? (
+                            task.contributors.slice(0, 3).map((user, idx) => (
+                                <div key={idx} className="task-avatar" title={user.split("@~")[0]}>
+                                    <img
+                                        src={user.split("@~")[1] ? rebuildFilePath(user.split("@~")[1], 0) : defaultAvatar}
+                                        alt={user || 'Аватар'}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            <div className="task-avatar-fallback" title="Исполнитель не назначен">
+                                ?
+                            </div>
+                        )}
+                        {task.contributors?.length > 3 && (
+                            <div className="task-avatar-more">
+                                +{task.contributors.length - 3}
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                <div className="task-avatars">
-                    {task?.contributors?.length > 0 ? (
-                        task.contributors.slice(0, 3).map((user, idx) => (
-                            <div key={idx} className="task-avatar" title={user.userName}>
-                                <img
-                                    src={user.imagePath ? rebuildFilePath(user.imagePath, 0) : defaultAvatar}
-                                    alt={user.userName || 'Аватар'}
-                                />
-                            </div>
-                        ))
-                    ) : (
-                        <div className="task-avatar-fallback" title="Исполнитель не назначен">
-                            ?
-                        </div>
-                    )}
-                    {task.contributors?.length > 3 && (
-                        <div className="task-avatar-more">
-                            +{task.contributors.length - 3}
-                        </div>
-                    )}
-                </div>
             </div>
         </div>
     );
