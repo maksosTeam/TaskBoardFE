@@ -1,171 +1,335 @@
-.project-settings-form-container h3 {
-    margin-top: 36px;
-    font-size: 20px;
-    color: #dadada;
+/* Основной контейнер */
+.project-settings-form-container {
+    font-family: 'Inter', sans-serif;
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+.project-settings-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-top: 0;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+}
+
+/* Форма */
 .project-settings-form {
-    width: 850px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 20px;
-    margin-top: -10px;
-    background: #1a2633;
-    border-radius: 8px;
-    color: #d1d9e6;
+    gap: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.project-settings-form input{
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-    background: #27374a;
-    color: #fff;
+/* Сетка для полей (2 в ряд) */
+.project-settings-grid-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Одиночное поле ввода */
+.project-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-form-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+/* Стилизация текстовых инпутов */
+.project-settings-form input,
+.project-settings-form textarea,
+.project-settings-select,
+.project-settings-datepicker-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.project-settings-form input:focus,
+.project-settings-form textarea:focus,
+.project-settings-select:focus,
+.project-settings-datepicker-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 .project-settings-form textarea {
-    margin-top: 0;
-    margin-bottom: -20px;
-    padding: 6px;
-    background: #27374a;
+    resize: vertical;
+    min-height: 80px;
 }
 
-
-.project-settings-data-sect label{
+/* Кастомизация react-datepicker под темную тему */
+.react-datepicker-wrapper {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
 }
 
+/* Обертка селектора с кастомной стрелочкой */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-wrapper::after {
+    content: "▾";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.project-settings-select {
+    appearance: none;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.project-settings-select option {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+/* Свитч/Тоггл приватности */
 .project-settings-switch-container {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.3);
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.project-settings-switch-container .switch {
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: 30px;
+.switch-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.project-settings-datepicker-input {
-
+.switch-text span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #f8fafc;
 }
 
-.project-settings-form .success {
-    color: #3bcf88;
-    margin-bottom: 0;
-
+.switch-text p {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
 }
 
-.project-settings-form .error {
-    color: #e06c75;
-    margin-bottom: 0;
+/* Основа переключателя */
+.project-custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
 }
 
+.project-custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
+.project-custom-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #334155;
+    transition: .2s ease;
+    border-radius: 24px;
+}
+
+.project-custom-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .2s ease;
+    border-radius: 50%;
+}
+
+.project-custom-switch input:checked + .project-custom-slider {
+    background-color: #3b82f6;
+}
+
+.project-custom-switch input:checked + .project-custom-slider:before {
+    transform: translateX(20px);
+}
+
+/* Сообщения об операциях */
+.project-status-message {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.project-status-message.msg-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.project-status-message.msg-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Зона кнопок под формой */
+.project-settings-actions-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    gap: 16px;
+}
+
+.btn-accent-primary, .btn-destructive-outline {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.btn-accent-primary {
+    background: #2a69d1;
+    color: #ffffff;
+    border: none;
+    margin-left: auto; /* Смещает кнопку сохранения вправо */
+}
+
+.btn-accent-primary:hover:not(:disabled) {
+    background: #1f56af;
+}
+
+.btn-destructive-outline {
+    background: transparent;
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-destructive-outline:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: #ef4444;
+}
+
+.project-settings-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Модальное окно */
 .project-settings-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.28);
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 1000;
+    padding: 16px;
 }
 
 .project-settings-modal {
-    background-color: #1d2737;
+    background-color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 24px;
-    border-radius: 8px;
-    max-width: 400px;
+    border-radius: 16px;
+    max-width: 440px;
     width: 100%;
-    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    color: #f8fafc;
+}
+
+.project-settings-modal h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ef4444;
 }
 
 .project-settings-modal p {
-    font-size: 16px;
-    font-weight: 400;
-    margin-top: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #94a3b8;
+    margin-bottom: 24px;
 }
 
+/* Исправленный контейнер кнопок модалки */
 .project-settings-modal-buttons {
-    margin-top: 16px;
-    font-size: 19px;
-    font-weight: 400;
     display: flex;
+    justify-content: flex-end;
+    gap: 12px;
 }
 
-.project-settings-modal-buttons button{
+.btn-modal-cancel, .btn-modal-confirm-delete {
+    font-family: inherit;
     font-size: 14px;
     font-weight: 500;
-    padding: 6px 16px;
-    color: #cacaca;
-    border: none;
+    padding: 8px 16px;
     border-radius: 8px;
-    margin-top: 20px;
-}
-
-.project-settings-confirm-delete-btn {
-    background-color: #c54f4b;
-}
-
-.project-settings-cancel-delete-btn {
-    background-color: #6c757d;
-}
-
-.project-settings-delete-btn {
-    margin-top: 12px;
-    background-color: #c54f4b;
-    color: #e1e1e1;
-    border: none;
-    padding: 8px;
-    border-radius: 4px;
     cursor: pointer;
-    width: 96%;
-}
-
-.project-settings-submit-btn {
-    margin-top: 8px;
-    background-color: #152f47;
-    color: #e1e1e1;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
-    padding: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 96%;
 }
 
-.project-settings-select-label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.btn-modal-cancel {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
 }
 
-.project-settings-select {
-    background: #27374a;
-    color: #f0f0f0;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s ease;
-    appearance: none;
-    cursor: pointer;
-    width: 96%;
+.btn-modal-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
 }
 
-.project-settings-select:focus {
-    outline: none;
-    border-color: #888;
+.btn-modal-confirm-delete {
+    background-color: #ef4444;
+    color: #ffffff;
 }
 
-.project-settings-select option {
-    background-color: #273749;
-    color: #f0f0f0;
+.btn-modal-confirm-delete:hover {
+    background-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }

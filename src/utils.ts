@@ -38,7 +38,7 @@ export const rebuildFilePath = (filePath: string, fileTypeId: number): string =>
     if (!filePath?.trim()) return '';
 
     const fileTypes = {
-        0: '',
+        0: 'avatars',
         1: 'documents',
         2: 'attachments',
         3: '',
@@ -47,7 +47,7 @@ export const rebuildFilePath = (filePath: string, fileTypeId: number): string =>
     const type = fileTypes[fileTypeId as keyof typeof fileTypes];
     const normalizedPath = filePath.replace(/^\/+/, '');
 
-    return `/api/${type}/${normalizedPath}`;
+    return `/api/${normalizedPath}`;
 };
 
 export const calculateTimeLeft = (startDate: string, endDate: string) => {

@@ -15,6 +15,7 @@ type Board = {
     id: number;
     name: string;
 };
+type TabType = "overview" | "docs" | "settings" | "analytics";
 
 export const ProjectPage = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -108,39 +109,33 @@ export const ProjectPage = () => {
 
     return (
         <div className='project-page-main-container'>
-            <div className='project-page-header'>
-                <h2 className='project-title'>{project.name}</h2>
-                <div className='tabs'>
-                    <button
-                        onClick={() => setActiveTab("overview")}
-                        className={activeTab === "overview" ? "active-tab" : ""}
-                    >
-                        Обзор
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("docs")}
-                        className={activeTab === "docs" ? "active-tab" : ""}
-                    >
-                        Документация
-                    </button>
-
-                    <button
-                        className={activeTab === "settings" ? "active-tab" : ""}
-                        onClick={() => setActiveTab("settings")}
-                    >
-                        Настройки
-                    </button>
-                    <button
-                        className={activeTab === "analytics" ? "active-tab" : ""}
-                        onClick={() => setActiveTab("analytics")}
-                    >
-                        Аналитика
-                    </button>
+            <header className="project-page__header">
+                <div className="project-page__title-block">
+                    <h2 className="project-page__title">{project.name}</h2>
+                    <span className="project-page__status">{project.status}</span>
                 </div>
-            </div>
 
-            <p className='project-status'>{project.status}</p>
-
+                <nav className="project-page__tabs" aria-label="Навигация по проекту">
+                    {(["overview", "docs", "settings", "analytics"] as const).map((tab) => {
+                        const labels: Record<TabType, string> = {
+                            overview: "Обзор",
+                            docs: "Документация",
+                            settings: "Настройки",
+                            analytics: "Аналитика"
+                        };
+                        return (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`project-page__tab-btn ${activeTab === tab ? "project-page__tab-btn--active" : ""}`}
+                                type="button"
+                            >
+                                {labels[tab]}
+                            </button>
+                        );
+                    })}
+                </nav>
+            </header>
             {activeTab === "overview" ? (
                 <>
                     <div className='project-description-container'>

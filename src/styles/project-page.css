@@ -1,38 +1,67 @@
 .project-page-main-container {
     width: 900px;
+    padding-top: 20px;
 }
 
-.project-page-header {
+.project-page__header {
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    gap: 20px;
 }
 
-.project-page-header div{
-    margin-left: auto;
-    margin-top: 15px;
+.project-page__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.project-page-header button{
-    font-size: 14px;
-    font-family: Inter, sans-serif;
-    font-weight: 500;
-    background: none;
-    color: #cccccc;
+.project-page__title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #f8fafc;
+    margin: 0;
+    letter-spacing: -0.01em;
 }
 
-.project-page-header button:hover{
-    color: #91ADC9;
-}
-
-.project-title {
-    font-size: 22px;
-}
-
-.project-status {
+.project-page__status {
     font-size: 16px;
-    color: #9CADBF;
-    margin-top: -25px;
+    color: #94a3b8;
+    font-weight: 400;
+    margin-top: -6px;
+}
+
+/* Навигационные табы */
+.project-page__tabs {
+    display: flex;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.project-page__tab-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.project-page__tab-btn:hover {
+    color: #f8fafc;
+}
+
+.project-page__tab-btn--active {
+    background-color: #1e293b;
+    color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 .project-specificity-container {
     margin-top: -10px;

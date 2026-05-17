@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import '../../styles/project-page/project-settings-form.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {ru} from "date-fns/locale";
+import { ru } from "date-fns/locale";
 
 interface UserProject {
     id: number;
@@ -88,7 +88,7 @@ export const ProjectSettingsForm = ({ project, onUpdate }: Props) => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            navigate('/home'); // переход на главную
+            navigate('/home');
         } catch (err) {
             setError("Не удалось удалить проект.");
             setDeleting(false);
@@ -99,125 +99,159 @@ export const ProjectSettingsForm = ({ project, onUpdate }: Props) => {
         if (typeof form.startDate === "string") {
             setForm((prev) => ({
                 ...prev,
-                startDate: new Date(prev.startDate),
-                expectedEndDate: new Date(prev.expectedEndDate),
+                startDate: new Date(prev.startDate) as any,
+                expectedEndDate: new Date(prev.expectedEndDate) as any,
             }));
         }
     }, []);
 
     return (
         <div className="project-settings-form-container">
-            <h3>Настройки проекта</h3>
+            <h3 className="project-settings-title">Настройки проекта</h3>
+
             <form className="project-settings-form" onSubmit={handleSubmit}>
-                <label>
-                    Название
-                    <input
-                        value={form.name}
-                        onChange={e => handleChange("name", e.target.value)}
-                    />
-                </label>
 
-                <label>
-                    Ключ проекта
-                    <input
-                        value={form.key}
-                        onChange={e => handleChange("key", e.target.value)}
-                    />
-                </label>
+                {/* Ряд: Название + Ключ */}
+                <div className="project-settings-grid-row">
+                    <div className="project-form-field">
+                        <label htmlFor="project-name">Название проекта</label>
+                        <input
+                            id="project-name"
+                            value={form.name}
+                            onChange={e => handleChange("name", e.target.value)}
+                            placeholder="Введите название"
+                            required
+                        />
+                    </div>
 
-                <label>
-                    Описание
+                    <div className="project-form-field">
+                        <label htmlFor="project-key">Ключ проекта</label>
+                        <input
+                            id="project-key"
+                            value={form.key}
+                            onChange={e => handleChange("key", e.target.value)}
+                            placeholder="Например, PRJ"
+                            required
+                        />
+                    </div>
+                </div>
+
+                {/* Описание */}
+                <div className="project-form-field">
+                    <label htmlFor="project-desc">Описание</label>
                     <textarea
+                        id="project-desc"
+                        rows={4}
                         value={form.description}
                         onChange={e => handleChange("description", e.target.value)}
+                        placeholder="Краткое описание целей и задач проекта..."
                     />
-                </label>
-                <div className="project-settings-data-sect">
-                <label>
-                    Начало
-                    <DatePicker
-                        selected={form.startDate instanceof Date ? form.startDate : new Date(form.startDate)}
-                        onChange={(date: Date) => handleChange("startDate", date)}
-                        dateFormat="dd.MM.yyyy"
-                        locale={ru}
-                        placeholderText="Дата начала"
-                        className="project-settings-datepicker-input"
-                    />
-                </label>
-
-                <label>
-                    Окончание
-                    <DatePicker
-                        selected={form.expectedEndDate instanceof Date ? form.expectedEndDate : new Date(form.expectedEndDate)}
-                        onChange={(date: Date) => handleChange("expectedEndDate", date)}
-                        dateFormat="dd.MM.yyyy"
-                        locale={ru}
-                        placeholderText="Дата окончания"
-                        className="project-settings-datepicker-input"
-                    />
-                </label>
                 </div>
+
+                {/* Ряд: Даты начала и окончания */}
+                <div className="project-settings-grid-row">
+                    <div className="project-form-field">
+                        <label>Дата начала</label>
+                        <DatePicker
+                            selected={form.startDate instanceof Date ? form.startDate : new Date(form.startDate)}
+                            onChange={(date: Date) => handleChange("startDate", date)}
+                            dateFormat="dd.MM.yyyy"
+                            locale={ru}
+                            placeholderText="Выберите дату"
+                            className="project-settings-datepicker-input"
+                        />
+                    </div>
+
+                    <div className="project-form-field">
+                        <label>Дата окончания</label>
+                        <DatePicker
+                            selected={form.expectedEndDate instanceof Date ? form.expectedEndDate : new Date(form.expectedEndDate)}
+                            onChange={(date: Date) => handleChange("expectedEndDate", date)}
+                            dateFormat="dd.MM.yyyy"
+                            locale={ru}
+                            placeholderText="Выберите дату"
+                            className="project-settings-datepicker-input"
+                        />
+                    </div>
+                </div>
+
+                {/* Селектор Статуса */}
+                <div className="project-form-field">
+                    <label htmlFor="project-status">Текущий статус</label>
+                    <div className="select-wrapper">
+                        <select
+                            id="project-status"
+                            className="project-settings-select"
+                            value={form.priority}
+                            onChange={e => handleChange("priority", Number(e.target.value))}
+                        >
+                            <option value={0}>Не активен</option>
+                            <option value={1}>В работе</option>
+                            <option value={2}>Завершён</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Переключатель приватности */}
                 <div className="project-settings-switch-container">
-                    <span>Приватный:</span>
-                    <label className="switch">
+                    <div className="switch-text">
+                        <span>Приватный проект</span>
+                        <p>Ограничить доступ к проекту только для участников</p>
+                    </div>
+                    <label className="project-custom-switch">
                         <input
                             type="checkbox"
-                            name="isPrivate"
                             checked={form.isPrivate}
                             onChange={e => handleChange("isPrivate", e.target.checked)}
                         />
-                        <span className="slider" />
+                        <span className="project-custom-slider" />
                     </label>
                 </div>
 
-                <label className="project-settings-select-label">
-                    Статус
-                    <select
-                        className="project-settings-select"
-                        value={form.priority}
-                        onChange={e => handleChange("priority", Number(e.target.value))}
+                {/* Блок уведомлений об операциях */}
+                {success && <div className="project-status-message msg-success">Изменения успешно сохранены!</div>}
+                {error && <div className="project-status-message msg-error">{error}</div>}
+
+                {/* Кнопки управления */}
+                <div className="project-settings-actions-zone">
+                    <button
+                        type="button"
+                        className="btn-destructive-outline"
+                        onClick={() => setShowConfirmDelete(true)}
+                        disabled={deleting}
                     >
-                        <option value={0}>Не активен</option>
-                        <option value={1}>В работе</option>
-                        <option value={2}>Завершён</option>
-                    </select>
-                </label>
-
-                <button className="project-settings-submit-btn" type="submit" disabled={loading}>
-                    {loading ? "Сохранение..." : "Сохранить изменения"}
-                </button>
-
-                <button
-                    type="button"
-                    className="project-settings-delete-btn"
-                    onClick={() => setShowConfirmDelete(true)}
-                    disabled={deleting}
-                >
-                    Удалить проект
-                </button>
-
-                {success && <p className="success">Изменения сохранены!</p>}
-                {error && <p className="error">{error}</p>}
+                        Удалить проект
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn-accent-primary"
+                        disabled={loading}
+                    >
+                        {loading ? "Сохранение..." : "Сохранить изменения"}
+                    </button>
+                </div>
             </form>
 
+            {/* Модальное окно подтверждения */}
             {showConfirmDelete && (
                 <div className="project-settings-modal-overlay">
                     <div className="project-settings-modal">
-                        <p>Вы уверены, что хотите удалить проект {project.name}?</p>
-                        <div className="modal-buttons">
-                            <button
-                                onClick={handleDelete}
-                                className="project-settings-confirm-delete-btn"
-                                disabled={deleting}
-                            >
-                                {deleting ? "Удаление..." : "Удалить"}
-                            </button>
+                        <h4>Удаление проекта</h4>
+                        <p>Вы уверены, что хотите безвозвратно удалить проект <strong>{project.name}</strong>? Это действие нельзя будет отменить.</p>
+                        <div className="project-settings-modal-buttons">
                             <button
                                 onClick={() => setShowConfirmDelete(false)}
-                                className="project-settings-cancel-delete-btn"
+                                className="btn-modal-cancel"
                                 disabled={deleting}
                             >
                                 Отмена
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="btn-modal-confirm-delete"
+                                disabled={deleting}
+                            >
+                                {deleting ? "Удаление..." : "Да, удалить"}
                             </button>
                         </div>
                     </div>

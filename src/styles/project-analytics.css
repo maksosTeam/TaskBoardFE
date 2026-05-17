@@ -1,106 +1,185 @@
+/* Контейнер графика — теперь он является опорной точкой координат */
 .burndown-container {
-    color: white;
-    border-radius: 8px;
-    width: 850px;
+    font-family: 'Inter', sans-serif;
+    position: relative; /* КРИТИЧНО: предотвращает уползание абсолютной модалки */
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 850px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
+/* Шапка контейнера */
 .burndown-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-}
-
-.burndown-toggle-button {
-    background: none;
-    color: #dfdfdf;
-}
-.burndown-toggle-button:hover {
-    color: #84acc7;
+    margin-bottom: 24px;
+    position: relative; /* Для выравнивания оверлея строго по шапке, если нужно */
 }
 
 .burndown-title {
-    font-size: 24px;
-}
-
-.burndown-filter-block label{
     font-size: 20px;
+    font-weight: 600;
+    color: #f8fafc;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.01em;
 }
 
-.burndown-filters {
+.burndown-subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Кнопка вызова фильтров */
+.burndown-toggle-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.burndown-toggle-button:hover,
+.burndown-toggle-button.active {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-color: #3b82f6;
+}
+
+/* Очищенное выпадающее меню (Модалка фильтрации) */
+.burndown-filters-dropdown {
     position: absolute;
+    top: 52px; /* Чуть ниже кнопки вызова */
     right: 0;
-    z-index: 10;
-    background-color: rgba(16, 28, 40, 0.61);
-    border-radius: 10px;
-    border: 1px solid #4b5a6a;
+    z-index: 50;
+    width: 340px;
+    background-color: rgba(15, 23, 42, 0.9); /* Темный полупрозрачный фон */
+    backdrop-filter: blur(12px); /* Эффект матового стекла */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     padding: 20px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
+/* Внутренние блоки настроек */
+.burndown-filter-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-block-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Группа кнопок переключателей */
 .burndown-button-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-    margin-bottom: 10px;
+    gap: 6px;
 }
 
-.burndown-button {
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    padding: 4px 14px;
-    border: 1px solid #1E2F3F;
-    border-radius: 10px;
-    background-color: transparent;
-    color: #e3e3e3;
+.burndown-filter-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #cbd5e1;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+    transition: all 0.15s ease;
 }
 
-.burndown-button:hover {
-    background-color: #2a415b;
+.burndown-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
 }
 
-.burndown-button.active {
-    background-color: #1E2F3F;
+.burndown-filter-btn.active {
+    background-color: rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+    color: #60a5fa;
     font-weight: 600;
 }
 
-.burndown-filter-block-container {
+/* Секция ручного выбора дат */
+.burndown-custom-date-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 14px;
     display: flex;
-    flex-direction: row;
-    margin-top: 16px;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.burndown-filter-block-container label {
-    margin-right: 10px;
-    font-family: Inter, sans-serif;
-    font-size: 14px;
-    font-weight: 300;
+.custom-date-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
+.date-pickers-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.date-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-input-field label {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Переопределение инпутов календаря */
 .burndown-datepicker {
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    padding: 4px 14px;
-    border: 1px solid #1E2F3F;
-    border-radius: 10px;
-    background-color: transparent;
-    color: #e3e3e3;
+    width: 100% !important;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    background-color: #0f172a;
+    color: #f8fafc;
+    outline: none;
+    box-sizing: border-box;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-    width: 90px;
-    margin-bottom: 10px;
+    transition: border-color 0.2s;
 }
 
-.burndown-label-user-date{
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    padding: 2px 14px;
-    border: 1px solid #1E2F3F;
-    border-radius: 10px;
-    height: 23px;
-    margin-right: 50px;
+.burndown-datepicker:focus {
+    border-color: #3b82f6;
+}
+
+/* Холст под график с фиксированной высотой */
+.burndown-chart-wrapper {
+    position: relative;
+    height: 340px; /* Фиксируем высоту самого Canvas для ChartJS */
+    width: 100%;
 }

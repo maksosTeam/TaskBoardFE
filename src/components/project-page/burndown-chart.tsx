@@ -3,7 +3,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Line } from "react-chartjs-2";
-import {Funnel} from "lucide-react";
+import { ru } from "date-fns/locale";
+import { Funnel } from "lucide-react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -14,7 +15,8 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import '../../styles/project-analytics.css'
+import '../../styles/project-analytics.css';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const priorityLabels = ["Очень низкий", "Низкий", "Средний", "Высокий", "Критический"];
@@ -28,26 +30,34 @@ const intervalOptions = [
     { label: "Всё время", days: null }
 ];
 
-export const BurndownChart = ({ projectId }) => {
-    const [priority, setPriority] = useState(2);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(() => {
+interface BurndownChartProps {
+    projectId: number;
+}
+
+interface DataItem {
+    date: string;
+    value: number;
+}
+
+export const BurndownChart = ({ projectId }: BurndownChartProps) => {
+    const [priority, setPriority] = useState<number>(2);
+    const [startDate, setStartDate] = useState<Date | null>(new Date());
+    const [endDate, setEndDate] = useState<Date | null>(() => {
         const d = new Date();
         d.setDate(d.getDate() + 7);
         return d;
     });
-    const [interval, setInterval] = useState(intervalOptions[0]);
-    const [data, setData] = useState([]);
-    const [showFilters, setShowFilters] = useState(false);
+    const [interval, setIntervalOption] = useState<typeof intervalOptions[0]>(intervalOptions[0]);
+    const [data, setData] = useState<DataItem[]>([]);
+    const [showFilters, setShowFilters] = useState<boolean>(false);
 
     useEffect(() => {
-        if (interval) {
+        if (interval && startDate) {
             const newEndDate = new Date(startDate);
             if (interval.days !== null) {
                 newEndDate.setDate(startDate.getDate() + interval.days);
             } else {
-                // Для "Всё время" можно установить очень далекую дату или оставить как есть
-                newEndDate.setFullYear(startDate.getFullYear() + 100);
+                newEndDate.setFullYear(startDate.getFullYear() + 10);
             }
             setEndDate(newEndDate);
         }
@@ -64,15 +74,15 @@ export const BurndownChart = ({ projectId }) => {
                     }
                 );
 
-                const raw = response.data.tasksCountByDate;
+                const raw = response.data.tasksCountByDate || {};
 
                 const filteredData = Object.entries(raw)
                     .map(([date, value]) => ({
                         date: new Date(date),
-                        value
+                        value: value as number
                     }))
                     .filter(item => (!startDate || item.date >= startDate) && (!endDate || item.date <= endDate))
-                    .sort((a, b) => a.date - b.date)
+                    .sort((a, b) => a.date.getTime() - b.date.getTime())
                     .map(item => ({
                         date: item.date.toLocaleDateString("ru-RU"),
                         value: item.value
@@ -91,49 +101,51 @@ export const BurndownChart = ({ projectId }) => {
         labels: data.map(item => item.date),
         datasets: [
             {
-                label: "Количество задач",
+                label: "Оставшиеся задачи",
                 data: data.map(item => item.value),
-                borderColor: "#90acc7",
-                backgroundColor: "rgba(102, 178, 255, 0.1)",
-                tension: 0.4,
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59, 130, 246, 0.06)",
+                borderWidth: 3,
+                pointBackgroundColor: "#3b82f6",
+                pointHoverRadius: 6,
+                tension: 0.3,
+                fill: true,
             }
         ]
     };
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                labels: {
-                    color: "#7188a0",
-                    font: { size: 14 }
-                }
+                display: false // Скрываем легенду, так как название графика уже есть в шапке
             },
             tooltip: {
-                backgroundColor: "#1E2A38",
+                backgroundColor: "#0f172a",
                 titleColor: "#ffffff",
-                bodyColor: "#ffffff"
+                bodyColor: "#94a3b8",
+                borderColor: "rgba(255, 255, 255, 0.08)",
+                borderWidth: 1,
+                padding: 12,
+                boxPadding: 6,
             }
         },
         scales: {
             x: {
                 ticks: {
-                    color: "#7188a0",
-                    font: { size: 13 }
+                    color: "#64748b",
+                    font: { size: 12, family: "Inter" }
                 },
-                grid: {
-                    display: false
-                }
+                grid: { display: false }
             },
             y: {
                 ticks: {
-                    color: "#7188a0",
-                    font: { size: 13 },
-                    callback: (value) => Number.isInteger(value) ? value : null
+                    color: "#64748b",
+                    font: { size: 12, family: "Inter" },
+                    callback: (value: any) => Number.isInteger(value) ? value : null
                 },
-                grid: {
-                    color: "#2A415B"
-                }
+                grid: { color: "rgba(255, 255, 255, 0.04)" }
             }
         }
     };
@@ -141,85 +153,95 @@ export const BurndownChart = ({ projectId }) => {
     return (
         <div className="burndown-container">
             <div className="burndown-header">
-                <h2 className="burndown-title">Диаграмма сгорания задач</h2>
+                <div>
+                    <h2 className="burndown-title">Диаграмма сгорания задач</h2>
+                    <p className="burndown-subtitle">Контроль динамики выполнения текущего спринта</p>
+                </div>
                 <button
+                    type="button"
                     onClick={() => setShowFilters(prev => !prev)}
-                    className="burndown-toggle-button"
+                    className={`burndown-toggle-button ${showFilters ? 'active' : ''}`}
+                    title="Фильтры"
                 >
-                    <Funnel size={26} />
+                    <Funnel size={20} />
+                    <span>Фильтры</span>
                 </button>
+
+                {/* Выпадающая панель фильтров (теперь жестко привязана к контейнеру) */}
+                {showFilters && (
+                    <div className="burndown-filters-dropdown">
+                        <div className="burndown-filter-block">
+                            <label className="filter-block-label">Приоритет задач</label>
+                            <div className="burndown-button-group">
+                                {priorityLabels.map((label, index) => (
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        onClick={() => setPriority(index)}
+                                        className={`burndown-filter-btn ${priority === index ? 'active' : ''}`}
+                                    >
+                                        {label}
+                                    </button>
+                                ))}
+                                <button
+                                    type="button"
+                                    onClick={() => setPriority(99)}
+                                    className={`burndown-filter-btn ${priority === 99 ? 'active' : ''}`}
+                                >
+                                    Любой
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="burndown-filter-block">
+                            <label className="filter-block-label">Быстрый интервал</label>
+                            <div className="burndown-button-group">
+                                {intervalOptions.map(opt => (
+                                    <button
+                                        key={opt.label}
+                                        type="button"
+                                        onClick={() => setIntervalOption(opt)}
+                                        className={`burndown-filter-btn ${interval?.label === opt.label ? 'active' : ''}`}
+                                    >
+                                        {opt.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="burndown-custom-date-section">
+                            <span className="custom-date-title">Произвольный период</span>
+                            <div className="date-pickers-row">
+                                <div className="date-input-field">
+                                    <label>От</label>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        dateFormat="dd.MM.yyyy"
+                                        className="burndown-datepicker"
+                                        locale={ru}
+                                    />
+                                </div>
+                                <div className="date-input-field">
+                                    <label>До</label>
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        dateFormat="dd.MM.yyyy"
+                                        className="burndown-datepicker"
+                                        locale={ru}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
 
-            {showFilters && (
-                <div className="burndown-filters">
-                    <div className="burndown-filter-block">
-                        <label>Приоритет</label>
-                        <div className="burndown-button-group">
-                            {priorityLabels.map((label, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setPriority(index)}
-                                    className={`burndown-button ${priority === index ? 'active' : ''}`}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                            <button
-                                onClick={() => setPriority(99)}
-                                className={`burndown-button ${priority === 99 ? 'active' : ''}`}
-                            >
-                                Любой
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="burndown-filter-block">
-                        <label>Интервал</label>
-                        <div className="burndown-button-group">
-                            {intervalOptions.map(opt => (
-                                <button
-                                    key={opt.label}
-                                    onClick={() => setInterval(opt)}
-                                    className={`burndown-button ${interval?.label === opt.label ? 'active' : ''}`}
-                                >
-                                    {opt.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="burndown-filter-block-container">
-
-                        <div className='burndown-label-user-date'>
-                            Определено пользователем
-                        </div>
-                        <div>
-                            <div className="burndown-filter-block">
-                                <label>От: </label>
-                                <DatePicker
-                                    selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
-                                    dateFormat="dd.MM.yyyy"
-                                    className="burndown-datepicker"
-                                />
-                            </div>
-
-                            <div className="burndown-filter-block">
-                                <label>До: </label>
-                                <DatePicker
-                                    selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
-                                    dateFormat="dd.MM.yyyy"
-                                    className="burndown-datepicker"
-                                />
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            )}
-
-            <Line data={chartData} options={options} />
+            {/* Обертка для фиксации высоты холста графика */}
+            <div className="burndown-chart-wrapper">
+                <Line data={chartData} options={options} />
+            </div>
         </div>
     );
 };
