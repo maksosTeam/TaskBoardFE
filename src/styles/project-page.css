@@ -1,209 +1,346 @@
-.project-page-main-container {
-    width: 900px;
-    padding-top: 20px;
-}
-
-.project-page__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-    gap: 20px;
-}
-
-.project-page__title-block {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.project-page__title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #f8fafc;
-    margin: 0;
-    letter-spacing: -0.01em;
-}
-
-.project-page__status {
-    font-size: 16px;
-    color: #94a3b8;
-    font-weight: 400;
-    margin-top: -6px;
-}
-
-/* Навигационные табы */
-.project-page__tabs {
-    display: flex;
-    padding: 4px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.project-page__tab-btn {
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.project-page__tab-btn:hover {
-    color: #f8fafc;
-}
-
-.project-page__tab-btn--active {
-    background-color: #1e293b;
-    color: #3b82f6;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-.project-specificity-container {
-    margin-top: -10px;
-    padding: 16px 20px;
-    border-radius: 10px;
-    border: #334e6a 1px solid;
-}
-
-.project-specificity-sect {
-    display: flex;
-    flex-direction: row;
-    color: #9CADBF;
-    font-size: 14px;
-    font-weight: 300;
-}
-
-.project-specificity-sect p{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.project-specificity-second {
-    color: rgba(255, 255, 255, 0.8);
-    margin-left: auto;
-}
-
-.project-to-boards-btn {
-    font-family: Inter, sans-serif;
-    margin-top: 20px;
-    padding: 12px 16px;
-    background-color: #2E3B47;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    font-weight: 400;
-    border-radius: 10px;
-}
-
-.project-to-boards-btn:hover {
-    background-color: #27323c;
-}
-
-
-.project-description-container {
+/* Базовый контейнер */
+.pp-container {
+    padding: 32px;
+    max-width: 1280px; /* max-w-7xl */
+    margin: 0 auto;
     width: 100%;
-    word-break: break-all;
-    hyphens: auto;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-.project-description-container h4{
-    margin-top: -10px;
+/* === Шапка проекта === */
+.pp-header {
+    margin-bottom: 24px;
 }
 
-.project-description-container p{
-    font-size: 13px;
-    margin-top: -8px;
-    margin-bottom: 0;
-    font-weight: 300;
-}
-
-
-
-
-.projects-tasks-state-container {
+.pp-title-wrapper {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
-.task-state {
-    width: 158px;
-    border: #334F6B solid 1px;
+.pp-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin: 0;
+}
+
+.pp-badge {
+    background-color: rgba(75, 206, 151, 0.2);
+    color: #4BCE97;
+    border: 1px solid #4BCE97;
+    padding: 2px 10px;
+    border-radius: 9999px; /* Badge shape */
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: box-shadow 0.3s ease;
+}
+
+.pp-badge:hover {
+    box-shadow: 0 0 12px rgba(75, 206, 151, 0.4);
+}
+
+.pp-id-subtitle {
+    color: #9FADBC;
+    font-family: monospace;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* === Навигационные табы === */
+.pp-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #2C333A;
+    padding-bottom: 16px;
+}
+
+.pp-tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #9FADBC;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pp-tab-btn:hover:not(.active) {
+    background-color: #161A1D;
+    color: #ffffff;
+}
+
+.pp-tab-btn.active {
+    background-color: rgba(75, 206, 151, 0.1);
+    color: #4BCE97;
+    border-color: #4BCE97;
+    box-shadow: 0 0 10px rgba(75, 206, 151, 0.2);
+}
+
+/* === Карточки (Общие стили) === */
+.pp-card {
+    background-color: #000000;
+    border: 1px solid #2C333A;
     border-radius: 12px;
     padding: 24px;
+    margin-bottom: 32px;
+    transition: all 0.3s ease;
 }
 
-.task-state p {
-    margin: 0;
-    margin-bottom: 5px;
+.pp-card:hover {
+    border-color: #4BCE97;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05); /* Легкий белый glow, как в дизайне */
+}
+
+/* Сетка инфо проекта */
+.pp-info-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .pp-info-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .pp-info-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.pp-info-label {
+    font-size: 12px;
+    color: #9FADBC;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pp-info-value {
+    color: #ffffff;
+    font-weight: 600;
     font-size: 16px;
-    font-weight: 500;
+    margin: 0;
 }
 
-.task-state b {
-    font-size: 24px;
+/* Участники */
+.pp-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.pp-section-title {
+    font-size: 18px;
     font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
-.project-page-loading {
-    width: 900px;
+.text-blue { color: #579DFF; }
+
+/* Кнопка "Добавить участника" */
+.pp-action-sm-btn {
+    background-color: #F1F2F4;
+    color: #000000;
+    border: 2px solid transparent;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 6px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pp-action-sm-btn:hover {
+    background-color: #4BCE97;
+    border-color: #4BCE97;
+    box-shadow: 0 0 12px rgba(75, 206, 151, 0.5);
+}
+
+.pp-contributors-wrapper {
+    /* Сюда отрендерится твой ProjectContributorsComponent */
+    /* Если у него внутри аватарки, они встанут сюда */
+}
+
+/* === Блок задач (Адаптируем под ProjectTasksState) === */
+.pp-tasks-section {
+    margin-bottom: 32px;
+}
+
+.pp-section-title-standalone {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* СТИЛИЗИРУЕМ ВНУТРЕННОСТИ КОМПОНЕНТА ProjectTasksState */
+.projects-tasks-state-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    .projects-tasks-state-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .projects-tasks-state-container { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Карточки состояния задач (заменяют старый дизайн) */
+.task-state {
+    background-color: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    width: 100%; /* Убрана жесткая ширина 158px */
+    box-sizing: border-box;
+}
+
+.task-state:hover {
+    border-color: #4BCE97;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Label внутри task-state */
+.task-state p {
+    font-size: 14px;
+    color: #9FADBC;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    font-weight: 400;
+}
+
+/* Значение внутри task-state */
+.task-state b {
+    font-size: 48px;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+    /* Если в компоненте не заданы цвета для цифр, по умолчанию делаем белым */
+    color: #ffffff;
+}
+
+/* === Большая кнопка внизу === */
+.pp-action-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pp-action-lg-btn {
+    background-color: #F1F2F4;
+    color: #000000;
+    border: 2px solid transparent;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pp-action-lg-btn:hover {
+    background-color: #4BCE97;
+    border-color: #4BCE97;
+    box-shadow: 0 0 20px rgba(75, 206, 151, 0.6);
+}
+
+/* === Загрузка и Ошибка (Оставил похожими, но адаптировал цвета) === */
+.pp-loading {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
 }
 
-.spinner {
+.pp-spinner {
     width: 48px;
     height: 48px;
-    border: 5px solid rgba(145, 173, 201, 0.3);
-    border-top-color: #91ADC9;
+    border: 4px solid #2C333A;
+    border-top-color: #4BCE97;
     border-radius: 50%;
     animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
-
-.project-page-error-container {
-    margin-left: 40px;
-    width: 900px;
-}
-
-.project-page-error {
-    font-family: Inter, sans-serif;
-    text-align: center;
-    padding: 2rem;
+.pp-error-container {
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 40px;
 }
 
-.project-page-error h2 {
-    color: #d6d6d6;
-    margin-bottom: 1rem;
+.pp-error {
+    text-align: center;
+    background: #000000;
+    border: 1px solid #2C333A;
+    padding: 40px;
+    border-radius: 12px;
 }
 
-.project-page-error p {
-    margin-bottom: 2rem;
-    color: #b1b1b1;
-}
+.pp-error h2 { color: #ffffff; margin-bottom: 16px; text-transform: uppercase; }
+.pp-error p { color: #9FADBC; margin-bottom: 32px; }
 
-.project-page-error-button {
-    padding: 8px 16px;
-    background-color: #254453;
-    color: white;
-    border: none;
-    border-radius: 4px;
+.pp-error-button {
+    padding: 12px 24px;
+    background-color: #161A1D;
+    color: #ffffff;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
     cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.2s;
 }
 
-.project-page-error-button:hover {
-    background-color: #295267;
+.pp-error-button:hover {
+    border-color: #4BCE97;
+    color: #4BCE97;
+}
+
+/* Описание */
+.pp-description {
+    color: #9FADBC;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
 }
