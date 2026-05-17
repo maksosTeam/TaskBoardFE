@@ -24,7 +24,6 @@ export const BoardSelectPanel = () => {
     );
 
     const isProjectHead = user?.username === project?.head;
-
     const selectedBoardId = boardId ? parseInt(boardId, 10) : null;
 
     const refreshBoards = () => dispatch(fetchBoardsByProject(projectId));
@@ -41,20 +40,22 @@ export const BoardSelectPanel = () => {
 
     return (
         <div className="board-select-panel-container">
-            <div className="board-select-buttons">
+            <div className="board-select-header">
                 <button
+                    className="board-select-back"
                     onClick={() => navigate(`/home/project/${projectId}`)}
-                    style={{ background: 'none', border: 'none', padding: 0, marginLeft: '-3px' }}
                 >
-                    <ChevronLeft size={50} color="#fff" />
+                    <ChevronLeft size={24} />
                 </button>
-
-                {isProjectHead && (
-                    <button className='panel-create-board-button' onClick={() => setShowModal(true)}>
-                        Добавить доску
-                    </button>
-                )}
+                <h2 className="panel-title">Доски проекта</h2>
+                <div style={{ width: 24 }} /> {/* Балансировка для центрирования заголовка */}
             </div>
+
+            {isProjectHead && (
+                <button className="panel-create-board-button" onClick={() => setShowModal(true)}>
+                    Создать
+                </button>
+            )}
 
             <div className="select-boards">
                 {boards.map((board) => (
@@ -62,7 +63,6 @@ export const BoardSelectPanel = () => {
                         key={board.id}
                         className={`board-item ${board.id === selectedBoardId ? "selected" : ""}`}
                         onClick={() => handleBoardClick(board.id)}
-                        style={{ cursor: 'pointer' }}
                     >
                         <p>{board.name}</p>
                         <span>{board.itemsCount} задач</span>

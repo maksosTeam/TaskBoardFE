@@ -1,5 +1,76 @@
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-ExtraBoldItalic.woff2') format('woff2');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-BookItalic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-Book.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Magistral';
+  src: url('./assets/fonts/Magistral-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+}
+
+
 :root {
-  font-family: Inter, sans-serif !important;
+  font-family: Magistral, Inter, sans-serif !important;
   line-height: 1.5;
   font-weight: 400;
 

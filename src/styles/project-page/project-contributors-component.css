@@ -1,221 +1,308 @@
-.project-users-container {
-    border-radius: 8px;
-    color: white;
-    margin-top: -10px;
-    font-family: Inter, sans-serif;
-    max-height: 400px;
-}
+/* project-contributors-component.css */
 
-.section-title {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 16px;
+.project-users-container {
+    width: 100%;
 }
 
 .user-list {
     list-style: none;
     padding: 0;
-    margin: 0;
-    max-height: 165px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    width: 100%;
-
-    /* Стилизация скроллбара для WebKit */
-    scrollbar-width: thin;              /* Firefox */
-    scrollbar-color: #9bacbe #141f29;   /* Firefox */
-
-    /* Webkit (Chrome, Edge, Safari) */
-}
-
-.user-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.user-list::-webkit-scrollbar-track {
-    background: #141f29;
-    border-radius: 4px;
-}
-
-.user-list::-webkit-scrollbar-thumb {
-    background-color: #9bacbe;
-    border-radius: 4px;
-    border: 2px solid transparent;
-    background-clip: content-box;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .user-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    width: 840px;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #161A1D;
+    border: 1px solid #2C333A;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    position: relative;
 }
 
 .user-avatar {
-    width: 43px;
-    height: 43px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    flex-shrink: 0;
     object-fit: cover;
+    background: #000000;
 }
 
 .user-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 
 .user-name {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #9FADBC;
 }
 
 .user-role {
-    font-size: 12px;
-    color: #9CADBF;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    width: fit-content;
 }
 
-.add-user-button {
-    padding: 6px 12px;
-    background-color: #3a3f47;
-    color: white;
+.project-user-actions {
+    position: relative;
+}
+
+.user-menu-btn {
+    background: none;
     border: none;
-    border-radius: 6px;
-    font-size: 13px;
+    padding: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-bottom: 6px;
+    color: #9FADBC;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.add-user-button:hover {
-    background-color: #4b525c;
+.user-menu-btn:hover {
+    background: #2C333A;
+    color: #4BCE97;
 }
 
+.user-menu-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 50;
+    min-width: 140px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    color: #9FADBC;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.user-edit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-edit-popup {
+    background: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 300px;
+    animation: fadeIn 0.2s ease;
+}
+
+.user-edit-popup h4 {
+    margin: 0 0 16px 0;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-edit-popup input {
+    width: 100%;
+    padding: 10px 14px;
+    background: #161A1D;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.user-edit-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.save-btn, .cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid #2C333A;
+    color: #9FADBC;
+}
+
+.cancel-btn:hover {
+    background: #161A1D;
+    color: #FFFFFF;
+    border-color: #F87168;
+}
+
+/* Invite Form */
 .invite-form {
     display: flex;
     align-items: center;
-    margin-top: 12px;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 12px;
+    background: #161A1D;
+    border-radius: 12px;
 }
 
 .invite-form-input {
+    flex: 1;
     display: flex;
     align-items: center;
-    border: 1px solid #606060;
+    gap: 8px;
+    background: #000000;
+    border: 1px solid #2C333A;
     border-radius: 8px;
-    padding: 12px 6px 2px 6px;
-    width: 100%;
+    padding: 10px 8px 0 8px;
+}
+
+.invite-form-input.shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
 .invite-form-input input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 6px;
-    background: transparent;
-    color: white;
-}
-
-.invite-form-sent-btn {
-    margin-top: -6px;
-    margin-right: 5px;
-    padding: 0;
-}
-
-.invite-form button {
+    flex: 1;
     background: none;
     border: none;
-    cursor: pointer;
-    color: #bababa;
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 8px 0;
 }
 
-.invite-form button:hover {
-    color: #628dc3;
+.invite-form-input input:focus {
+    outline: none;
 }
+
+.invite-form-sent-btn-1 {
+    background: none;
+    margin-bottom: 6px;
+}
+
+.invite-cancel-btn {
+    background: none;
+    border: none;
+    color: #9FADBC;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+.add-user-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1b1b1b;
+    background: #eff0f2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
 
 .invite-message {
-    width: 900px;
-    margin-top: 0;
-    padding-bottom: 4px;
-    position: relative;
-    font-size: 14px;
-    color: #afafaf;
-}
-
-.invite-message a {
-    color: #496f98;
-    text-decoration: underline;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(75, 206, 151, 0.1);
+    border: 1px solid rgba(75, 206, 151, 0.3);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #4BCE97;
 }
 
 .close-invite-message {
     background: none;
     border: none;
-    color: #bababa;
-    position: absolute;
-    top: 2px;
-    right: 0;
+    color: #4BCE97;
     cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
 .close-invite-message:hover {
-    color: #628dc3;
+    background: rgba(75, 206, 151, 0.2);
 }
 
-@keyframes shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-6px); }
-    80% { transform: translateX(6px); }
-    100% { transform: translateX(0); }
-}
-
-.shake {
-    animation: shake 0.4s ease-in-out;
-}
-
-
-
-.project-user-actions {
-    margin-left: auto;
-    position: relative;
-}
-
-.project-user-actions button{
-    background: none;
-    color: #cacaca;
-}
-.project-user-actions button:hover {
-    color: #628dc3;
-}
-
-.project-user-edit-role-popup {
-    position: absolute;
-    width: 300px;
-    right: -8px;
-    top: -5px;
-    background: #141f29;
-    padding: 0.5rem;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: row;
-    z-index: 10;
-}
-
-.project-user-edit-role-popup input {
-    background: #282c34;
-    border: 1px solid #444;
-    color: white;
-    border-radius: 4px;
-    padding: 0 5px;
-    height: 20px;
-    margin-top: 0;
-}
-
-.project-user-edit-role-popup button {
-    background: none;
-    color: #cccccc;
-    border: none;
-    cursor: pointer;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

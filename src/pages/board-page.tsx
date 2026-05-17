@@ -10,10 +10,10 @@ import { TaskSidebar } from "../components/board-page/task-sidebar";
 import { BoardSelectPanel } from "../components/board-page/board-select-panel";
 import { SortButton } from "../components/board-page/sort-button";
 import "../styles/board-page/board-page.css";
-import {CreateTaskModal} from "../components/create-task-modal.tsx";
-import {useParams} from "react-router-dom";
-import {LoadingColumn} from "../components/board-page/loading-column.tsx";
-import {ListPlus} from 'lucide-react'
+import { CreateTaskModal } from "../components/create-task-modal.tsx";
+import { useParams } from "react-router-dom";
+import { LoadingColumn } from "../components/board-page/loading-column.tsx";
+import { Plus, ListPlus } from 'lucide-react';
 
 export interface Task {
     id: string;
@@ -57,19 +57,14 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
     const [isCreatingStatus, setIsCreatingStatus] = useState(false);
     const [newStatus, setNewStatus] = useState({ name: '', isDone: false, isRejected: false });
 
-
     const fetchTasks = async () => {
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(`/api/item/board/${boardId}`, {
                 method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
+                headers: { Authorization: `Bearer ${token}` }
             });
-
             const data = await response.json();
-
             const formattedTasks: Task[] = data.map((item: any) => ({
                 id: item.id.toString(),
                 author: item.author,
@@ -85,9 +80,7 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                 itemTypeId: item.itemTypeId,
                 projectId: item.projectId,
             }));
-
             setTaskList(formattedTasks);
-            console.log(formattedTasks);
         } catch (error) {
             console.error("Ошибка при загрузке задач:", error);
         }
@@ -111,79 +104,47 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
         setActiveId(event.active.id);
     };
 
+    // ... (Ваш обработчик handleDragEnd без изменений, он логический)
     const handleDragEnd = async (event: any) => {
         const { active, over } = event;
         setActiveId(null);
         if (!over) return;
-
         const activeTask = taskList.find((t) => t.id === active.id);
         if (!activeTask) return;
-
         const isOverColumn = statuses.some((status) => status.name === over.id);
         const isOverTask = taskList.find((t) => t.id === over.id);
         const token = localStorage.getItem("token");
-
         const previousTaskList = [...taskList];
 
         if (isOverColumn) {
             const newStatus = statuses.find((status) => status.name === over.id);
             if (!newStatus) return;
-
-            setTaskList((prev) =>
-                prev.map((task) =>
-                    task.id === active.id
-                        ? { ...task, category: newStatus.name }
-                        : task
-                )
-            );
-
+            setTaskList((prev) => prev.map((task) => task.id === active.id ? { ...task, category: newStatus.name } : task));
             try {
                 const response = await fetch(`/api/item/change-status/${activeTask.id}`, {
                     method: "POST",
-                    headers: {
-                        accept: "*/*",
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
+                    headers: { accept: "*/*", Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
                     body: JSON.stringify(newStatus.id),
                 });
-
-                if (!response.ok) {
-                    throw new Error("Ошибка при изменении статуса задачи");
-                }
+                if (!response.ok) throw new Error("Ошибка при изменении статуса");
             } catch (error) {
-                console.error("Ошибка при отправке запроса на изменение статуса:", error);
+                console.error(error);
                 setTaskList(previousTaskList);
             }
         } else if (isOverTask) {
             if (activeTask.category !== isOverTask.category) {
                 const newStatus = statuses.find((status) => status.name === isOverTask.category);
                 if (!newStatus) return;
-
-                setTaskList((prev) =>
-                    prev.map((task) =>
-                        task.id === active.id
-                            ? { ...task, category: isOverTask.category }
-                            : task
-                    )
-                );
-
+                setTaskList((prev) => prev.map((task) => task.id === active.id ? { ...task, category: isOverTask.category } : task));
                 try {
                     const response = await fetch(`/api/item/change-status/${activeTask.id}`, {
                         method: "POST",
-                        headers: {
-                            accept: "*/*",
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "application/json",
-                        },
+                        headers: { accept: "*/*", Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
                         body: JSON.stringify(newStatus.id),
                     });
-
-                    if (!response.ok) {
-                        throw new Error("Ошибка при изменении статуса задачи");
-                    }
+                    if (!response.ok) throw new Error("Ошибка при изменении статуса");
                 } catch (error) {
-                    console.error("Ошибка при отправке запроса на изменение статуса:", error);
+                    console.error(error);
                     setTaskList(previousTaskList);
                 }
             } else {
@@ -198,10 +159,12 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
     };
 
     const activeTask = taskList.find((t) => t.id === activeId);
+
+    // Кастомный компонент дроп-зоны с подсветкой (isOver)
     const DroppableColumn = ({ id, children }: { id: string; children: React.ReactNode }) => {
-        const { setNodeRef } = useDroppable({ id });
+        const { setNodeRef, isOver } = useDroppable({ id });
         return (
-            <div ref={setNodeRef} style={{ flex: 1, minHeight: "200px" }}>
+            <div ref={setNodeRef} className={`droppable-area ${isOver ? 'is-over' : ''}`}>
                 {children}
             </div>
         );
@@ -234,77 +197,70 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
 
     if (!boardId) {
         return (
-            <div style={{ display: "flex" }}>
+            <div className="board-wrapper">
                 <BoardSelectPanel />
-                <div>
-                    <h2>Проект {projectId}</h2>
-                    <p>У этого проекта пока нет досок</p>
+                <div style={{ padding: '2rem', color: '#fff' }}>
+                    <h2>Project {projectId}</h2>
+                    <p style={{ color: '#9FADBC' }}>This project has no boards yet.</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div style={{ display: "flex" }}>
+        <div className="board-wrapper">
             <BoardSelectPanel />
+
             <DndContext
                 collisionDetection={closestCenter}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
                 sensors={sensors}
             >
-
                 <div className="board-columns">
                     {statusesStatus === 'loading' ? (
-                        <div className="loading-columns-container">
-                            {Array.from({ length: 4 }).map((_, index) => (
-                                <LoadingColumn key={index} />
-                            ))}
-                        </div>
+                        Array.from({ length: 4 }).map((_, index) => <LoadingColumn key={index} />)
                     ) : (
                         <>
                             {[...statuses]
                                 .sort((a, b) => a.order - b.order)
                                 .map((status) => {
                                     const tasks = getTasksByCategory(status.name);
+
+                                    // Определение цвета точки статуса
+                                    const statusDotClass = status.isDone
+                                        ? 'done'
+                                        : status.isRejected
+                                            ? 'rejected'
+                                            : 'default';
+
                                     return (
                                         <div className="board-column" key={status.name}>
-                                            <div style={{ display: 'flex' }}>
-                                                <h1
-                                                    className={
-                                                        status.isDone
-                                                            ? 'status-title done'
-                                                            : status.isRejected
-                                                                ? 'status-title rejected'
-                                                                : 'status-title'
-                                                    }
-                                                >
-                                                    {status.name}
-                                                </h1>
+                                            <div className="column-header">
+                                                <div className="column-header-left">
+                                                    <div className={`status-dot ${statusDotClass}`} />
+                                                    <h1 className="status-title">{status.name}</h1>
+                                                    <span className="status-count">{tasks.length}</span>
+                                                </div>
                                                 <SortButton
                                                     onSortChange={(sortType) => {
                                                         setTaskList((prev) => {
                                                             const currentTasks = prev.filter((task) => task.category === status.name);
                                                             const otherTasks = prev.filter((task) => task.category !== status.name);
-
                                                             const sorted = [...currentTasks].sort((b, a) => {
                                                                 if (sortType === 'date') {
                                                                     return new Date(b.expectedEndDate).getTime() - new Date(a.expectedEndDate).getTime();
                                                                 }
-                                                                if (sortType === 'priority') {
-                                                                    return a.priority - b.priority;
-                                                                }
+                                                                if (sortType === 'priority') return a.priority - b.priority;
                                                                 return 0;
                                                             });
-
                                                             return [...otherTasks, ...sorted];
                                                         });
                                                     }}
                                                 />
                                             </div>
 
-
-                                            <DroppableColumn id={status.name} status={status}>
+                                            <DroppableColumn id={status.name}>
                                                 <SortableContext
                                                     items={tasks.map((t) => t.id)}
                                                     strategy={verticalListSortingStrategy}
@@ -317,7 +273,8 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                                                                 setIsModalOpen(true);
                                                             }}
                                                         >
-                                                            Добавить задачу
+                                                            <Plus size={14} />
+                                                            Add Task
                                                         </button>
                                                     )}
                                                     {tasks.map((task) => (
@@ -335,60 +292,57 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                                     );
                                 })}
 
-                                {isCreatingStatus ? (
-                                    <div className="add-status-column">
+                            {isCreatingStatus ? (
+                                <div className="add-status-overlay">
                                     <div className="create-status-form">
-                                        <h4>Добавить новую колонку</h4>
+                                        <h4>Add New Column</h4>
                                         <input
                                             type="text"
-                                            placeholder="Название"
+                                            placeholder="Column Name"
                                             value={newStatus.name}
                                             onChange={(e) => setNewStatus({ ...newStatus, name: e.target.value })}
                                         />
-                                        <div style={{ display: 'flex', flexDirection: 'row', gap: '22px', marginTop: '20px', marginBottom: '20px' }}>
-                                            <label>
+                                        <div className="status-checkbox-group">
+                                            <label className="status-checkbox-label">
                                                 <input
                                                     type="checkbox"
                                                     checked={newStatus.isDone}
-                                                    onChange={(e) => {
-                                                        setNewStatus({
-                                                            ...newStatus,
-                                                            isDone: e.target.checked,
-                                                            isRejected: e.target.checked ? false : newStatus.isRejected
-                                                        });
-                                                    }}
+                                                    onChange={(e) => setNewStatus({
+                                                        ...newStatus,
+                                                        isDone: e.target.checked,
+                                                        isRejected: e.target.checked ? false : newStatus.isRejected
+                                                    })}
                                                     disabled={newStatus.isRejected}
                                                 />
-                                                Содержит завершенные задачи
+                                                Contains completed tasks
                                             </label>
-                                            <label>
+                                            <label className="status-checkbox-label">
                                                 <input
                                                     type="checkbox"
                                                     checked={newStatus.isRejected}
-                                                    onChange={(e) => {
-                                                        setNewStatus({
-                                                            ...newStatus,
-                                                            isRejected: e.target.checked,
-                                                            isDone: e.target.checked ? false : newStatus.isDone
-                                                        });
-                                                    }}
+                                                    onChange={(e) => setNewStatus({
+                                                        ...newStatus,
+                                                        isRejected: e.target.checked,
+                                                        isDone: e.target.checked ? false : newStatus.isDone
+                                                    })}
                                                     disabled={newStatus.isDone}
                                                 />
-                                                Содержит отклоненные задачи
+                                                Contains rejected tasks
                                             </label>
                                         </div>
 
-                                        <div style={{ display: "flex", gap: "5px" }}>
-                                            <button onClick={handleCreateStatus}>Создать</button>
-                                            <button onClick={() => setIsCreatingStatus(false)}>Отмена</button>
+                                        <div className="create-status-actions">
+                                            <button className="btn-primary" onClick={handleCreateStatus}>Create</button>
+                                            <button className="btn-ghost" onClick={() => setIsCreatingStatus(false)}>Cancel</button>
                                         </div>
                                     </div>
-                                    </div>
-                                ) : (
-                                    <button onClick={() => setIsCreatingStatus(true)} className="add-column-button">
-                                        <ListPlus size={32}/>
-                                    </button>
-                                )}
+                                </div>
+                            ) : (
+                                <button onClick={() => setIsCreatingStatus(true)} className="add-column-button">
+                                    <ListPlus size={20} />
+                                    Add Column
+                                </button>
+                            )}
 
                             {isModalOpen && selectedStatusId !== null && (
                                 <CreateTaskModal
@@ -407,16 +361,12 @@ export const BoardPage = ({ tasks = [] }: BoardPageProps) => {
                     )}
                 </div>
 
-
-
                 {selectedTask && (
-                    <TaskSidebar task={selectedTask} onClose={() => setSelectedTask(null)} onTasksChange={fetchTasks}/>
+                    <TaskSidebar task={selectedTask} onClose={() => setSelectedTask(null)} onTasksChange={fetchTasks} />
                 )}
 
                 <DragOverlay>
-                    {activeTask ? (
-                        <TaskComponent task = {activeTask}/>
-                    ) : null}
+                    {activeTask ? <TaskComponent task={activeTask} /> : null}
                 </DragOverlay>
             </DndContext>
         </div>

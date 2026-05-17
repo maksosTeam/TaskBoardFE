@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/autorization/login-page.css';
-import axios, {AxiosResponse} from "axios";
 
 export const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +10,7 @@ export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Логин';
+        document.title = 'АВТОРИЗАЦИЯ';
     }, []);
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -34,7 +33,7 @@ export const LoginPage: React.FC = () => {
                 throw new Error(
                     errorData.message ||
                     errorData.errors?.join(', ') ||
-                    'Ошибка входа. Проверьте email или пароль.'
+                    'Ошибка входа. Проверьте данные.'
                 );
             }
             const data = await response.json();
@@ -42,7 +41,7 @@ export const LoginPage: React.FC = () => {
             console.log(data);
             navigate('/home');
         } catch (err: unknown) {
-            setError('Произошла ошибка при входе.');
+            setError(err instanceof Error ? err.message : 'Сбой системной аутентификации');
         } finally {
             setLoading(false);
         }
@@ -51,7 +50,10 @@ export const LoginPage: React.FC = () => {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1>С возвращением</h1>
+                <div className="auth-header">
+                    <h1>С возвращением</h1>
+                    <p>Введите учетные данные для доступа к системе</p>
+                </div>
 
                 {error && <div className="auth-error-message">{error}</div>}
 
@@ -69,7 +71,7 @@ export const LoginPage: React.FC = () => {
                     </div>
 
                     <div className="auth-form-group">
-                        <label htmlFor="password">Пароль</label>
+                        <label htmlFor="password">Пароль доступа</label>
                         <input
                             type="password"
                             id="password"
@@ -79,16 +81,16 @@ export const LoginPage: React.FC = () => {
                             required
                         />
                         <button type="button" className="forgot-password">
-                            Забыли пароль?
+                            Восстановить доступ
                         </button>
                     </div>
 
                     <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Загрузка...' : 'Войти'}
+                        {loading ? 'Аутентификация...' : 'Инициировать вход'}
                     </button>
 
                     <div className="signup-link">
-                        <p>У вас еще нет учетной записи?</p>
+                        <p>Отсутствует учетная запись?</p>
                         <button
                             type="button"
                             className="auth-navigate-btn"

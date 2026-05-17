@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Task } from "../../pages/board-page";
 import { formatDateToDayMonth } from "../../utils.ts";
-import { Paperclip, SendHorizontal } from "lucide-react";
+import { Paperclip, SendHorizontal, X } from "lucide-react";
 import "../../styles/board-page/task-sidebar.css";
-import { useRef } from "react";
-import {getTaskPriorityColor} from "../../utils.ts";
-import {rebuildFilePath} from "../../utils.ts";
+import { getTaskPriorityColor } from "../../utils.ts";
+import { rebuildFilePath } from "../../utils.ts";
 
 interface TaskSidebarProps {
     task: Task;
@@ -31,15 +30,12 @@ interface Comment {
 export const formatDateToDayMonthYear = (isoDate: string): string => {
     try {
         const date = new Date(isoDate);
-
         if (isNaN(date.getTime())) {
             throw new Error("Невалидная дата");
         }
-
         const day = String(date.getUTCDate()).padStart(2, '0');
         const month = String(date.getUTCMonth() + 1).padStart(2, '0');
         const year = date.getUTCFullYear();
-
         return `${day}.${month}.${year}`;
     } catch (error) {
         console.error("Ошибка при форматировании даты:", error);
@@ -48,7 +44,6 @@ export const formatDateToDayMonthYear = (isoDate: string): string => {
 };
 
 const CommentItem = ({ comment }: { comment: Comment }) => {
-
     return (
         <div className="comment-item">
             <div className="comment-header">
@@ -64,9 +59,9 @@ const CommentItem = ({ comment }: { comment: Comment }) => {
                             href={rebuildFilePath(att.filePath, 2)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="comment-attachment"
+                            className="comment-attachment-link"
                         >
-                            <Paperclip size={14}/> Вложение
+                            <Paperclip size={14} /> Attachment
                         </a>
                     ))}
                 </div>
@@ -142,92 +137,152 @@ export const TaskSidebar = ({ task, onClose }: TaskSidebarProps) => {
         } finally {
             setIsSending(false);
         }
-
     };
 
     const handleClose = () => {
         setVisible(false);
-        setTimeout(() => onClose(), 300);
+        setTimeout(() => onClose(), 300); // Ожидание анимации
     };
+
+    const isBug = task.itemTypeId === 3;
+    const priorityColor = getTaskPriorityColor(task.priority);
 
     return (
         <div className={`task-sidebar ${visible ? "open" : ""}`}>
-            <div className="task-sidebar-overlay" />
-            <button className="close-button" onClick={handleClose}>×</button>
+            {/* Затемненный фон */}
+            <div className="task-sidebar-overlay" onClick={handleClose} />
 
-            <div className="task-sidebar-content">
-                <p className='task-sidebar-username'>{task?.contributors?.[0]?.userName}</p>
-                <h2 className='task-sidebar-title'>{task.title}</h2>
+            {/* Панель сайдбара */}
+            <div className="task-sidebar-panel">
 
-                <div className='task-sidebar-short-info-container'>
-                    <div className='task-sidebar-short-info'><p>Создатель</p><p>{task.author}</p></div>
-                    <div className='task-sidebar-short-info'><p>Исполнитель</p><p>{task?.contributors?.[0]?.userName || 'Не задан'}</p></div>
-                    <div className='task-sidebar-short-info'><p>Дата создания</p><p>{formatDateToDayMonthYear(task.startDate)}</p></div>
-                    <div className='task-sidebar-short-info'><p>Дедлайн</p><p>{formatDateToDayMonthYear(task.expectedEndDate)}</p></div>
-                    <div className='task-sidebar-short-info'><p>Приоритет</p><p style={{backgroundColor: getTaskPriorityColor(task.priority)}} className='task-sidebar-priority'>{task.priorityText}</p></div>
-                    {task.itemTypeId === 3 && (<div className='task-sidebar-short-info'><p>Тип задачи</p><p style={{backgroundColor: "#FF4D4F93", color: "white"}} className='task-sidebar-priority'>БАГ</p></div>)}
-                    <h3 className='task-sidebar-desc-title'>Описание:</h3>
-                    <p className='task-sidebar-description'>{task.description}</p>
+                {/* Шапка */}
+                <div className="sidebar-header">
+                    <div className="sidebar-title-wrapper">
+            <span className="sidebar-assignee">
+              {task?.contributors?.[0]?.userName || 'Исполнитель не назначен'}
+            </span>
+                        <h2 className="sidebar-title">{task.title}</h2>
+                    </div>
+                    <button className="sidebar-close-btn" onClick={handleClose}>
+                        <X size={20} />
+                    </button>
+                </div>
 
-                    <h3 className='task-sidebar-comm-title'>Комментарии</h3>
+                {/* Тело (Скроллится) */}
+                <div className="sidebar-body">
+                    <div className="sidebar-props">
+                        <div className="prop-row">
+                            <span className="prop-label">Автор</span>
+                            <span className="prop-value">{task.author}</span>
+                        </div>
+                        <div className="prop-row">
+                            <span className="prop-label">ИСполнитель</span>
+                            <span className="prop-value">{task?.contributors?.[0]?.userName || 'Отсутствует'}</span>
+                        </div>
+                        <div className="prop-row">
+                            <span className="prop-label">Создано</span>
+                            <span className="prop-value">{formatDateToDayMonthYear(task.startDate)}</span>
+                        </div>
+                        <div className="prop-row">
+                            <span className="prop-label">Дедлайн</span>
+                            <span className="prop-value">{formatDateToDayMonthYear(task.expectedEndDate)}</span>
+                        </div>
+                        <div className="prop-row">
+                            <span className="prop-label">Приоритет</span>
+                            <div className="prop-value">
+                <span
+                    className="prop-badge priority"
+                    style={{ backgroundColor: priorityColor, borderColor: priorityColor }}
+                >
+                  {task.priorityText}
+                </span>
+                            </div>
+                        </div>
+                        {isBug && (
+                            <div className="prop-row">
+                                <span className="prop-label">Task Type</span>
+                                <div className="prop-value">
+                                    <span className="prop-badge bug">BUG</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
-                    <div className="comments-list">
-                        {comments.map((c) => (
-                            <CommentItem key={c.id} comment={c} />
-                        ))}
+                    <div>
+                        <h3 className="section-title">Description</h3>
+                        <p className="sidebar-desc-box">
+                            {task.description || "No description provided."}
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 className="section-title">Comments</h3>
+                        <div className="comments-list">
+                            {comments.length > 0 ? (
+                                comments.map((c) => <CommentItem key={c.id} comment={c} />)
+                            ) : (
+                                <div style={{ color: '#9FADBC', fontSize: '0.875rem' }}>No comments yet.</div>
+                            )}
+                        </div>
                     </div>
                 </div>
+
+                {/* Подвал (Фиксированный) */}
+                <div className="sidebar-footer">
+                    {attachment && (
+                        <div className="attachment-preview">
+                            <span>{attachment.name}</span>
+                            <button
+                                type="button"
+                                className="remove-attachment-btn"
+                                onClick={() => setAttachment(null)}
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    )}
+
+                    <form onSubmit={handleCommentSubmit} className="comment-form">
+                        <div className="comment-input-wrapper">
+                            <button
+                                type="button"
+                                className="comment-attach-btn"
+                                onClick={handleAttachClick}
+                            >
+                                <Paperclip size={18} />
+                            </button>
+                            <input
+                                className="comment-input"
+                                type="text"
+                                placeholder="Write a comment..."
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                            />
+                            <button
+                                type="submit"
+                                className="comment-send-btn"
+                                disabled={!commentText.trim() || isSending}
+                                title={!commentText.trim() ? "Enter comment text" : ""}
+                            >
+                                {isSending ? (
+                                    <div className="task-sidebar-spinner" />
+                                ) : (
+                                    <SendHorizontal size={18} />
+                                )}
+                            </button>
+                        </div>
+
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            className="comment-file-input"
+                            onChange={(e) => setAttachment(e.target.files?.[0] || null)}
+                            style={{ display: "none" }}
+                        />
+                    </form>
+                </div>
+
             </div>
-            {attachment && (
-                <div className="comment-attachment-preview">
-                    <span>{attachment.name}</span>
-                    <button
-                        type="button"
-                        className="remove-attachment-btn"
-                        onClick={() => setAttachment(null)}
-                    >
-                        ×
-                    </button>
-                </div>
-            )}
-            {/* Фиксированная форма */}
-            <form onSubmit={handleCommentSubmit} className="comment-form">
-                <div className="comment-input-wrapper">
-                    <button
-                        type="button"
-                        className="comment-attach-btn"
-                        onClick={handleAttachClick}
-                    >
-                        <Paperclip color={"rgba(255,255,255,0.48)"} size={19} />
-                    </button>
-                    <input
-                        className="comment-input"
-                        type="text"
-                        placeholder="Комментарий..."
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                    />
-                    <button
-                        type="submit"
-                        className="comment-send-btn"
-                        disabled={!commentText.trim() || isSending}
-                        title={!commentText.trim() ? "Введите текст комментария" : ""}
-                    >
-                        {isSending ? (
-                            <span className="task-sidebar-spinner" />
-                        ) : (
-                            <SendHorizontal color={"#91ADC9"} size={20} />
-                        )}
-                    </button>
-                </div>
-                <input
-                    ref={fileInputRef}
-                    type="file"
-                    className="comment-file-input"
-                    onChange={(e) => setAttachment(e.target.files?.[0] || null)}
-                    style={{ display: "none" }}
-                />
-            </form>
         </div>
     );
 };

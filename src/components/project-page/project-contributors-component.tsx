@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import '../../styles/project-page/project-contributors-component.css';
 import defaultAvatar from "../../assets/user-avatar.webp";
-import { Send, X, MoreVertical, Save } from 'lucide-react';
-import {rebuildFilePath} from "../../utils.ts";
+import { Send, X, MoreVertical, Save, UserPlus, User, Check } from 'lucide-react';
+import { rebuildFilePath } from "../../utils.ts";
 
 interface User {
     id: number;
@@ -24,22 +24,29 @@ export const ProjectContributorsComponent = ({ projectId }: ProjectContributorsP
     const [url, setUrl] = useState('');
     const [shakeError, setShakeError] = useState(false);
     const token = localStorage.getItem('token');
-    const [editingUserId, setEditingUserId] = useState<number | null>(null);
-    const [newRole, setNewRole] = useState('');
+    const [menuOpenFor, setMenuOpenFor] = useState<number | null>(null);
+    const [editingUser, setEditingUser] = useState<{ id: number; role: string } | null>(null);
 
     useEffect(() => {
         if (projectId) {
-            fetch(`/api/project/get-users-in-project/${projectId}`, {
+            fetchUsers();
+        }
+    }, [projectId, token]);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch(`/api/project/get-users-in-project/${projectId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': '*/*',
                 },
-            })
-                .then(response => response.json())
-                .then(data => setUsers(data))
-                .catch(error => console.error('Ошибка при получении участников:', error));
+            });
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error('Ошибка при получении участников:', error);
         }
-    }, [projectId, token]);
+    };
 
     const sendInvite = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,6 +72,10 @@ export const ProjectContributorsComponent = ({ projectId }: ProjectContributorsP
                 setInviteOpen(false);
                 setEmail('');
                 setUrl(link);
+                setTimeout(() => {
+                    setInviteSent(false);
+                    setUrl('');
+                }, 5000);
             })
             .catch(err => {
                 console.error(err);
@@ -73,7 +84,9 @@ export const ProjectContributorsComponent = ({ projectId }: ProjectContributorsP
             });
     };
 
-    const changeRole = async (userId: number) => {
+    const changeRole = async () => {
+        if (!editingUser) return;
+
         try {
             const res = await fetch('/api/project/set-user-role', {
                 method: 'POST',
@@ -82,27 +95,21 @@ export const ProjectContributorsComponent = ({ projectId }: ProjectContributorsP
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId,
+                    userId: editingUser.id,
                     projectId,
-                    role: { role: newRole }
+                    role: { role: editingUser.role }
                 })
             });
 
             if (!res.ok) throw new Error("Ошибка при изменении роли");
 
-            setEditingUserId(null);
-            setNewRole('');
-            // Обновить список
-            const refreshed = await fetch(`/api/project/get-users-in-project/${projectId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const data = await refreshed.json();
-            setUsers(data);
+            setEditingUser(null);
+            setMenuOpenFor(null);
+            await fetchUsers();
         } catch (error) {
             console.error("Ошибка смены роли:", error);
         }
     };
-
 
     const resetInvite = () => {
         setInviteSent(false);
@@ -114,63 +121,111 @@ export const ProjectContributorsComponent = ({ projectId }: ProjectContributorsP
             <ul className="user-list">
                 {users?.map(user => (
                     <li key={user.id} className="user-item">
-                        <img className="user-avatar" src={rebuildFilePath(user.imagePath, 0) || defaultAvatar} alt="avatar" />
+                        <img
+                            className="user-avatar"
+                            src={rebuildFilePath(user.imagePath, 0) || defaultAvatar}
+                            alt={user.username}
+                        />
                         <div className="user-info">
-                            <div className="user-name">{user.username} ({user.email})</div>
-                            <div className="user-role">{user.role || ''}</div>
+                            <div className="user-name">{user.username}</div>
+                            <div className="user-email">{user.email}</div>
+                            <div className="user-role">
+                                {user.role || 'Участник'}
+                            </div>
                         </div>
 
-                        {user.role !== "Создатель" &&  (<div className="project-user-actions">
-                            <button onClick={() => setEditingUserId(user.id)}>
-                                <MoreVertical size={20} />
-                            </button>
+                        {user.role !== "Создатель" && (
+                            <div className="project-user-actions">
+                                <button
+                                    className="user-menu-btn"
+                                    onClick={() => setMenuOpenFor(menuOpenFor === user.id ? null : user.id)}
+                                >
+                                    <MoreVertical size={18} />
+                                </button>
 
-                            {editingUserId === user.id && (
-                                <div className="project-user-edit-role-popup">
+                                {menuOpenFor === user.id && (
+                                    <div className="user-menu-popup">
+                                        <button
+                                            className="user-menu-item"
+                                            onClick={() => {
+                                                setEditingUser({ id: user.id, role: user.role });
+                                                setMenuOpenFor(null);
+                                            }}
+                                        >
+                                            <Save size={14} />
+                                            Изменить роль
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {editingUser && editingUser.id === user.id && (
+                            <div className="user-edit-overlay">
+                                <div className="user-edit-popup">
+                                    <h4>Изменение роли</h4>
                                     <input
                                         type="text"
-                                        placeholder="Введите роль"
-                                        value={newRole}
-                                        onChange={(e) => setNewRole(e.target.value)}
+                                        placeholder="Введите новую роль"
+                                        value={editingUser.role}
+                                        onChange={(e) => setEditingUser({
+                                            ...editingUser,
+                                            role: e.target.value
+                                        })}
+                                        autoFocus
                                     />
-                                    <button onClick={() => changeRole(user.id)}>
-                                        <Save size={20}/>
-                                    </button>
-                                    <button onClick={() => setEditingUserId(null)}>
-                                        <X size={22}/>
-                                    </button>
+                                    <div className="user-edit-actions">
+                                        <button className="save-btn" onClick={changeRole}>
+                                            <Check size={16} />
+                                            Сохранить
+                                        </button>
+                                        <button className="cancel-btn" onClick={() => {
+                                            setEditingUser(null);
+                                        }}>
+                                            <X size={16} />
+                                            Отмена
+                                        </button>
+                                    </div>
                                 </div>
-                            )}
-                        </div>)}
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>
 
             {inviteOpen && !inviteSent && (
-                <div className={`invite-form`}>
+                <div className="invite-form">
                     <div className={`invite-form-input ${shakeError ? 'shake' : ''}`}>
                         <input
                             type="email"
-                            placeholder="Email (участник должен быть зарегистрирован на платформе)"
+                            placeholder="Email участника (должен быть зарегистрирован)"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
+                            onKeyPress={e => e.key === 'Enter' && sendInvite()}
                         />
-                        <button className="invite-form-sent-btn" onClick={sendInvite} title="Отправить"><Send size={17} /></button>
+                        <button className="invite-form-sent-btn-1" onClick={sendInvite} title="Отправить">
+                            <Send size={14} />
+                        </button>
                     </div>
-                    <button onClick={() => setInviteOpen(false)} title="Отменить"><X size={20} /></button>
+                    <button className="invite-cancel-btn" onClick={() => setInviteOpen(false)} title="Отменить">
+                        <X size={18} />
+                    </button>
                 </div>
             )}
 
             {!inviteOpen && !inviteSent && (
                 <button className="add-user-button" onClick={() => setInviteOpen(true)}>
+                    <UserPlus size={16} />
                     Добавить участника
                 </button>
             )}
 
             {inviteSent && (
                 <div className="invite-message">
-                    Ссылка <a href={url} target="_blank" rel="noopener noreferrer">{url}</a> была отправлена на указанный адрес
-                    <button className="close-invite-message" onClick={resetInvite}><X size={16} /></button>
+                    <span>Ссылка <a href={url} target="_blank" rel="noopener noreferrer">{url}</a> была отправлена на указанный адрес</span>
+                    <button className="close-invite-message" onClick={resetInvite}>
+                        <X size={14} />
+                    </button>
                 </div>
             )}
         </div>

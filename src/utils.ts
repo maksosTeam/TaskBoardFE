@@ -22,13 +22,13 @@ export const getTaskPriorityColor = (priority: number): string => {
         case 0:
             return '#8ed380';
         case 1:
-            return '#136a00';
+            return '#20800c';
         case 2:
-            return '#b18403';
+            return '#e3b42e';
         case 3:
-            return '#aa1515';
+            return '#cd2d2d';
         case 4:
-            return '#870000';
+            return '#a80f0f';
         default:
             return 'none';
     }

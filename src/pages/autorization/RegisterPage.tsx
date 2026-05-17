@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import '../../styles/autorization/login-page.css';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
+import '../../styles/autorization/login-page.css';
 
 export const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ export const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Регистрация';
+        document.title = 'РЕГИСТРАЦИЯ';
     }, []);
 
     const handleRegister = async (e: React.FormEvent) => {
@@ -28,13 +28,13 @@ export const RegisterPage: React.FC = () => {
             });
 
             if (!(response.status >= 200 && response.status < 300)) {
-                setError('Произошла ошибка при регистрации.');
+                setError('Произошла системная ошибка при регистрации.');
                 return;
             }
 
             navigate('/login');
         } catch (e: any) {
-            setError(e.response?.data?.message || 'Произошла ошибка при регистрации.');
+            setError(e.response?.data?.message || 'Сбой при создании учетной записи.');
         } finally {
             setLoading(false);
         }
@@ -43,7 +43,10 @@ export const RegisterPage: React.FC = () => {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1>Создать аккаунт</h1>
+                <div className="auth-header">
+                    <h1>Регистрация</h1>
+                    <p>Инициализация нового пользователя в системе</p>
+                </div>
 
                 {error && <div className="auth-error-message">{error}</div>}
 
@@ -61,19 +64,19 @@ export const RegisterPage: React.FC = () => {
                     </div>
 
                     <div className="auth-form-group">
-                        <label htmlFor="username">Имя пользователя</label>
+                        <label htmlFor="username">Идентификатор (Имя)</label>
                         <input
                             type="text"
                             id="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="johndoe"
+                            placeholder="user_id"
                             required
                         />
                     </div>
 
                     <div className="auth-form-group">
-                        <label htmlFor="password">Пароль</label>
+                        <label htmlFor="password">Пароль доступа</label>
                         <input
                             type="password"
                             id="password"
@@ -85,17 +88,17 @@ export const RegisterPage: React.FC = () => {
                     </div>
 
                     <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Загрузка...' : 'Зарегистрироваться'}
+                        {loading ? 'Создание записи...' : 'Зарегистрировать'}
                     </button>
 
                     <div className="signup-link">
-                        <p>Уже есть учетная запись?</p>
+                        <p>Уже зарегистрированы?</p>
                         <button
                             type="button"
                             className="auth-navigate-btn"
                             onClick={() => navigate('/login')}
                         >
-                            Выполнить вход
+                            Выполнить авторизацию
                         </button>
                     </div>
                 </form>

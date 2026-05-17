@@ -177,9 +177,6 @@ export const ProjectPage = () => {
                                 <Users size={20} className="text-blue" />
                                 Участники
                             </h2>
-                            <button className="pp-action-sm-btn">
-                                <Plus size={16} /> Добавить участника
-                            </button>
                         </div>
                         {/* Обертка для твоего компонента участников */}
                         <div className="pp-contributors-wrapper">

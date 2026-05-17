@@ -1,185 +1,327 @@
-.sortable-task {
+/* sortable-task.css - обновленный стиль */
+
+.sortable-task-wrapper {
     position: relative;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
 }
 
+/* Drag Handle */
 .drag-handle {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: 12px;
+    right: 12px;
     z-index: 10;
     cursor: grab;
-    background-color: #294460;
-    border-radius: 4px;
-    padding: 4px;
-    display: none;
+    background: #161A1D;
+    border: 1px solid #2C333A;
+    border-radius: 6px;
+    padding: 6px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    color: #9FADBC;
 }
 
-.sortable-task:hover .drag-handle {
-    display: flex;
+.drag-handle:hover {
+    background: #2C333A;
+    color: #4BCE97;
+    border-color: #4BCE97;
 }
 
+.sortable-task-wrapper:hover .drag-handle {
+    opacity: 1;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Menu Button */
 .task-menu-wrapper {
-    background: none;
     position: absolute;
-    bottom: 4px;
-    right: 103px;
-}
-.task-menu-wrapper img{
-    width: 15px;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
 }
 
 .task-menu-button {
-    position: absolute;
-    right: 2px;
-    bottom: 0;
-    background: none;
-    border: none;
-    padding: 4px;
+    background: #161A1D;
+    border: 1px solid #2C333A;
+    padding: 6px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    z-index: 1;
+    color: #9FADBC;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.sortable-task-wrapper:hover .task-menu-button {
+    opacity: 1;
 }
 
 .task-menu-button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background: #2C333A;
+    color: #4BCE97;
+    border-color: #4BCE97;
 }
 
-.task-menu-modal {
+/* Task Menu Dropdown */
+.task-menu {
     position: absolute;
-    top: 8px;
-    right: -103px;
-    width: 212px;
-    background-color: #141f29;
-    border: 1px solid #122b44;
+    top: 100%;
+    right: 0;
+    width: 220px;
+    background: #000000;
+    border: 1px solid #2C333A;
     border-radius: 8px;
-    padding: 3px;
-    z-index: 2;
+    margin-top: 8px;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    animation: fadeIn 0.2s ease;
 }
 
-.task-menu-modal button {
-    z-index: 1000;
-    background: none;
-    border: none;
-    color: #dddddd;
-    font-size: 14px;
-    text-align: left;
-    padding: 6px 10px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-    cursor: pointer;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.task-menu-modal button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.confirm-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
-    border-radius: 10px;
-    padding: 20px;
-    z-index: 200;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    color: #ffffff;
-    width: 90%;
-    max-width: 320px;
-    text-align: center;
-}
-
-.confirm-modal p {
-    margin-bottom: 16px;
-    font-size: 15px;
-    color: #dddddd;
-}
-
-.confirm-modal button {
-    margin: 0 6px;
-    padding: 6px 14px;
-    font-size: 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.confirm-modal button:first-of-type {
-    background-color: #b33a3a;
-    color: #fff;
-}
-
-.confirm-modal button:first-of-type:hover {
-    background-color: #d14545;
-}
-
-.confirm-modal button:last-of-type {
-    background-color: #444;
-    color: #ddd;
-}
-
-.confirm-modal button:last-of-type:hover {
-    background-color: #555;
-}
-
-
-.user-list-modal {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    background-color: #1e2a36;
-    color: #cfcfcf;
-    padding: 10px 10px 0 10px;
-    border-radius: 10px;
-    z-index: 10;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    width: 200px;
-}
-
-.user-list-modal h4{
-    margin: 0;
-    margin-top: 5px;
-    font-size: 16px;
-}
-
-.user-list-modal button {
-    font-family: Inter, sans-serif;
-    background: none;
-    border: none;
-    color: #c3c3c3;
-    background: #294460;
-    width: 100%;
-    padding: 4px 6px 4px 12px;
-    cursor: pointer;
-    font-size: 14px;
+.task-menu button {
     display: flex;
     align-items: center;
-    border-radius: 8px;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #9FADBC;
+    font-size: 13px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.user-list-modal img{
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: auto;
+.task-menu button:hover:not(:disabled) {
+    background: #161A1D;
+    color: #FFFFFF;
+}
+
+.task-menu button.danger:hover {
+    background: rgba(248, 113, 104, 0.1);
+    color: #F87168;
+}
+
+.task-menu button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* User List Modal */
+.user-list-modal {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 260px;
+    background: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 8px;
+    margin-top: 8px;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    animation: fadeIn 0.2s ease;
+}
+
+.user-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid #2C333A;
+    background: #161A1D;
+}
+
+.user-list-header h4 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4BCE97;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-list-header .close-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #9FADBC;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.user-list-header .close-btn:hover {
+    background: #2C333A;
+    color: #FFFFFF;
 }
 
 .user-list-modal ul {
     list-style: none;
-    padding: 0;
-    margin-top: 10px;
+    padding: 6px;
+    margin: 0;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
-.user-list-modal li {
-    margin: 0 0 5px 0;
+.user-list-modal li button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.user-list-modal button:hover {
-    background: #345373;
+.user-list-modal li button:hover {
+    background: #161A1D;
+}
+
+.user-list-modal img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #2C333A;
+}
+
+.user-list-modal span {
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* Click area */
+.task-click-area {
+    cursor: pointer;
+}
+
+/* Delete Confirmation Modal */
+.confirm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-modal-box {
+    background: #000000;
+    border: 1px solid #2C333A;
+    border-radius: 16px;
+    padding: 24px;
+    width: 360px;
+    text-align: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.confirm-modal-icon {
+    margin-bottom: 16px;
+}
+
+.confirm-modal-box h3 {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.confirm-modal-box p {
+    color: #9FADBC;
+    font-size: 13px;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-danger {
+    background: #F87168;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: #FF5A4A;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #9FADBC;
+    border: 1px solid #2C333A;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #161A1D;
+    color: #FFFFFF;
+    border-color: #4BCE97;
+}
+
+/* Scrollbar */
+.user-list-modal ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+.user-list-modal ul::-webkit-scrollbar-track {
+    background: #161A1D;
+    border-radius: 3px;
+}
+
+.user-list-modal ul::-webkit-scrollbar-thumb {
+    background: #2C333A;
+    border-radius: 3px;
+}
+
+.user-list-modal ul::-webkit-scrollbar-thumb:hover {
+    background: #4BCE97;
 }
