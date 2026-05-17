@@ -1,59 +1,11 @@
+/* projects-page.css - обновленный стиль */
+
 .projects-page {
     width: 900px;
+    padding: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
-.project-table-wrapper {
-    margin-top: 20px;
-}
-
-.project-table {
-    border-radius: 12px;
-    border: 1px solid #214F7D;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    width: 100%;
-}
-
-.project-table th {
-    background-color:#122B45;
-    padding: 16px 15px 16px 15px;
-    text-align: left;
-    font-weight: 400;
-    font-size: 15px;
-}
-
-.project-table td {
-    padding: 0px 15px;
-    border-top: 1px solid #dee2e6;
-    vertical-align: middle;
-    font-weight: 300;
-    font-size: 15px;
-}
-
-.project-table tr:hover {
-    background-color: #14273a;
-}
-
-.project-item-menu-btn {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-.project-item-menu-btn:hover {
-    color: #95b4ec;
-}
-
-.project-table-status {
-    display: flex;
-    justify-content:center;
-    background-color: #12394f;
-    margin-left: -15px;
-    margin-right: 15px;
-    border-radius: 6px;
-}
-
 
 .search-container {
     margin-top: 25px;
@@ -63,69 +15,131 @@
 }
 
 .project-search-input {
-    border: 1px solid #D9D9D980;
-    background: none;
+    border: 1px solid #2C333A;
+    background: black;
     padding: 8px 15px;
-    width: 200px;
+    width: 250px;
     margin-bottom: 15px;
-    border-radius: 10px;
+    border-radius: 8px;
     color: white;
+    transition: all 0.2s ease;
 }
+
 .search-icon {
     position: absolute;
     right: 8px;
     top: 27%;
     transform: translateY(-50%);
-    color: #888;
+    color: #9FADBC;
     pointer-events: none;
 }
 
+.project-table-wrapper {
+    margin-top: 20px;
+}
 
+.project-table {
+    border-radius: 12px;
+    border: 1px solid #2C333A;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    width: 100%;
+    background: black;
+}
 
+.project-table th {
+    background-color: black;
+    padding: 16px 15px 16px 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #9FADBC;
+    border-bottom: 1px solid #2C333A;
+}
 
+.project-table td {
+    padding: 16px 15px;
+    border-top: 1px solid #2C333A;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 14px;
+    color: white;
+}
 
+.project-table tbody tr {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
 
+.project-table tbody tr:hover {
+    background-color: #161A1D;
+    transform: scale(1.01);
+}
 
-.status-badge {
-    padding: 4px 10px;
-    border-radius: 999px;
+.project-table-status {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(75, 206, 151, 0.2);
+    color: #4BCE97;
+    padding: 2px 12px;
+    border-radius: 8px;
     font-size: 12px;
     font-weight: bold;
-    display: inline-block;
+    text-transform: uppercase;
+    width: fit-content;
+    margin: 0;
+    border: 1px solid rgba(75, 206, 151, 0.3);
+    transition: all 0.2s ease;
 }
 
-.status-active {
-    background-color: #2563eb;
-    color: white;
-}
-
-.status-inactive {
-    background-color: #6b7280;
-    color: white;
-}
-
-.menu-button {
+.project-item-menu-btn {
     background: none;
     border: none;
-    color: white;
-    font-size: 18px;
+    color: #9FADBC;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-button {
-    margin-top: 20px;
-    padding: 12px 18px;
-    border: none;
+    margin-top: 24px;
+    padding: 12px 24px;
+    border: 2px solid transparent;
     border-radius: 12px;
-    background-color: #122B45;
-    color: white;
+    background: #F1F2F4;
+    color: black;
     font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .add-button:hover {
-    background-color: #052445;
+    background: #4BCE97;
+    border-color: #4BCE97;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(75, 206, 151, 0.3);
 }
 
+/* Стиль для ссылок/ID проекта */
+.project-table td:first-child {
+    font-weight: 600;
+    color: #94a4b5;
+}
 
+.project-table-status {
+    animation: glow-green 2s infinite alternate;
+}
